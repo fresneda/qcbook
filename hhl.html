@@ -1,0 +1,721 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Overview &#8212; Topics in quantum computation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'hhl';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="HHL algorithm" href="hybrid-hhl.html" />
+    <link rel="prev" title="Welcome to your Jupyter Book" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Overview</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="hybrid-hhl.html">HHL algorithm</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fhhl.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/hhl.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Overview</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Overview</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-processing">Pre-processing</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-hhl">hybrid HHL</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h1>
+<p>We will discuss a hybrid classical-quantum algorithm to solve the linear
+system of equations $<span class="math notranslate nohighlight">\(Ax=b\,,\label{eq:linear-sytem}\)</span><span class="math notranslate nohighlight">\( where
+\)</span>A\in\mathcal{M}_{N}\left(\mathbb{C}\right)<span class="math notranslate nohighlight">\( is a complex matrix of
+order \)</span>N$, following the HHL algorithm.</p>
+<p>Without lost of generality, we will assume that
+<span class="math notranslate nohighlight">\(\left\Vert b\right\Vert =1\)</span> where
+<span class="math notranslate nohighlight">\(\left\Vert b\right\Vert =\sqrt{b^{*}b}\)</span> is the usual hermitian norm in
+<span class="math notranslate nohighlight">\(\mathbb{C}^{N}\)</span> (<span class="math notranslate nohighlight">\(b^{*}\)</span> is the conjugate transpose of <span class="math notranslate nohighlight">\(b\)</span>), and that
+<span class="math notranslate nohighlight">\(A\)</span> is hermitian, <span class="math notranslate nohighlight">\(A=A^{*}\)</span>. The first assumption can be made by simply
+rescaling of the solution by <span class="math notranslate nohighlight">\(\left\Vert b\right\Vert\)</span>, while the second
+assumption be realized in terms of the system $<span class="math notranslate nohighlight">\(\left(\begin{array}{cc}
+0 &amp; A\\
+A^{*} &amp; 0
+\end{array}\right)\left(\begin{array}{c}
+0\\
+x
+\end{array}\right)=\left(\begin{array}{c}
+b\\
+0
+\end{array}\right)\)</span><span class="math notranslate nohighlight">\( which is equivalent to \)</span>Ax=b$ and has an hermitian
+coefficient matrix.</p>
+<p>Let us further assume that <span class="math notranslate nohighlight">\(A\)</span> is invertible, that is, the linear system
+<span class="math notranslate nohighlight">\(Ax=b\)</span> has the unique solution <span class="math notranslate nohighlight">\(x=A^{-1}b\)</span>. This is equivalent to the
+assumption that all eigenvalues of <span class="math notranslate nohighlight">\(A\)</span> are non-zero. By the spectral
+theorem for hermitian matrices, the eigenvalues
+<span class="math notranslate nohighlight">\(\lambda_{0}\)</span>,…,<span class="math notranslate nohighlight">\(\lambda_{N-1}\)</span> of <span class="math notranslate nohighlight">\(A\)</span> lie in the compact set
+<span class="math notranslate nohighlight">\(\left[\lambda_{min},\lambda_{max}\right]\subset\mathbb{R}\)</span> with
+<span class="math notranslate nohighlight">\(\lambda_{min}&gt;0\)</span>. In addition, <span class="math notranslate nohighlight">\(A\)</span> has an orthonormal basis of
+eigenvectors
+<span class="math notranslate nohighlight">\(\left\{ \left|v_{0}\right\rangle ,...,\left|v_{N-1}\right\rangle \right\}\)</span>,
+which allows <span class="math notranslate nohighlight">\(A\)</span> to be written in terms of the orthogonal projection
+operators
+$<span class="math notranslate nohighlight">\(A=\sum_{i=0}^{N-1}\lambda_{i}\left|v_{i}\right\rangle \left\langle v_{i}\right|\,.\)</span><span class="math notranslate nohighlight">\(
+Likewise, the inverse matrix \)</span>A^{-1}<span class="math notranslate nohighlight">\( can be written as
+\)</span><span class="math notranslate nohighlight">\(A^{-1}=\sum_{i=0}^{N-1}\lambda_{i}^{-1}\left|v_{i}\right\rangle \left\langle v_{i}\right|\,,\)</span><span class="math notranslate nohighlight">\(
+so for \)</span>b<span class="math notranslate nohighlight">\( given by the linear combination
+\)</span><span class="math notranslate nohighlight">\(b=\sum_{i=0}^{N-1}b_{i}\left|v_{i}\right\rangle\)</span><span class="math notranslate nohighlight">\( the solution to the
+system \)</span>Ax=b<span class="math notranslate nohighlight">\( is given by
+\)</span><span class="math notranslate nohighlight">\(x=A^{-1}b=\sum_{i=0}^{N-1}\frac{b_{i}}{\lambda_{i}}v_{i}\label{eq:solution}\)</span><span class="math notranslate nohighlight">\(
+Thus, the problem of finding the solution of \)</span>Ax=b<span class="math notranslate nohighlight">\( reduces to the
+problem of diagonalizing \)</span>A$, or rather, of finding its eigenvalues.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pre-processing">
+<h1>Pre-processing<a class="headerlink" href="#pre-processing" title="Permalink to this heading">#</a></h1>
+<p>In order to express this problem in terms of an <span class="math notranslate nohighlight">\(n\)</span>-qubit quantum
+system, we need to extend <span class="math notranslate nohighlight">\(A\)</span> to a <span class="math notranslate nohighlight">\(2^{n}\times2^{n}\)</span> matrix by
+completing it with the identity, so the linear system becomes
+$<span class="math notranslate nohighlight">\(\left(\begin{array}{cc}
+A &amp; 0\\
+0 &amp; I
+\end{array}\right)\left(\begin{array}{c}
+x\\
+0
+\end{array}\right)=\left(\begin{array}{c}
+b\\
+0
+\end{array}\right)\)</span><span class="math notranslate nohighlight">\( For instance, if
+\)</span>A\in M_{3}\left(\mathbb{C}\right)<span class="math notranslate nohighlight">\(, then we consider the alternative
+system \)</span><span class="math notranslate nohighlight">\(\left(\begin{array}{cc}
+A &amp; 0\\
+0 &amp; 1
+\end{array}\right)\left(\begin{array}{c}
+x\\
+0
+\end{array}\right)=\left(\begin{array}{c}
+b\\
+0
+\end{array}\right)\,,\)</span><span class="math notranslate nohighlight">\( where the coefficient matrix is now of order
+\)</span>2^{2}$.</p>
+<p>Another key adaptation for a quantum system is the necessity of having
+the eigenvalues in the interval <span class="math notranslate nohighlight">\(\left(0,1\right]\)</span>. This can be
+accomplished by rescaling and shifting the spectrum of <span class="math notranslate nohighlight">\(A\)</span>. However, it
+is important to accomplish this without prior knowledge of the point
+spectrum of <span class="math notranslate nohighlight">\(A\)</span>. This can be achieved by considering the spectral radius
+<span class="math notranslate nohighlight">\(\rho\left(A\right)\)</span> of <span class="math notranslate nohighlight">\(A\)</span>, which is defined by
+$<span class="math notranslate nohighlight">\(\rho\left(A\right)=\max\left\{ \left|\lambda_{1}\right|,...\text{\ensuremath{\left|\lambda_{n}\right|}}\right\} \,.\)</span><span class="math notranslate nohighlight">\(
+Because \)</span>\rho\left(A\right)\leq\left\Vert A\right\Vert<span class="math notranslate nohighlight">\( for any operator
+norm \)</span>\left\Vert \cdot\right\Vert<span class="math notranslate nohighlight">\(, we can choose a convenient matrix
+norm, such as the maximum absolute row sum,
+\)</span><span class="math notranslate nohighlight">\(\rho\equiv\left\Vert A\right\Vert _{\infty}=\max_{1\leq i\leq N}\left\{ \sum_{j=1}^{N}\left|a_{ij}\right|\right\}\)</span><span class="math notranslate nohighlight">\(
+so that
+\)</span>spec\left(A\right)=\left[\lambda_{min},\lambda_{max}\right]\subset\left[-\rho,\rho\right]<span class="math notranslate nohighlight">\(.
+Consider the matrix \)</span><span class="math notranslate nohighlight">\(\tilde{A}=\Omega\left(A+\omega I\right)\)</span><span class="math notranslate nohighlight">\( where
+\)</span>\Omega&gt;0<span class="math notranslate nohighlight">\( and \)</span>\omega<span class="math notranslate nohighlight">\( are real numbers. The eigenvalues of \)</span>\tilde{A}<span class="math notranslate nohighlight">\(
+are the \)</span>\tilde{\lambda}<span class="math notranslate nohighlight">\( roots of the characteristic polynomial
+\)</span><span class="math notranslate nohighlight">\(\det\left(\tilde{A}-\tilde{\lambda}I\right)=\det\left(\Omega\left(A+\omega I\right)-\tilde{\lambda}I\right)=\Omega^{N}\det\left(A+\omega-\frac{\tilde{\lambda}}{\Omega}\right)\,.\)</span><span class="math notranslate nohighlight">\(
+The last determinant tells us that
+\)</span><span class="math notranslate nohighlight">\(\lambda=\frac{\tilde{\lambda}}{\Omega}-\omega\Leftrightarrow\tilde{\lambda}=\Omega\left(\omega+\lambda\right)\label{eq:eigenvalue}\)</span><span class="math notranslate nohighlight">\(
+are the eigenvalues of \)</span>A<span class="math notranslate nohighlight">\(, so we find a relation between the spectrum
+of \)</span>A<span class="math notranslate nohighlight">\( and that of \)</span>\tilde{A}<span class="math notranslate nohighlight">\(. Let us now impose the condition that the
+spectrum of \)</span>\tilde{A}<span class="math notranslate nohighlight">\( is in \)</span>\left(0,1\right]<span class="math notranslate nohighlight">\(: \)</span><span class="math notranslate nohighlight">\(\begin{aligned}
+\tilde{\lambda}\left(\lambda=-\rho\right) &amp; =\Omega\left(\omega-\rho\right)=\frac{1}{2^{k}}\\
+\tilde{\lambda}\left(\lambda=\rho\right) &amp; =\Omega\left(\omega+\rho\right)=1-\frac{1}{2^{k}}\end{aligned}\)</span><span class="math notranslate nohighlight">\(
+for integer \)</span>k&gt;1<span class="math notranslate nohighlight">\(. The solution for any \)</span>k<span class="math notranslate nohighlight">\( is
+\)</span><span class="math notranslate nohighlight">\(\Omega=\left(\frac{1}{2}-\frac{1}{2^{k}}\right)\rho^{-1}\,,\,\,\omega=\frac{1}{1-2^{1-k}}\rho\)</span>$</p>
+<p>For instance, consider the Hadamard matrix
+$<span class="math notranslate nohighlight">\(H=\frac{1}{\sqrt{2}}\left(\begin{array}{cc}
+1 &amp; 1\\
+1 &amp; -1
+\end{array}\right)\,.\)</span><span class="math notranslate nohighlight">\( It is hermitian and
+\)</span>\left\Vert H\right\Vert _{\infty}=\sqrt{2}<span class="math notranslate nohighlight">\(, so
+\)</span>spec\left(H\right)\subset\left[-\sqrt{2},\sqrt{2}\right]<span class="math notranslate nohighlight">\(, which is
+true, of course, since its eigenvalues are \)</span>\pm1<span class="math notranslate nohighlight">\(. For \)</span>k=2<span class="math notranslate nohighlight">\(, we have
+\)</span>\Omega=\sqrt{2}/8<span class="math notranslate nohighlight">\( and \)</span>\omega=2\sqrt{2}<span class="math notranslate nohighlight">\(, so
+\)</span><span class="math notranslate nohighlight">\(\tilde{H}=\Omega\left(H+\omega I\right)=\frac{1}{8}\left(\begin{array}{cc}
+5 &amp; 1\\
+1 &amp; 3
+\end{array}\right)\,.\)</span><span class="math notranslate nohighlight">\( One can check that the eigenvalues of
+\)</span>\tilde{H}<span class="math notranslate nohighlight">\( are \)</span>\frac{1}{8}\left(4\pm\sqrt{2}\right)<span class="math notranslate nohighlight">\(, so
+\)</span>spec\left(\tilde{H}\right)\subset\left[\frac{1}{4},\frac{3}{4}\right]\subset\left(0,1\right]$.</p>
+<p>Finally, it is important to notice that the eigenvector of <span class="math notranslate nohighlight">\(A\)</span> belonging
+to the eigenvalue <span class="math notranslate nohighlight">\(\lambda\)</span> is also an eigenvector of <span class="math notranslate nohighlight">\(\tilde{A}\)</span>
+belonging to <span class="math notranslate nohighlight">\(\tilde{\lambda}\)</span>. In fact,
+$<span class="math notranslate nohighlight">\(\tilde{A}\left|v\right\rangle =\text{\ensuremath{\tilde{\lambda}\left|v\right\rangle \Leftrightarrow A\left|v\right\rangle =\frac{1}{\Omega}\left(\tilde{\lambda}-\Omega\omega\right)\left|v\right\rangle =\lambda\left|v\right\rangle }}\)</span><span class="math notranslate nohighlight">\(
+Therefore, from the solution
+\)</span><span class="math notranslate nohighlight">\(\tilde{x}=\tilde{A}^{-1}b=\sum_{i}\frac{b_{i}}{\tilde{\lambda}_{i}}\left|v_{i}\right\rangle\)</span><span class="math notranslate nohighlight">\(
+we get the solution
+\)</span><span class="math notranslate nohighlight">\(x=A^{-1}b=\sum_{i}\frac{b_{i}}{\lambda_{i}}\left|v_{i}\right\rangle\)</span><span class="math notranslate nohighlight">\(
+by simple replacement of each \)</span>\tilde{\lambda}<em>{i}<span class="math notranslate nohighlight">\( for \)</span>\lambda</em>{i}$,
+according to (<span class="xref myst">[eq:eigenvalue]</span>{reference-type=”ref”
+reference=”eq:eigenvalue”}).</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="hybrid-hhl">
+<h1>hybrid HHL<a class="headerlink" href="#hybrid-hhl" title="Permalink to this heading">#</a></h1>
+<p>Suppose all the necessary pre-processing has been deatlt with, and we
+are to apply HHL to the linear system
+(<span class="xref myst">[eq:linear-sytem]</span>{reference-type=”ref”
+reference=”eq:linear-sytem”}) where <span class="math notranslate nohighlight">\(A\)</span> is an hermitian matrix of order
+<span class="math notranslate nohighlight">\(2^{n}\)</span>, whose eigenvalues lie in the interval <span class="math notranslate nohighlight">\(\left(0,1\right]\)</span>.</p>
+<p>Since we can only implement unitary transformations, we consider instead
+the unitary matrix <span class="math notranslate nohighlight">\(U=e^{2\pi iA}\)</span>, whose eigenvalues are
+<span class="math notranslate nohighlight">\(e^{2\pi i\lambda_{i}}\)</span>, <span class="math notranslate nohighlight">\(i=0,...,N-1\)</span>. So let’s say we have prepared a
+<span class="math notranslate nohighlight">\(n\)</span>-qubit state <span class="math notranslate nohighlight">\(\left|v\right\rangle\)</span> which is an eigenstate of <span class="math notranslate nohighlight">\(A\)</span>
+with eigenvalue <span class="math notranslate nohighlight">\(\lambda\)</span>, so
+$<span class="math notranslate nohighlight">\(U\left|v\right\rangle =e^{2\pi i\lambda}\left|v\right\rangle \,.\)</span><span class="math notranslate nohighlight">\( We
+then apply the Quantum Phase Estimation (QPE) algorithm to the state
+\)</span>\left|v\right\rangle \otimes\left|0\right\rangle ^{\otimes t}<span class="math notranslate nohighlight">\(, where
+\)</span>\left|0\right\rangle ^{\otimes t}<span class="math notranslate nohighlight">\( is a second quantum register with
+\)</span>t<span class="math notranslate nohighlight">\( qubits. The result is
+\)</span><span class="math notranslate nohighlight">\(\left|v\right\rangle \otimes\left|0\right\rangle ^{\otimes t}\overset{QPE}{\mapsto}\left|v\right\rangle \otimes\left|\tilde{\lambda}\right\rangle\)</span><span class="math notranslate nohighlight">\(
+where \)</span>\left|\tilde{\lambda}\right\rangle<span class="math notranslate nohighlight">\( is the state which outputs
+\)</span>\lambda<span class="math notranslate nohighlight">\( when measured with the accuracy of \)</span>t<span class="math notranslate nohighlight">\( qubits, that is,
+\)</span>\tilde{\lambda}<span class="math notranslate nohighlight">\( is an approximation of \)</span>\lambda<span class="math notranslate nohighlight">\( with \)</span>t<span class="math notranslate nohighlight">\( bits of
+accuracy. So one would measure \)</span>\lambda<span class="math notranslate nohighlight">\( exactly if \)</span>2^{t}\lambda<span class="math notranslate nohighlight">\( is an
+integer. If we apply QPE to the state
+\)</span>\left|b\right\rangle \left|0\right\rangle<span class="math notranslate nohighlight">\(, then we should arrive at
+\)</span><span class="math notranslate nohighlight">\(\left|b\right\rangle \left|0\right\rangle ^{\otimes t}=\sum_{i=0}^{N-1}b_{i}\left|v_{i}\right\rangle \left|0\right\rangle ^{\otimes t}\overset{QPE}{\mapsto}\sum_{i=0}^{N-1}b_{i}\left|v_{i}\right\rangle \left|\tilde{\lambda}_{i}\right\rangle\)</span><span class="math notranslate nohighlight">\(
+where \)</span>\tilde{\lambda}<em>{i}<span class="math notranslate nohighlight">\( is the \)</span>t<span class="math notranslate nohighlight">\(-bit approximation for the
+eigenvalue \)</span>\lambda</em>{i}$.</p>
+<p>The next step is to get the reciprocals of the eigenvalues, which appear
+in the solution of the linear system
+(<span class="xref myst">[eq:solution]</span>{reference-type=”ref”
+reference=”eq:solution”}). The idea is to introduce an auxiliar qubit
+<span class="math notranslate nohighlight">\(\left|0\right\rangle\)</span> and perform a <span class="math notranslate nohighlight">\(y\)</span>-rotation <span class="math notranslate nohighlight">\(R_{y}\)</span> by an
+appropriate angle <span class="math notranslate nohighlight">\(\theta\)</span>. Since
+$<span class="math notranslate nohighlight">\(R_{y}\left(\theta\right)\left|0\right\rangle =\cos\frac{\theta}{2}\left|0\right\rangle +\sin\frac{\theta}{2}\left|1\right\rangle\)</span><span class="math notranslate nohighlight">\(
+we need \)</span>\theta<span class="math notranslate nohighlight">\( to be \)</span>2\arcsin f\left(\lambda\right)<span class="math notranslate nohighlight">\( (we could also
+work with \)</span>\arccos<span class="math notranslate nohighlight">\(), where
+\)</span>f\left(\lambda\right)=\frac{\Lambda}{\lambda}<span class="math notranslate nohighlight">\( and \)</span>\Lambda<span class="math notranslate nohighlight">\( is a
+scaling parameter. In this way,
+\)</span><span class="math notranslate nohighlight">\(R_{y}\left(2\arcsin\frac{\Lambda}{\lambda}\right)=\sqrt{1-\frac{\Lambda^{2}}{\lambda^{2}}}\left|0\right\rangle +\frac{\Lambda}{\lambda}\left|1\right\rangle\)</span><span class="math notranslate nohighlight">\(
+and by measuring the auxiliar qubit we can find the reciprocal of the
+eigenvalue, up to a scaling factor. Since all eigenvalues belong to
+\)</span>\left[\lambda_{min},\lambda_{max}\right]<span class="math notranslate nohighlight">\(,
+\)</span>\lambda\in\left[\lambda_{min},\lambda_{max}\right]<span class="math notranslate nohighlight">\(, and so
+\)</span>\frac{\Lambda}{\lambda}\in\left[\frac{\Lambda}{\lambda_{max}},\frac{\Lambda}{\lambda_{min}}\right]<span class="math notranslate nohighlight">\(.
+In order to use the function \)</span>\arccos<span class="math notranslate nohighlight">\( must choose the scale \)</span>\Lambda<span class="math notranslate nohighlight">\(
+so that
+\)</span>\left[\frac{\Lambda}{\lambda_{max}},\frac{\Lambda}{\lambda_{min}}\right]<span class="math notranslate nohighlight">\(
+fits the domain of \)</span>\arcsin<span class="math notranslate nohighlight">\(. This can by accomplished by rescaling by
+\)</span>\Lambda\leq\lambda_{min}<span class="math notranslate nohighlight">\(, so we get
+\)</span>\left[\frac{\Lambda}{\lambda_{max}},\frac{\Lambda}{\lambda_{min}}\right]=\left[\frac{\lambda_{min}}{\lambda_{max}},1\right]\subset\left(0,1\right]<span class="math notranslate nohighlight">\(.
+This means
+\)</span>\arcsin\left(\frac{\Lambda}{\lambda}\right)\in\left(0,\frac{\pi}{2}\right]<span class="math notranslate nohighlight">\(,
+or equivalently,
+\)</span>\frac{2}{\pi}\arcsin\left(\frac{\Lambda}{\lambda}\right)\in\left(0,1\right]$.</p>
+<p>Therefore, if we could apply rotations
+<span class="math notranslate nohighlight">\(R_{y}\left(2\arcsin\frac{\Lambda}{\lambda_{i}}\right)\)</span> to the auxiliar
+qubit, conditioned on the register
+<span class="math notranslate nohighlight">\(\left|\tilde{\lambda}_{i}\right\rangle\)</span>, we would get the desired
+result of inverting the eigenvalues, and arrive at the state
+$<span class="math notranslate nohighlight">\(\sum_{i=0}^{N-1}b_{i}\left(\sqrt{1-\frac{\Lambda^{2}}{\lambda_{i}^{2}}}\left|0\right\rangle +\frac{\Lambda}{\lambda_{i}}\left|1\right\rangle \right)\left|v_{i}\right\rangle \left|\tilde{\lambda}_{i}\right\rangle\)</span><span class="math notranslate nohighlight">\(
+The final step is to apply the inverse QPE to bring back the register
+\)</span>\left|\tilde{\lambda}_{i}\right\rangle<span class="math notranslate nohighlight">\( to
+\)</span>\left|0\right\rangle ^{\otimes t}<span class="math notranslate nohighlight">\(:
+\)</span><span class="math notranslate nohighlight">\(\sum_{i=0}^{N-1}b_{i}\left(\sqrt{1-\frac{\Lambda^{2}}{\lambda_{i}^{2}}}\left|0\right\rangle +\frac{\Lambda}{\lambda_{i}}\left|1\right\rangle \right)\left|v_{i}\right\rangle \left|\tilde{\lambda}_{i}\right\rangle \overset{QPE^{\dagger}}{\mapsto}\sum_{i=0}^{N-1}b_{i}\left(\sqrt{1-\frac{\Lambda^{2}}{\lambda_{i}^{2}}}\left|0\right\rangle +\frac{\Lambda}{\lambda_{i}}\left|1\right\rangle \right)\left|v_{i}\right\rangle \left|0\right\rangle ^{\otimes t}\)</span><span class="math notranslate nohighlight">\(
+Now, measurement values of \)</span>1<span class="math notranslate nohighlight">\( of the auxiliar qubit will result in the
+state
+\)</span><span class="math notranslate nohighlight">\(\sum_{i=0}^{N-1}b_{i}\frac{\Lambda}{\lambda_{i}}\left|1\right\rangle \left|v_{i}\right\rangle \left|0\right\rangle ^{\otimes t}\)</span>$</p>
+<p>A solution to the problem of efficiently implementing a quantum circuit
+to perform eigenvalue inversion does not seem to be a hand. In
+(<a class="reference external" href="https://arxiv.org/abs/1207.2485">ref1</a>), the eigenvalue inversion is
+done using a combination of Newton’s method and bissection, while
+(<a class="reference external" href="https://arxiv.org/pdf/2009.04484.pdf">ref2</a>) and
+(<a class="reference external" href="https://arxiv.org/pdf/1805.12445.pdf">ref3</a>) use piecewise polynomial
+approximation to approximate <span class="math notranslate nohighlight">\(\arcsin\)</span>. We will adopt a third approach,
+which is a hybrid approach, and involves first measuring the QPE circuit
+multiple times to get a probability distribution of the eigenvalues.
+Having computed the eigenvalues, we can apply the rotations controlled
+rotations having the eigenvalues as control. To see how this works, let
+the first measured eigenvalue be <span class="math notranslate nohighlight">\(\lambda_{1}\)</span>, which is stored in
+<span class="math notranslate nohighlight">\(\left|\lambda_{1}\right\rangle\)</span>. So we apply a controlled rotation
+<span class="math notranslate nohighlight">\(Ry\left(2\arcsin\frac{\Lambda}{\lambda_{1}}\right)\)</span> to the target
+qubit, whose control bits are the bits of the measured eigenvalue
+<span class="math notranslate nohighlight">\(\lambda_{1}\)</span>. Repeat for each measured eigenvalue, and we are done.</p>
+<p>Putting everything together, we have $<span class="math notranslate nohighlight">\(\begin{aligned}
+\left|0\right\rangle \left|b\right\rangle \left|0\right\rangle ^{\otimes t}\overset{QPE}{\mapsto}\sum_{i=0}^{N-1}b_{i}\left|0\right\rangle \left|v_{i}\right\rangle \left|\tilde{\lambda}_{i}\right\rangle  &amp; \overset{R_{y}}{\mapsto}\sum_{i=0}^{N-1}b_{i}\left(\sqrt{1-\frac{\Lambda^{2}}{\lambda_{i}^{2}}}\left|0\right\rangle +\frac{\Lambda}{\lambda_{i}}\left|1\right\rangle \right)\left|v_{i}\right\rangle \left|\tilde{\lambda}_{i}\right\rangle \\
+ &amp; \overset{QPE^{\dagger}}{\mapsto}\sum_{i=0}^{N-1}b_{i}\left(\sqrt{1-\frac{\Lambda^{2}}{\lambda_{i}^{2}}}\left|0\right\rangle +\frac{\Lambda}{\lambda_{i}}\left|1\right\rangle \right)\left|v_{i}\right\rangle \left|0\right\rangle ^{\otimes t}\\
+ &amp; \overset{measurement}{\mapsto}\sum_{i=0}^{N-1}b_{i}\frac{\Lambda}{\lambda_{i}}\left|1\right\rangle \left|v_{i}\right\rangle \left|0\right\rangle ^{\otimes t}\end{aligned}\)</span>$</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Welcome to your Jupyter Book</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="hybrid-hhl.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">HHL algorithm</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Overview</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-processing">Pre-processing</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-hhl">hybrid HHL</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rodrigo Fresneda
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

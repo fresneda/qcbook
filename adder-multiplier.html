@@ -1,0 +1,950 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Quantum adders and quantum multipliers &#8212; Topics in quantum computation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'adder-multiplier';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="HHL algorithm" href="hybrid-hhl.html" />
+    <link rel="prev" title="Discrete Fourier Transformation and Quantum Phase Estimation" href="dft_qpe.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Topics in Quantum Computing
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="dft_qpe.html">Discrete Fourier Transformation and Quantum Phase Estimation</a></li>
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Quantum adders and quantum multipliers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid-hhl.html">HHL algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chsh.html">The CHSH game</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chsh_test.html">The CHSH test</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fadder-multiplier.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/adder-multiplier.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Quantum adders and quantum multipliers</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modular-sum-by-classical-b">Modular sum by classical <span class="math notranslate nohighlight">\(b\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiplication-by-classical-b">Multiplication by classical <span class="math notranslate nohighlight">\(b\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-addition">Quantum addition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-multiplication">Quantum Multiplication</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="quantum-adders-and-quantum-multipliers">
+<h1>Quantum adders and quantum multipliers<a class="headerlink" href="#quantum-adders-and-quantum-multipliers" title="Permalink to this heading">#</a></h1>
+<hr class="docutils" />
+<section id="modular-sum-by-classical-b">
+<h2>Modular sum by classical <span class="math notranslate nohighlight">\(b\)</span><a class="headerlink" href="#modular-sum-by-classical-b" title="Permalink to this heading">#</a></h2>
+<p>Our first task is to compose a circuit that performs</p>
+<div class="math notranslate nohighlight">
+\[\left|a\right\rangle \mapsto  \left|a+b\right\rangle\]</div>
+<p>for a fixed <span class="math notranslate nohighlight">\(b\)</span>.</p>
+<p>The approach we will take is by using the quantum discrete transformation. First, we initalize our system to the state <span class="math notranslate nohighlight">\(\left|a\right\rangle\)</span>. After applying DFT to this state, we are left with</p>
+<div class="math notranslate nohighlight">
+\[
+DFT\left|a\right\rangle =\frac{1}{\sqrt{N}}\sum_{k=0}^{N-1}e^{\frac{2\pi iak}{N}}\left|k\right\rangle
+\]</div>
+<p>Now, consider the unitary operator</p>
+<div class="math notranslate nohighlight">
+\[
+U_b \left|k\right\rangle = e^{2\pi i b \frac{k}{N}} \left|k\right\rangle
+\]</div>
+<p>If we apply it to <span class="math notranslate nohighlight">\( DFT\left|a\right\rangle\)</span>, we get</p>
+<div class="math notranslate nohighlight">
+\[
+U_b DFT\left|a\right\rangle = \frac{1}{\sqrt{N}}\sum_{k=0}^{N-1}e^{\frac{2\pi i(a+b)k}{N}}\left|k\right\rangle
+\]</div>
+<p>Therefore, by applying the inverse DFT operator to the previous state, we get</p>
+<div class="math notranslate nohighlight">
+\[
+DFT^{-1}U_bDFT\left|a\right\rangle = \left|a+b\right\rangle
+\]</div>
+<p>We already know how to implement the DFT operator (and it’s inverse). To implement the <span class="math notranslate nohighlight">\(U_b\)</span> operator, we just need to apply the phase operator P with angle <span class="math notranslate nohighlight">\(2^k 2 \pi /N b\)</span> to the <span class="math notranslate nohighlight">\(k\)</span>-th qubit.</p>
+<p>Note that if we perform the operations in reverse order, we get subtraction:</p>
+<div class="math notranslate nohighlight">
+\[
+DFT^{-1}U^{-1}_b DFT \left|a+b\right\rangle= \left|a\right\rangle .
+\]</div>
+<p>Also, the adition is <span class="math notranslate nohighlight">\(modN\)</span>, that is, <span class="math notranslate nohighlight">\(a+b = (a+b)modN\)</span></p>
+<p>Let us write an implementation for <span class="math notranslate nohighlight">\(U_{b}\)</span> using the phase gate</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P\left(\lambda\right)=\left(\begin{array}{cc}
+1 &amp; 0\\
+0 &amp; e^{i\lambda}
+\end{array}\right)
+\end{split}\]</div>
+<p>Consider the operator</p>
+<div class="math notranslate nohighlight">
+\[
+U=P\left(\lambda_{n-1}\right)\otimes P\left(\lambda_{n-2}\right)\otimes\cdots\otimes P\left(\lambda_{0}\right)
+\]</div>
+<p>acting on <span class="math notranslate nohighlight">\(\left|k\right\rangle =\left|k_{n}k_{n-1}\cdots k_{0}\right\rangle\)</span>,
+where <span class="math notranslate nohighlight">\(k=k_{0}2^{0}+k_{1}2^{1}+\cdots+k_{n-1}2^{n-1}\)</span> is the <span class="math notranslate nohighlight">\(n\)</span>-bit
+binary representation for <span class="math notranslate nohighlight">\(k\)</span>. The angles are given by</p>
+<div class="math notranslate nohighlight">
+\[
+\lambda_{i}=\frac{2^{i+1}\pi b}{2^{n}}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(b\)</span> is fixed. Then,</p>
+<div class="math notranslate nohighlight">
+\[
+U\left|k\right\rangle =P\left(\lambda_{n-1}\right)\left|k_{n-1}\right\rangle \otimes P\left(\lambda_{n-2}\right)\left|k_{n-2}\right\rangle \otimes\cdots\otimes P\left(\lambda_{0}\right)\left|k_{0}\right\rangle \,.
+\]</div>
+<p>Since</p>
+<div class="math notranslate nohighlight">
+\[
+P\left(\lambda_{i}\right)\left|k_{i}\right\rangle =e^{i\lambda_{i}k_{i}}\left|k_{i}\right\rangle ,\,\,k_{i}\in\left\{ 0,1\right\} \,,
+\]</div>
+<p>we get</p>
+<div class="math notranslate nohighlight">
+\[
+U\left|k\right\rangle =\Pi_{i=0}^{n-1}e^{i\lambda_{i}k_{i}}\left|k\right\rangle =e^{i\sum_{i=0}^{n-1}\lambda_{i}k_{i}}\left|k\right\rangle
+\]</div>
+<p>Finally, by noting that</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{i=0}^{n-1}\lambda_{i}k_{i}=\sum_{i=0}^{n-1}\frac{2^{i+1}\pi b}{2^{n}}k_{i}=\frac{2\pi b}{2^{n}}\sum_{i=0}^{n-1}2^{i}k_{i}=\frac{2\pi b}{2^{n}}k
+\]</div>
+<p>we arrive at <span class="math notranslate nohighlight">\(U=U_{b}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span><span class="p">,</span><span class="n">QuantumRegister</span><span class="p">,</span><span class="n">ClassicalRegister</span>
+<span class="kn">from</span> <span class="nn">qiskit.quantum_info</span> <span class="kn">import</span> <span class="n">Statevector</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">StatePreparation</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="k">def</span> <span class="nf">dft</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">dftcirc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="c1">#make the rotations</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">dftcirc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">=</span><span class="mi">2</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">dftcirc</span><span class="o">.</span><span class="n">cp</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="n">p</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+            <span class="n">p</span><span class="o">+=</span><span class="mi">1</span>
+       <span class="c1"># dftcirc.barrier()</span>
+    <span class="c1">#now we make the swap operations</span>
+    <span class="k">for</span> <span class="n">qubit</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">dftcirc</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="n">qubit</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="n">qubit</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dftcirc</span>
+
+<span class="c1">#below N=2**n such that a&lt;N</span>
+<span class="c1"># if a+b &gt;= 2**n, then circuit calculates (a+b)modN</span>
+<span class="k">def</span> <span class="nf">modular_sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">a</span><span class="o">&gt;=</span><span class="mi">2</span><span class="o">**</span><span class="n">n</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;a &gt;= N=2**n&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">qbits</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">cbits</span> <span class="o">=</span> <span class="n">ClassicalRegister</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">modsumqc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">qbits</span><span class="p">,</span><span class="n">cbits</span><span class="p">)</span>
+        <span class="c1">#initialize state |a&gt;</span>
+        <span class="n">astate</span> <span class="o">=</span> <span class="n">Statevector</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">2</span><span class="o">**</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">modsumqc</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">astate</span><span class="p">,</span><span class="n">qbits</span><span class="p">)</span>
+        <span class="n">modsumqc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dft</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="n">qbits</span><span class="p">)</span>
+        <span class="c1">#now we implement the unitary U_b</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">modsumqc</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">b</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="n">n</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">modsumqc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dft</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span><span class="n">qbits</span><span class="p">)</span>
+        <span class="c1">#modsumqc.measure(qbits,cbits)</span>
+        <span class="k">return</span> <span class="n">modsumqc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc</span> <span class="o">=</span> <span class="n">modular_sum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">measure</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">output</span><span class="o">=</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/986c2c562d9cb616f46c452594714d7187f73ebe338a0934d4724e5735cff45f.png" src="_images/986c2c562d9cb616f46c452594714d7187f73ebe338a0934d4724e5735cff45f.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#run circuit simulator</span>
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">Aer</span><span class="p">,</span><span class="n">transpile</span>
+<span class="kn">from</span> <span class="nn">qiskit.visualization</span> <span class="kn">import</span> <span class="n">plot_histogram</span>
+
+<span class="n">aer_sim</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;aer_simulator&#39;</span><span class="p">)</span>
+<span class="n">shots</span> <span class="o">=</span> <span class="mi">2048</span>
+<span class="n">t_modsum</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">aer_sim</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">aer_sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">t_modsum</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">shots</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+
+<span class="n">plot_histogram</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/323845ec02a4b0890f5ca63f55d0785bcb539f2b1fba7980640f02bbdbe6f34c.png" src="_images/323845ec02a4b0890f5ca63f55d0785bcb539f2b1fba7980640f02bbdbe6f34c.png" />
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="multiplication-by-classical-b">
+<h2>Multiplication by classical <span class="math notranslate nohighlight">\(b\)</span><a class="headerlink" href="#multiplication-by-classical-b" title="Permalink to this heading">#</a></h2>
+<p>Now that we know how to sum <span class="math notranslate nohighlight">\((a+b)modN\)</span>, let us see how to multiply <span class="math notranslate nohighlight">\(a\mapsto ab\)</span>, that is, we need a unitary operator <span class="math notranslate nohighlight">\(U_b\)</span> such that <span class="math notranslate nohighlight">\(U_b \left|a\right\rangle = \left|ab\right\rangle\)</span>.
+There’s a simple algorithm which does this in time <span class="math notranslate nohighlight">\(O(b)\)</span>: simply add <span class="math notranslate nohighlight">\(a\)</span> to your register <span class="math notranslate nohighlight">\(b\)</span>  times. One can do modular_sum(a,(b-1)<em>a,n)  to obtain a</em>b(mod2**n) from the above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">a</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">qc</span> <span class="o">=</span> <span class="n">modular_sum</span><span class="p">(</span><span class="n">a</span><span class="p">,(</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">a</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">measure</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7faac7e9f4f0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aer_sim</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;aer_simulator&#39;</span><span class="p">)</span>
+<span class="n">shots</span> <span class="o">=</span> <span class="mi">2048</span>
+<span class="n">t_modsum</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">aer_sim</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">aer_sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">t_modsum</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">shots</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+
+<span class="n">plot_histogram</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/da6ba14a0c75c1f95339527526bfa5e09bbd1c3887d7914526f646858c246ddf.png" src="_images/da6ba14a0c75c1f95339527526bfa5e09bbd1c3887d7914526f646858c246ddf.png" />
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="quantum-addition">
+<h2>Quantum addition<a class="headerlink" href="#quantum-addition" title="Permalink to this heading">#</a></h2>
+<p>This is very similar to the previous section where we perform a modular
+sum by a classical <span class="math notranslate nohighlight">\(b\)</span>, that is, we perform
+<span class="math notranslate nohighlight">\(\left|a\right\rangle \mapsto\left|a+b\,\,\,(modN)\right\rangle\)</span>, but
+now we sum two quantum registers
+<span class="math notranslate nohighlight">\(\left|a\right\rangle \left|b\right\rangle \mapsto\left|a\right\rangle \left|a+b\,\,(modN)\right\rangle\)</span>.
+The general idea is the same, we start by applying the DFT operator to
+the target register <span class="math notranslate nohighlight">\(\left|b\right\rangle\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\left|a\right\rangle \left|b\right\rangle \mapsto\left|a\right\rangle DFT\left|b\right\rangle
+\]</div>
+<p>Then we apply a unitary <span class="math notranslate nohighlight">\(U\)</span> on
+<span class="math notranslate nohighlight">\(\left|a\right\rangle \otimes DFT\left|b\right\rangle\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[
+U\left(\left|a\right\rangle DFT\left|b\right\rangle \right)=\left|a\right\rangle \otimes\left(\frac{1}{\sqrt{N}}\sum_{k=0}^{N-1}e^{\frac{2\pi i\left(a+b\right)k}{N}}\left|k\right\rangle \right)
+\]</div>
+<p>Then it is a matter of applying the inverse <span class="math notranslate nohighlight">\(DFT\)</span> to the second register
+to obtain</p>
+<div class="math notranslate nohighlight">
+\[
+\left(I\otimes DFT^{-1}\right)U\left(\left|a\right\rangle DFT\left|b\right\rangle \right)=\left|a\right\rangle \left|a+b\,\,(modN)\right\rangle
+\]</div>
+<p>Therefore, our task is to understand how the unitary <span class="math notranslate nohighlight">\(U\)</span> works. The idea
+is to use our previous result, but since now we are summing two quantum
+registers, the phase operators acting on the target register must be
+conditioned by the source register. We can do this by inspection. Start
+with <span class="math notranslate nohighlight">\(\left|a\right\rangle DFT\left|b\right\rangle\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\left|a\right\rangle DFT\left|b\right\rangle =\frac{1}{\sqrt{N}}\sum_{k=0}^{N-1}e^{\frac{2\pi ibk}{N}}\left|a\right\rangle \left|k\right\rangle
+\]</div>
+<p>Now we must have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+U\left(\left|a\right\rangle \left|k\right\rangle \right) &amp; =e^{\frac{2\pi iak}{N}}\left|a\right\rangle \left|k\right\rangle \\
+ &amp; =\prod_{l,j=0}^{N-1}\exp\left(\frac{2\pi i}{N}2^{j+l}a_{j}k_{l}\right)\left|a_{N-1}\cdots a_{0}\right\rangle \left|k_{N-1}\cdots k_{0}\right\rangle \,,\end{aligned}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(a_{j},k_{l}\in\left\{ 0,1\right\}\)</span> are the coeficients of the
+binary expansions of the integers <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span>. In order to get the
+desired result, we can apply controlled phase operators. We target each
+<span class="math notranslate nohighlight">\(\left|k_{l}\right\rangle\)</span> with phase operators
+<span class="math notranslate nohighlight">\(P\left(\lambda_{jl}\right)\)</span>, <span class="math notranslate nohighlight">\(\lambda_{jl}=\frac{2\pi i}{N}2^{j+l}\)</span>,
+controlled by each one of the <span class="math notranslate nohighlight">\(\left|a_{j}\right\rangle\)</span>. We take
+advantage of the fact that <span class="math notranslate nohighlight">\(k_{l},a_{j}\in\left\{ 0,1\right\}\)</span>, to write</p>
+<div class="math notranslate nohighlight">
+\[
+U_{jl}=\left|0\right\rangle \left\langle 0\right|\otimes I+\left|1\right\rangle \left\langle 1\right|\otimes P\left(\lambda_{jl}\right)
+\]</div>
+<p>so that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+U_{jl}\left(\left|a_{j}\right\rangle \left|k_{l}\right\rangle \right) &amp; =\left\langle 0\right|\left.a_{j}\right\rangle \left|0\right\rangle \left|k_{l}\right\rangle +\left\langle 1\right|\left.a_{j}\right\rangle \left|1\right\rangle P\left(\lambda_{jl}\right)\left|k_{l}\right\rangle \\
+ &amp; =\left\langle 0\right|\left.a_{j}\right\rangle \left|0\right\rangle \left|k_{l}\right\rangle +\left\langle 1\right|\left.a_{j}\right\rangle \left|1\right\rangle e^{i\lambda_{jl}k_{l}}\left|k_{l}\right\rangle \\
+ &amp; =\left(\left\langle 0\right|\left.a_{j}\right\rangle \left|0\right\rangle +\left\langle 1\right|\left.a_{j}\right\rangle \left|1\right\rangle \right)e^{i\lambda_{jl}k_{l}a_{j}}\left|k_{l}\right\rangle \\
+ &amp; =e^{i\lambda_{jl}k_{l}a_{j}}\left|a_{j}\right\rangle \left|k_{l}\right\rangle \end{aligned}
+\end{split}\]</div>
+<p>By composing over the contribuitions of <span class="math notranslate nohighlight">\(U_{jl}\)</span> for each <span class="math notranslate nohighlight">\(j\)</span>,
+<span class="math notranslate nohighlight">\(U_{l}=U_{0l}\circ U_{1l}\circ\cdots\circ U_{N-1,l}\)</span>, we get</p>
+<div class="math notranslate nohighlight">
+\[
+U_{l}\left(\left|a\right\rangle \left|k_{l}\right\rangle \right)=e^{i\sum_{j}\lambda_{jl}a_{j}k_{l}}\left|a\right\rangle \left|k_{l}\right\rangle
+\]</div>
+<p>Finally, by applying <span class="math notranslate nohighlight">\(U_{l}\)</span> for all <span class="math notranslate nohighlight">\(l\)</span>, we get</p>
+<div class="math notranslate nohighlight">
+\[
+U\left(\left|a\right\rangle \left|k\right\rangle \right)=\prod_{l,j=0}^{N-1}\exp\left(\frac{2\pi i}{N}2^{j+l}a_{j}k_{l}\right)\left|a\right\rangle \left|k\right\rangle \,.
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#perform |a&gt;|b&gt; --&gt;  |a&gt;|a+b (modN)&gt;</span>
+
+<span class="k">def</span> <span class="nf">modular_qsum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">a</span><span class="o">&gt;=</span><span class="mi">2</span><span class="o">**</span><span class="n">n</span> <span class="ow">or</span> <span class="n">b</span><span class="o">&gt;=</span><span class="mi">2</span><span class="o">**</span><span class="n">n</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;a &gt;= 2**n or b&gt;=2**n&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">q1bits</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">q2bits</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="c1">#cbits = ClassicalRegister(n)</span>
+        <span class="n">modsumqc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">q1bits</span><span class="p">,</span><span class="n">q2bits</span><span class="p">)</span>
+        <span class="c1">#initialize state |a&gt;</span>
+        <span class="c1">#use StatePreparation so that circuit can be converted to gate</span>
+        <span class="n">astate</span> <span class="o">=</span> <span class="n">StatePreparation</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+        <span class="c1">#astate = Statevector.from_int(a,2**n)</span>
+        <span class="c1">#modsumqc.initialize(astate,q1bits)</span>
+        <span class="n">modsumqc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">astate</span><span class="p">,</span><span class="n">q1bits</span><span class="p">)</span>
+        <span class="c1">#initialize state |b&gt;</span>
+        <span class="n">bstate</span> <span class="o">=</span> <span class="n">StatePreparation</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">modsumqc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bstate</span><span class="p">,</span><span class="n">q2bits</span><span class="p">)</span>
+        <span class="c1">#bstate = Statevector.from_int(b,2**n)</span>
+        <span class="c1">#modsumqc.initialize(bstate,q2bits)</span>
+        <span class="c1">#apply DFT to |b&gt;</span>
+        <span class="n">modsumqc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dft</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">to_gate</span><span class="p">(),</span><span class="n">q2bits</span><span class="p">)</span>
+        <span class="c1">#now we implement the unitary U</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+                <span class="n">modsumqc</span><span class="o">.</span><span class="n">cp</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="n">n</span><span class="p">,</span><span class="n">q1bits</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">q2bits</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="c1">#modsumqc.barrier()</span>
+        <span class="n">modsumqc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dft</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">inverse</span><span class="p">()</span><span class="o">.</span><span class="n">to_gate</span><span class="p">(),</span><span class="n">q2bits</span><span class="p">)</span>
+        <span class="c1">#modsumqc.measure(q2bits,cbits)</span>
+        <span class="k">return</span> <span class="n">modsumqc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc</span> <span class="o">=</span> <span class="n">modular_qsum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">cbits</span> <span class="o">=</span> <span class="n">ClassicalRegister</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">add_register</span><span class="p">(</span><span class="n">cbits</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">measure</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">output</span><span class="o">=</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/fb1ca234eacb4384c0573a7d85f057fe585374bbcaa077db664bbc7a895c5ee5.png" src="_images/fb1ca234eacb4384c0573a7d85f057fe585374bbcaa077db664bbc7a895c5ee5.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aer_sim</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;aer_simulator&#39;</span><span class="p">)</span>
+<span class="n">shots</span> <span class="o">=</span> <span class="mi">2048</span>
+<span class="n">t_modsum</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">aer_sim</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">aer_sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">t_modsum</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">shots</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+
+<span class="n">plot_histogram</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3c235565c9535c0165b8c2365a674153771be0910bc9dc1a5e0e3ab8c549da68.png" src="_images/3c235565c9535c0165b8c2365a674153771be0910bc9dc1a5e0e3ab8c549da68.png" />
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="quantum-multiplication">
+<h2>Quantum Multiplication<a class="headerlink" href="#quantum-multiplication" title="Permalink to this heading">#</a></h2>
+<p>In this section our task is two write an algorithm which performs, given
+two integers <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span>, the operation</p>
+<div class="math notranslate nohighlight">
+\[
+\left|a\right\rangle \left|b\right\rangle \mapsto\left|a\right\rangle \left|ab\right\rangle
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(N=2^{n}\)</span> and <span class="math notranslate nohighlight">\(\left|a\right\rangle\)</span> and <span class="math notranslate nohighlight">\(\left|b\right\rangle\)</span>
+are two <span class="math notranslate nohighlight">\(n\)</span>-qubit quantum registers. Let us start with <span class="math notranslate nohighlight">\(2\)</span>
+<span class="math notranslate nohighlight">\(n\)</span>-qubit registers <span class="math notranslate nohighlight">\(\left|a\right\rangle\)</span> and <span class="math notranslate nohighlight">\(\left|b\right\rangle\)</span>,
+and one <span class="math notranslate nohighlight">\(2n\)</span>-qubit auxilliary register <span class="math notranslate nohighlight">\(\left|anc\right\rangle\)</span> which
+will record the sum. We write the the initial state of our system as</p>
+<div class="math notranslate nohighlight">
+\[
+\left|0\right\rangle ^{\otimes2n}\left|a\right\rangle \left|b\right\rangle \,,
+\]</div>
+<p>that is <span class="math notranslate nohighlight">\(\left|anc\right\rangle =\left|0\right\rangle ^{\otimes2n}\)</span>.
+Start by applying DFT to <span class="math notranslate nohighlight">\(\left|anc\right\rangle\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\left|0\right\rangle ^{\otimes2n}\left|a\right\rangle \left|b\right\rangle \mapsto\frac{1}{\sqrt{2^{2n}}}\sum_{k=0}^{2^{2n}-1}\left|k\right\rangle \left|a\right\rangle \left|b\right\rangle
+\]</div>
+<p>We need to apply unitary operations to the last state so that in the end
+we have</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{\sqrt{2^{2n}}}\sum_{k=0}^{2^{2n}-1}\left|k\right\rangle \left|a\right\rangle \left|b\right\rangle \mapsto\frac{1}{\sqrt{2^{2n}}}\sum_{k=0}^{2^{2n}-1}\exp\left(\frac{2\pi i\left(ab\right)k}{2^{2n}}\right)\left|k\right\rangle \left|a\right\rangle \left|b\right\rangle
+\]</div>
+<p>Let us start from the last state and decompose <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> in their
+binary expansions,</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{\sqrt{2^{2n}}}\sum_{k=0}^{2^{2n}-1}\exp\left(\frac{2\pi i\sum_{r,s=0}^{2^{n}-1}\sum_{l=0}^{2^{2n}-1}2^{r+s+l}a_{r}b_{s}k_{l}}{2^{2n}}\right)\left|k\right\rangle \left|a\right\rangle \left|b\right\rangle =\frac{1}{\sqrt{2^{2n}}}\sum_{k=0}^{2^{2n}-1}\prod_{r,s=0}^{2^{n}-1}\prod_{l=0}^{2^{2n}-1}\exp\left(\frac{2\pi i2^{r+s+l}a_{r}b_{s}k_{l}}{2^{2n}}\right)\left|k\right\rangle \left|a\right\rangle \left|b\right\rangle 
+\]</div>
+<p>Each exponential can be seen as the result of applying a phase operator
+<span class="math notranslate nohighlight">\(P\left(\lambda_{rsl}\right)\)</span> to the qubit <span class="math notranslate nohighlight">\(k_{l}\)</span> controlled by the
+qubits <span class="math notranslate nohighlight">\(a_{r}\)</span> and <span class="math notranslate nohighlight">\(b_{s}\)</span>, where
+<span class="math notranslate nohighlight">\(\lambda_{rsl}=\frac{2\pi i2^{r+s+l}}{2^{2n}}\)</span>.</p>
+<p>Note that for <span class="math notranslate nohighlight">\(a&lt;2^n\)</span>  and <span class="math notranslate nohighlight">\(b&lt;2^n\)</span> we get <span class="math notranslate nohighlight">\(ab &lt; 2^{2n}\)</span>. This is why the auxilliary register has <span class="math notranslate nohighlight">\(2n\)</span> qubits, so that it can register <span class="math notranslate nohighlight">\(ab\)</span> exactly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># now we perform |a&gt;|b&gt; -&gt; |ab&gt;</span>
+
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">PhaseGate</span>
+
+<span class="k">def</span> <span class="nf">modular_qmult</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="c1">#determine circuit size</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">a</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">b</span><span class="p">))))</span><span class="o">+</span><span class="mi">1</span>
+    <span class="n">abits</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">bbits</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">ancilla</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">multqc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">abits</span><span class="p">,</span><span class="n">bbits</span><span class="p">,</span><span class="n">ancilla</span><span class="p">)</span>
+    <span class="c1">#initialize state |a&gt;</span>
+    <span class="n">astate</span> <span class="o">=</span> <span class="n">Statevector</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">2</span><span class="o">**</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">multqc</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">astate</span><span class="p">,</span><span class="n">abits</span><span class="p">)</span>
+    <span class="c1">#initialize state |b&gt;</span>
+    <span class="n">bstate</span> <span class="o">=</span> <span class="n">Statevector</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="mi">2</span><span class="o">**</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">multqc</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">bstate</span><span class="p">,</span><span class="n">bbits</span><span class="p">)</span>
+    <span class="c1">#apply DFT to |ancilla&gt;</span>
+    <span class="n">multqc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dft</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">),</span><span class="n">ancilla</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+                <span class="n">angle</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">s</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">)</span>
+                <span class="n">c2phase</span> <span class="o">=</span> <span class="n">PhaseGate</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span><span class="o">.</span><span class="n">control</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">multqc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c2phase</span><span class="p">,</span> <span class="p">[</span><span class="n">abits</span><span class="p">[</span><span class="n">r</span><span class="p">]]</span> <span class="o">+</span> <span class="p">[</span><span class="n">bbits</span><span class="p">[</span><span class="n">s</span><span class="p">]]</span> <span class="o">+</span> <span class="p">[</span><span class="n">ancilla</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+    <span class="n">multqc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dft</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span><span class="n">ancilla</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">multqc</span><span class="p">,</span> <span class="n">ancilla</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc4</span><span class="p">,</span> <span class="n">ancilla</span> <span class="o">=</span> <span class="n">modular_qmult</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+
+
+<span class="n">cbits</span> <span class="o">=</span> <span class="n">ClassicalRegister</span><span class="p">(</span><span class="n">ancilla</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">qc4</span><span class="o">.</span><span class="n">add_register</span><span class="p">(</span><span class="n">cbits</span><span class="p">)</span>
+<span class="n">qc4</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">ancilla</span><span class="p">,</span><span class="n">cbits</span><span class="p">)</span>
+<span class="c1">#qc4.draw(output=&quot;mpl&quot;,scale=0.6)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7faac6eea6b0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aer_sim</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;aer_simulator&#39;</span><span class="p">)</span>
+<span class="n">shots</span> <span class="o">=</span> <span class="mi">2048</span>
+<span class="n">t_modsum</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc4</span><span class="p">,</span> <span class="n">aer_sim</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">aer_sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">t_modsum</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">shots</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+
+<span class="n">plot_histogram</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/98af90992873811b1afc6205b89c14eacc0cbd05e31ceac02a9d65ca44fd4ae6.png" src="_images/98af90992873811b1afc6205b89c14eacc0cbd05e31ceac02a9d65ca44fd4ae6.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "qiskit"
+        },
+        kernelOptions: {
+            name: "qiskit",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'qiskit'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="dft_qpe.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Discrete Fourier Transformation and Quantum Phase Estimation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="hybrid-hhl.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">HHL algorithm</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modular-sum-by-classical-b">Modular sum by classical <span class="math notranslate nohighlight">\(b\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiplication-by-classical-b">Multiplication by classical <span class="math notranslate nohighlight">\(b\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-addition">Quantum addition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-multiplication">Quantum Multiplication</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rodrigo Fresneda
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

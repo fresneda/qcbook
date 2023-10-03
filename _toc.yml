@@ -1,0 +1,13 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+- file: dft_qpe
+- file: adder-multiplier
+- file: hybrid-hhl
+- file: chsh
+- file: chsh_test
+
+

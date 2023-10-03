@@ -1,0 +1,851 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>The CHSH game &#8212; Topics in quantum computation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chsh';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The CHSH test" href="chsh_test.html" />
+    <link rel="prev" title="HHL algorithm" href="hybrid-hhl.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Topics in Quantum Computing
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="dft_qpe.html">Discrete Fourier Transformation and Quantum Phase Estimation</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="adder-multiplier.html">Quantum adders and quantum multipliers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid-hhl.html">HHL algorithm</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">The CHSH game</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chsh_test.html">The CHSH test</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchsh.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/chsh.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The CHSH game</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <hr class="docutils" />
+<section id="the-chsh-game">
+<h1>The CHSH game<a class="headerlink" href="#the-chsh-game" title="Permalink to this heading">#</a></h1>
+<p>The CHSH is a nonlocal game where two players (Alice and Bob) cooperate
+to win. They are allowed to communicate before the game starts, but once
+the game starts, they are not allowed to communicate anymore. The game
+itself is defined by a simple rule: Alice and Bob are each provided a
+classical bit, <span class="math notranslate nohighlight">\(0\)</span> or <span class="math notranslate nohighlight">\(1\)</span>, and they must respond with another classical
+bit. Let’s say Alice is provided the classical bit <span class="math notranslate nohighlight">\(x\in\{0,1\}\)</span> and her
+answer is <span class="math notranslate nohighlight">\(a\in\{0,1\}\)</span>. Likewise, Bob is provided the classical bit
+<span class="math notranslate nohighlight">\(y\in\{0,1\}\)</span> and his answer is <span class="math notranslate nohighlight">\(b\in\{0,1\}\)</span>. They win the CHSH game if
+the following rule is satisfied:</p>
+<div class="math notranslate nohighlight" id="equation-chsh-rule">
+<span class="eqno">(4)<a class="headerlink" href="#equation-chsh-rule" title="Permalink to this equation">#</a></span>\[
+x\wedge y=a\oplus b
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\wedge\)</span> is the logical conjunction and <span class="math notranslate nohighlight">\(\oplus\)</span> is the logical disjunction
+(equivalently, bitwise addition modulo 2). Therefore one can see for
+each possible pair <span class="math notranslate nohighlight">\(\left(x,y\right)\)</span> the answer <span class="math notranslate nohighlight">\(\left(a,b\right)\)</span>
+which satisfies the above proposition. If the proposition is true, we
+say that Alice and Bob have won the game, and that they have lost
+otherwise.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>(x,y)</p></th>
+<th class="head"><p>Alice and Bob win</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>(0,0)</p></td>
+<td><p>a=b</p></td>
+</tr>
+<tr class="row-odd"><td><p>(1,0)</p></td>
+<td><p>a=b</p></td>
+</tr>
+<tr class="row-even"><td><p>(0,1)</p></td>
+<td><p>a=b</p></td>
+</tr>
+<tr class="row-odd"><td><p>(1,1)</p></td>
+<td><p>a≠b</p></td>
+</tr>
+</tbody>
+</table>
+<p><em>Winning scenarios for Alice and Bob</em></p>
+<p>So, let’s say Alice and Bob agree beforehand that whatever bit they
+receive, their answer will be <span class="math notranslate nohighlight">\(0\)</span>, therefore, the same, <span class="math notranslate nohighlight">\(a=b\)</span>. Thus,
+they will win the game <span class="math notranslate nohighlight">\(3/4\)</span> of the time. Incidently, the best possible
+classical strategy has at most <span class="math notranslate nohighlight">\(75\%\)</span> success rate. What is interesting
+about this game is that there are quantum strategies with better success
+rate. In fact, the best possible quantum strategy has success rate of at
+most <span class="math notranslate nohighlight">\(\frac{1}{2}+\frac{\sqrt{2}}{2}\approx85\%\)</span>. To see this, let us
+first explain what we mean by a quantum strategy.</p>
+<p>Before the game starts, Alice and Bob prepare the Bell state</p>
+<div class="math notranslate nohighlight" id="equation-bell-state">
+<span class="eqno">(5)<a class="headerlink" href="#equation-bell-state" title="Permalink to this equation">#</a></span>\[
+\psi=\frac{1}{\sqrt{2}}\left(\left|00\right\rangle +\left|11\right\rangle \right)
+\]</div>
+<p>and each gets one qubit. For the sake of definiteness, let’s say Bob
+gets the first one (from the right), while Alice gets the second one
+(from the right). Then, they agree to apply certain hermitian unitary
+operators (like Pauli matrices) to their qubit depending on the bit they
+receive. Let’s call these operators <span class="math notranslate nohighlight">\(A_{x}\)</span> (for Alice), and <span class="math notranslate nohighlight">\(B_{y}\)</span>
+(for Bob). So, if Bob gets <span class="math notranslate nohighlight">\(y=1\)</span>, he applies the rotation <span class="math notranslate nohighlight">\(B_{1}\)</span> to his
+qubit. Their respective answer will be the measured state of their qubit
+in the standard computational basis. In terms of these quantities, the
+success rate of the CHSH game for a given choice
+<span class="math notranslate nohighlight">\(S=\left\{ A_{x},B_{y},\psi\right\}\)</span> can be written as</p>
+<div class="math notranslate nohighlight" id="equation-success">
+<span class="eqno">(6)<a class="headerlink" href="#equation-success" title="Permalink to this equation">#</a></span>\[\begin{split}
+\begin{aligned}
+\omega_{CHSH} &amp; =\frac{1}{8}\sum_{x,y\in\left\{ 0,1\right\} }\left(-1\right)^{x\wedge y}\left\langle A_{x}\otimes B_{y}\right\rangle _{\psi}+\frac{1}{2}\nonumber \\
+ &amp; =\frac{1}{8}\left(\left\langle A_{0}\otimes B_{0}\right\rangle _{\psi}+\left\langle A_{0}\otimes B_{1}\right\rangle _{\psi}+\left\langle A_{1}\otimes B_{0}\right\rangle _{\psi}-\left\langle A_{1}\otimes B_{1}\right\rangle _{\psi}\right)+\frac{1}{2}\end{aligned}
+\end{split}\]</div>
+<p>In order to define their quantum strategy, let us examine the
+expectation values of possible outcomes, in other words, let us examine
+the expectation values
+<span class="math notranslate nohighlight">\(\left\langle A_{x}\otimes B_{y}\right\rangle _{\psi}\)</span> (the subindex
+<span class="math notranslate nohighlight">\(\psi\)</span> just means that the average value is taken with respect to the
+Bell state <a class="reference internal" href="chsh_test.html#equation-bell-state">(11)</a>. Since <span class="math notranslate nohighlight">\(A_{x}\)</span> and <span class="math notranslate nohighlight">\(B_{y}\)</span> are hermitian
+unitary operators, and therefore square to the identity,
+<span class="math notranslate nohighlight">\(A_{x}^{2}=B_{x}^{2}=\mathbb{I}\)</span>, we have that the square of</p>
+<div class="math notranslate nohighlight">
+\[
+T=A_{0}\otimes B_{0}+A_{0}\otimes B_{1}+A_{1}\otimes B_{0}-A_{1}\otimes B_{1}\]</div>
+<p>is $<span class="math notranslate nohighlight">\(\begin{aligned}
+T^{2} &amp; =\left(A_{0}\otimes B_{0}+A_{0}\otimes B_{1}+A_{1}\otimes B_{0}-A_{1}\otimes B_{1}\right)^{2}\\
+ &amp; =\left(A_{0}\otimes\left(B_{0}+B_{1}\right)+A_{1}\otimes\left(B_{0}-B_{1}\right)\right)^{2}\\
+ &amp; =\mathbb{I}\otimes\left(B_{0}+B_{1}\right)^{2}+\mathbb{I}\otimes\left(B_{0}-B_{1}\right)^{2}+A_{0}A_{1}\otimes\left(B_{0}+B_{1}\right)\left(B_{0}-B_{1}\right)+A_{1}A_{0}\otimes\left(B_{0}-B_{1}\right)\left(B_{0}+B_{1}\right)\\
+ &amp; =4\mathbb{I}\otimes\mathbb{I}-\left[A_{0},A_{1}\right]\otimes\left[B_{0},B_{1}\right]\end{aligned}
+\)</span>$</p>
+<p>Now using the following property for bounded linear operators
+<span class="math notranslate nohighlight">\(\left\Vert A\otimes B\right\Vert \leq\left\Vert A\right\Vert \left\Vert B\right\Vert\)</span>
+and the fact that unitary operators <span class="math notranslate nohighlight">\(A\)</span> satisfy
+<span class="math notranslate nohighlight">\(\left\Vert A\right\Vert =1\)</span>, we have</p>
+<div class="math notranslate nohighlight">
+\[
+\left\Vert \left[A_{0},A_{1}\right]\otimes\left[B_{0},B_{1}\right]\right\Vert \leq\left\Vert \left[A_{0},A_{1}\right]\right\Vert \left\Vert \left[B_{0},B_{1}\right]\right\Vert \leq4
+\]</div>
+<p>where we used the triangle inequality to compute
+<span class="math notranslate nohighlight">\(\left\Vert A_{0}A_{1}-A_{1}A_{0}\right\Vert \leq\left\Vert A_{0}A_{1}\right\Vert +\left\Vert A_{1}A_{0}\right\Vert \leq2\left\Vert A_{0}\right\Vert \left\Vert A_{1}\right\Vert =2\)</span>.
+Therefore, we have that</p>
+<div class="math notranslate nohighlight">
+\[
+\left\Vert T^{2}\right\Vert \leq8\Rightarrow\left\Vert T\right\Vert \leq2\sqrt{2}
+\]</div>
+<p>By the Cauchy-Schwarz inequality,</p>
+<div class="math notranslate nohighlight">
+\[
+\left|\left\langle \psi,T\psi\right\rangle \right|\leq\left\Vert \psi\right\Vert \left\Vert T\psi\right\Vert \leq\left\Vert T\right\Vert \,,
+\]</div>
+<p>so</p>
+<div class="math notranslate nohighlight">
+\[
+\left\langle T\right\rangle _{\psi}\leq2\sqrt{2}
+\]</div>
+<p>Using this last
+result in success rate <span class="math notranslate nohighlight">\(\omega_{CHSH}\)</span> given in <a class="reference internal" href="#equation-success">(6)</a>, we get the bound</p>
+<div class="math notranslate nohighlight" id="equation-success-rate">
+<span class="eqno">(7)<a class="headerlink" href="#equation-success-rate" title="Permalink to this equation">#</a></span>\[
+\omega_{CHSH}=\frac{1}{8}\left\langle T\right\rangle _{\psi}+\frac{1}{2}\leq\frac{\sqrt{2}+2}{4}\approx85\%\,.
+\]</div>
+<p>Now let us go back to the problem at hand and figure out what the
+operators <span class="math notranslate nohighlight">\(A_{x}\)</span> and <span class="math notranslate nohighlight">\(B_{y}\)</span> must be. We know they are hermitian
+unitary matrices on <span class="math notranslate nohighlight">\(\mathbb{C}_{2}\)</span>, and a general unitary matrix
+acting on a qubit is of the form</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+U\left(\theta,\phi,\lambda\right)=\left(\begin{array}{cc}
+\cos\left(\frac{\theta}{2}\right) &amp; -e^{i\lambda}\sin\frac{\theta}{2}\\
+e^{i\phi}\sin\frac{\theta}{2} &amp; e^{i\left(\phi+\lambda\right)}\cos\frac{\theta}{2}
+\end{array}\right)\,,\,\,\lambda,\phi\in\left[0,2\pi\right]\,,\,\,\theta\in\left[0,\pi\right]\,.
+\end{split}\]</div>
+<p>The condition that <span class="math notranslate nohighlight">\(U\)</span> is also hermitian or self-adjoint further imposes
+the conditions</p>
+<div class="math notranslate nohighlight">
+\[
+e^{i\left(\phi+\lambda\right)}=-1\,,\,\,e^{2i\left(\phi+\lambda\right)}=1\,,
+\]</div>
+<p>which together imply <span class="math notranslate nohighlight">\(\phi+\lambda=k\pi\)</span>, for odd <span class="math notranslate nohighlight">\(k\in\mathbb{Z}\)</span>.
+Thus, we are able to eliminate one of the angles, i.e.,
+<span class="math notranslate nohighlight">\(\lambda=k\pi-\phi\)</span>, to obtain</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+U\left(\theta,\phi\right)=\left(\begin{array}{cc}
+\cos\left(\frac{\theta}{2}\right) &amp; e^{-i\phi}\sin\frac{\theta}{2}\\
+e^{i\phi}\sin\frac{\theta}{2} &amp; -\cos\frac{\theta}{2}
+\end{array}\right)\,,\,\,\phi\in\left[0,2\pi\right]\,,\,\,\theta\in\left[0,\pi\right]\,.\end{split}\]</div>
+<p>Let us use this transformation to compute the probabilites of different
+measurement outcomes for Alice and Bob. Let’s call the angles Alices
+uses <span class="math notranslate nohighlight">\(\left(\theta_{a},\phi_{a}\right)\)</span> and those of Bob
+<span class="math notranslate nohighlight">\(\left(\theta_{b},\phi_{b}\right)\)</span>. Then, a direct computation yields</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\left[U\left(\theta_{a},\phi_{a}\right)\otimes U\left(\theta_{b},\phi_{b}\right)\right]\psi &amp; =\frac{1}{\sqrt{2}}\left(\cos\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}+e^{-i\left(\phi_{a}+\phi_{b}\right)}\sin\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}\right)\left|00\right\rangle \\
+ &amp; +\frac{1}{\sqrt{2}}e^{i\phi_{b}}\left(\cos\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}-e^{-i\left(\phi_{a}+\phi_{b}\right)}\sin\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}\right)\left|01\right\rangle \\
+ &amp; +\frac{1}{\sqrt{2}}e^{i\phi_{a}}\left(\sin\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}-\cos\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}e^{-i\left(\phi_{a}+\phi_{b}\right)}\right)\left|10\right\rangle \\
+ &amp; +\frac{1}{\sqrt{2}}\left(\cos\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}+e^{i\left(\phi_{a}+\phi_{b}\right)}\sin\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}\right)\left|11\right\rangle \end{aligned}
+\end{split}\]</div>
+<p>The probability that Alice’s and Bob’s measurements have the same result
+is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+prob\left(a=b\right) &amp; =\frac{1}{2}\left|\left(\cos\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}+e^{-i\left(\phi_{a}+\phi_{b}\right)}\sin\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}\right)\right|^{2}+\frac{1}{2}\left|\left(\cos\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}+e^{i\left(\phi_{a}+\phi_{b}\right)}\sin\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}\right)\right|^{2}\\
+ &amp; =\left(\cos\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}\right)^{2}+2\left(\sin\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}\right)^{2}+\left[e^{i\left(\phi_{a}+\phi_{b}\right)}+e^{-i\left(\phi_{a}+\phi_{b}\right)}\right]\cos\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}\sin\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}\\
+ &amp; =\left(\cos\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}\right)^{2}+2\left(\sin\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}\right)^{2}+2\cos\left(\phi_{a}+\phi_{b}\right)\sin\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}\cos\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}\end{aligned}\end{split}\]</div>
+<p>For <span class="math notranslate nohighlight">\(\cos\left(\phi_{a}+\phi_{b}\right)=1\)</span>, this reduces to</p>
+<div class="math notranslate nohighlight" id="equation-a">
+<span class="eqno">(8)<a class="headerlink" href="#equation-a" title="Permalink to this equation">#</a></span>\[
+prob\left(a=b\right)=\left(\cos\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}+\sin\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}\right)^{2}=\cos^{2}\left(\frac{\theta_{a}-\theta_{b}}{2}\right)\,.
+\]</div>
+<p>The probability that Alice’s and Bob’s measurements have a differing
+result is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+prob\left(a\neq b\right) &amp; =\frac{1}{2}\left|\cos\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}-e^{-i\left(\phi_{a}+\phi_{b}\right)}\sin\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}\right|^{2}+\frac{1}{2}\left|\sin\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}-\cos\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}e^{-i\left(\phi_{a}+\phi_{b}\right)}\right|^{2}\\
+ &amp; =\left(\cos\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}\right)^{2}+\left(\sin\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}\right)^{2}-\left[e^{i\left(\phi_{a}+\phi_{b}\right)}+e^{-i\left(\phi_{a}+\phi_{b}\right)}\right]\sin\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}\cos\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}\\
+ &amp; =\left(\cos\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}\right)^{2}+\left(\sin\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}\right)^{2}-2\cos\left(\phi_{a}+\phi_{b}\right)\sin\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}\cos\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}\end{aligned}
+\end{split}\]</div>
+<p>For <span class="math notranslate nohighlight">\(\cos\left(\phi_{a}+\phi_{b}\right)=1\)</span>, this reduces to</p>
+<div class="math notranslate nohighlight" id="equation-anotb">
+<span class="eqno">(9)<a class="headerlink" href="#equation-anotb" title="Permalink to this equation">#</a></span>\[
+prob\left(a\neq b\right)=\left(\sin\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}-\sin\frac{\theta_{b}}{2}\cos\frac{\theta_{a}}{2}\right)^{2}=\sin^{2}\left(\frac{\theta_{a}-\theta_{b}}{2}\right)\,
+\]</div>
+<p>For the sake of simplicity, we shall assume <span class="math notranslate nohighlight">\(\phi_{a}=\phi_{b}=0\)</span>, so
+the unitary operators are given by <span class="math notranslate nohighlight">\(U(\theta,0,\pi)\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+U\left(\theta\right)=\left(\begin{array}{cc}
+\cos\left(\frac{\theta}{2}\right) &amp; \sin\frac{\theta}{2}\\
+\sin\frac{\theta}{2} &amp; -\cos\frac{\theta}{2}
+\end{array}\right)\,,\,\,\theta\in\left[0,\pi\right]\,.
+\end{split}\]</div>
+<p>Now that we have obtained the respective probabilities, we can choose
+the appropriate operations that Alice and Bob must perform to increase
+the likelihood of success. Suppose they are given the pair
+<span class="math notranslate nohighlight">\(\left(x,y\right)=\left(0,0\right)\)</span>. In order to win the game, they must
+choose their bits so that <span class="math notranslate nohighlight">\(a=b\)</span>. The highest chance of success is given
+by expression <a class="reference internal" href="#equation-success-rate">(7)</a>, so let us equate <a class="reference internal" href="#equation-a">(8)</a>  with
+<a class="reference internal" href="#equation-anotb">(9)</a>:
+<span class="math notranslate nohighlight">\(\cos^{2}\alpha=\frac{\sqrt{2}+2}{4}\Leftrightarrow\cos2\alpha=\frac{\sqrt{2}}{2}\)</span>.
+So <span class="math notranslate nohighlight">\(\alpha=\frac{\pi}{8}\)</span> or <span class="math notranslate nohighlight">\(\alpha=-\frac{\pi}{8}\)</span>. Since
+<span class="math notranslate nohighlight">\(\alpha=\frac{\theta_{a}-\theta_{b}}{2}\)</span>, a possible choice is
+<span class="math notranslate nohighlight">\(\theta_{a}=\frac{\pi}{4}\)</span> and <span class="math notranslate nohighlight">\(\theta_{b}=0\)</span>. In this case, Alice and
+Bob must agree beforehand that if given bit <span class="math notranslate nohighlight">\(0\)</span>, Alice must apply the
+unitary operation <span class="math notranslate nohighlight">\(U\left(\frac{\pi}{4}\right)\)</span>, while Bob must apply
+<span class="math notranslate nohighlight">\(U\left(0\right)\)</span>. Likewise, for <span class="math notranslate nohighlight">\(\left(x,y\right)=\left(0,1\right)\)</span> the
+winning strategy is <span class="math notranslate nohighlight">\(a=b\)</span>, so we must have <span class="math notranslate nohighlight">\(\theta_{b}=\frac{\pi}{2}\)</span> so
+that <span class="math notranslate nohighlight">\(\alpha=-\frac{\pi}{8}\)</span>. Hence, Alice still applies
+<span class="math notranslate nohighlight">\(U\left(\frac{\pi}{4}\right)\)</span> , but Bob applies
+<span class="math notranslate nohighlight">\(U\left(\frac{\pi}{2}\right)\)</span>. For <span class="math notranslate nohighlight">\(\left(x,y\right)=\left(1,0\right)\)</span>
+the winning strategy is again <span class="math notranslate nohighlight">\(a=b\)</span>, so Bob applies <span class="math notranslate nohighlight">\(U\left(0\right)\)</span>,
+while Alice applies <span class="math notranslate nohighlight">\(U\left(-\frac{\pi}{4}\right)\)</span>. Finally, for
+<span class="math notranslate nohighlight">\(\left(x,y\right)=\left(1,1\right)\)</span> Alice and Bob must provided distinct
+bits, <span class="math notranslate nohighlight">\(a\neq b\)</span>. In this case,
+<span class="math notranslate nohighlight">\(\sin^{2}\alpha=\frac{\sqrt{2}+2}{4}\Leftrightarrow\cos2\alpha=-\frac{\sqrt{2}}{2}\)</span>,
+so <span class="math notranslate nohighlight">\(\alpha=\pm\frac{3\pi}{4}\)</span>. Alice applies
+<span class="math notranslate nohighlight">\(U\left(-\frac{\pi}{4}\right)\)</span> as in the previous case, and Bob applies
+<span class="math notranslate nohighlight">\(U\left(\frac{\pi}{2}\right)\)</span>. In summary, the proposed strategy is</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>(x,y)</p></th>
+<th class="head"><p>Alice and Bob win</p></th>
+<th class="head"><p>Alice’s Gate</p></th>
+<th class="head"><p>Bob’s Gate</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>(0,0)</p></td>
+<td><p>a=b</p></td>
+<td><p>U(π/4)</p></td>
+<td><p>U(0)</p></td>
+</tr>
+<tr class="row-odd"><td><p>(0,1)</p></td>
+<td><p>a=b</p></td>
+<td><p>U(π/4)</p></td>
+<td><p>U(π/2)</p></td>
+</tr>
+<tr class="row-even"><td><p>(1,0)</p></td>
+<td><p>a=b</p></td>
+<td><p>U(-π/4)</p></td>
+<td><p>U(0)</p></td>
+</tr>
+<tr class="row-odd"><td><p>(1,1)</p></td>
+<td><p>a≠b</p></td>
+<td><p>U(-π/4)</p></td>
+<td><p>U(π/2)</p></td>
+</tr>
+</tbody>
+</table>
+<p><em>Winning strategy for Alice and Bob</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#the following has been adapted from https://learning.quantum-computing.ibm.com/course/basics-of-quantum-information/entanglement-in-action#the-chsh-game</span>
+
+<span class="c1">#definition of the game</span>
+
+<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">randint</span>
+
+
+<span class="k">def</span> <span class="nf">chsh_game</span><span class="p">(</span><span class="n">strategy</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plays the CHSH game</span>
+<span class="sd">    Args:</span>
+<span class="sd">        strategy (callable): A function that takes two bits (as `int`s) and</span>
+<span class="sd">            returns two bits (also as `int`s). The strategy must follow the</span>
+<span class="sd">            rules of the CHSH game.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        int: 1 for a win, 0 for a loss.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Referee chooses x and y randomly</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Use strategy to choose a and b</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">strategy</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># Referee decides if Alice and Bob win or lose</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">!=</span> <span class="n">b</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span>  <span class="c1"># Win</span>
+    <span class="k">return</span> <span class="mi">0</span>  <span class="c1"># Lose</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#create the chsh circuit based on the best strategy we presented</span>
+
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">pi</span>
+
+
+<span class="k">def</span> <span class="nf">chsh_circuit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates a `QuantumCircuit` that implements the best CHSH strategy.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        x (int): Alice&#39;s bit (must be 0 or 1)</span>
+<span class="sd">        y (int): Bob&#39;s bit (must be 0 or 1)</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        QuantumCircuit: Circuit that, when run, returns Alice and Bob&#39;s</span>
+<span class="sd">            answer bits.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="c1">#we apply the general unitary gates qc.u  with parameters phi=0 and lambda=pi</span>
+    
+    <span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+
+    <span class="c1"># Alice</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">u</span><span class="p">(</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="n">pi</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">u</span><span class="p">(</span><span class="o">-</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Bob</span>
+    <span class="k">if</span> <span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">u</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">pi</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">u</span><span class="p">(</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">pi</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">qc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#run the circuit on simulator for fixed pair (x,y)</span>
+
+<span class="kn">from</span> <span class="nn">qiskit_aer.primitives</span> <span class="kn">import</span> <span class="n">Sampler</span>
+
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">quantum_strategy</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Carry out the best strategy for the CHSH game.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        x (int): Alice&#39;s bit (must be 0 or 1)</span>
+<span class="sd">        y (int): Bob&#39;s bit (must be 0 or 1)</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        (int, int): Alice and Bob&#39;s answer bits (respectively)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># `shots=1` runs the circuit once</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">chsh_circuit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+    <span class="n">statistics</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">quasi_dists</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">binary_probabilities</span><span class="p">()</span>
+    <span class="n">bits</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">statistics</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">bits</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bits</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NUM_GAMES</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">TOTAL_SCORE</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUM_GAMES</span><span class="p">):</span>
+    <span class="n">TOTAL_SCORE</span> <span class="o">+=</span> <span class="n">chsh_game</span><span class="p">(</span><span class="n">quantum_strategy</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fraction of games won:&quot;</span><span class="p">,</span> <span class="n">TOTAL_SCORE</span> <span class="o">/</span> <span class="n">NUM_GAMES</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fraction of games won: 0.851
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "qiskit"
+        },
+        kernelOptions: {
+            name: "qiskit",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'qiskit'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="hybrid-hhl.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">HHL algorithm</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chsh_test.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The CHSH test</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rodrigo Fresneda
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

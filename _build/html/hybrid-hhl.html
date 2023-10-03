@@ -1,0 +1,1071 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>HHL algorithm &#8212; Topics in quantum computation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'hybrid-hhl';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The CHSH game" href="chsh.html" />
+    <link rel="prev" title="Quantum adders and quantum multipliers" href="adder-multiplier.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Topics in Quantum Computing
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="dft_qpe.html">Discrete Fourier Transformation and Quantum Phase Estimation</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="adder-multiplier.html">Quantum adders and quantum multipliers</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">HHL algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chsh.html">The CHSH game</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chsh_test.html">The CHSH test</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fhybrid-hhl.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/hybrid-hhl.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>HHL algorithm</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-processing">Pre-processing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-hhl">Hybrid HHL</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="hhl-algorithm">
+<h1>HHL algorithm<a class="headerlink" href="#hhl-algorithm" title="Permalink to this heading">#</a></h1>
+<hr class="docutils" />
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<p>We will discuss a hybrid classical-quantum algorithm to solve the linear
+system of equations</p>
+<div class="math notranslate nohighlight" id="equation-linear-sys">
+<span class="eqno">(1)<a class="headerlink" href="#equation-linear-sys" title="Permalink to this equation">#</a></span>\[
+Ax=b
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(A\in\mathcal{M}_{N}\left(\mathbb{C}\right)\)</span> is a complex matrix of
+order <span class="math notranslate nohighlight">\(N\)</span>, following the HHL algorithm.</p>
+<p>Without lost of generality, we will assume that
+<span class="math notranslate nohighlight">\(\left\Vert b\right\Vert =1\)</span> where
+<span class="math notranslate nohighlight">\(\left\Vert b\right\Vert =\sqrt{b^{*}b}\)</span> is the usual hermitian norm in
+<span class="math notranslate nohighlight">\(\mathbb{C}^{N}\)</span> (<span class="math notranslate nohighlight">\(b^{*}\)</span> is the conjugate transpose of <span class="math notranslate nohighlight">\(b\)</span>), and that
+<span class="math notranslate nohighlight">\(A\)</span> is hermitian, <span class="math notranslate nohighlight">\(A=A^{*}\)</span>. The first assumption can be made by simply
+rescaling of the solution by <span class="math notranslate nohighlight">\(\left\Vert b\right\Vert\)</span>, while the second
+assumption be realized in terms of the system</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(\begin{array}{cc}
+0 &amp; A\\
+A^{*} &amp; 0
+\end{array}\right)\left(\begin{array}{c}
+0\\
+x
+\end{array}\right)=\left(\begin{array}{c}
+b\\
+0
+\end{array}\right)
+\end{split}\]</div>
+<p>which is equivalent to <span class="math notranslate nohighlight">\(Ax=b\)</span> and has an hermitian
+coefficient matrix.</p>
+<p>Let us further assume that <span class="math notranslate nohighlight">\(A\)</span> is invertible, that is, the linear system
+<span class="math notranslate nohighlight">\(Ax=b\)</span> has the unique solution <span class="math notranslate nohighlight">\(x=A^{-1}b\)</span>. This is equivalent to the
+assumption that all eigenvalues of <span class="math notranslate nohighlight">\(A\)</span> are non-zero. By the spectral
+theorem for hermitian matrices, the eigenvalues
+<span class="math notranslate nohighlight">\(\lambda_{0}\)</span>,…,<span class="math notranslate nohighlight">\(\lambda_{N-1}\)</span> of <span class="math notranslate nohighlight">\(A\)</span> lie in the compact set
+<span class="math notranslate nohighlight">\(\left[\lambda_{min},\lambda_{max}\right]\subset\mathbb{R}\)</span> with
+<span class="math notranslate nohighlight">\(\lambda_{min}&gt;0\)</span>. In addition, <span class="math notranslate nohighlight">\(A\)</span> has an orthonormal basis of
+eigenvectors
+<span class="math notranslate nohighlight">\(\left\{ \left|v_{0}\right\rangle ,...,\left|v_{N-1}\right\rangle \right\}\)</span>,
+which allows <span class="math notranslate nohighlight">\(A\)</span> to be written in terms of the orthogonal projection
+operators</p>
+<div class="math notranslate nohighlight">
+\[
+A=\sum_{i=0}^{N-1}\lambda_{i}\left|v_{i}\right\rangle \left\langle v_{i}\right|\,.
+\]</div>
+<p>Likewise, the inverse matrix <span class="math notranslate nohighlight">\(A^{-1}\)</span> can be written as</p>
+<div class="math notranslate nohighlight">
+\[
+A^{-1}=\sum_{i=0}^{N-1}\lambda_{i}^{-1}\left|v_{i}\right\rangle \left\langle v_{i}\right|\,,
+\]</div>
+<p>so for <span class="math notranslate nohighlight">\(b\)</span> given by the linear combination</p>
+<div class="math notranslate nohighlight">
+\[
+b=\sum_{i=0}^{N-1}b_{i}\left|v_{i}\right\rangle
+\]</div>
+<p>the solution to the system <a class="reference internal" href="#equation-linear-sys">(1)</a> is given by</p>
+<div class="math notranslate nohighlight" id="equation-solution">
+<span class="eqno">(2)<a class="headerlink" href="#equation-solution" title="Permalink to this equation">#</a></span>\[
+x=A^{-1}b=\sum_{i=0}^{N-1}\frac{b_{i}}{\lambda_{i}}v_{i}
+\]</div>
+<p>Thus, the problem of finding the solution of <span class="math notranslate nohighlight">\(Ax=b\)</span> reduces to the
+problem of diagonalizing <span class="math notranslate nohighlight">\(A\)</span>, or rather, of finding its eigenvalues.</p>
+</section>
+<hr class="docutils" />
+<section id="pre-processing">
+<h2>Pre-processing<a class="headerlink" href="#pre-processing" title="Permalink to this heading">#</a></h2>
+<p>In order to express this problem in terms of an <span class="math notranslate nohighlight">\(n\)</span>-qubit quantum
+system, we need to extend <span class="math notranslate nohighlight">\(A\)</span> to a <span class="math notranslate nohighlight">\(2^{n}\times2^{n}\)</span> matrix by
+completing it with the identity, so the linear system becomes</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(\begin{array}{cc}
+A &amp; 0\\
+0 &amp; I
+\end{array}\right)\left(\begin{array}{c}
+x\\
+0
+\end{array}\right)=\left(\begin{array}{c}
+b\\
+0
+\end{array}\right)
+\end{split}\]</div>
+<p>For instance, if <span class="math notranslate nohighlight">\(A\in M_{3}\left(\mathbb{C}\right)\)</span>, then we consider the alternative
+system</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(\begin{array}{cc}
+A &amp; 0\\
+0 &amp; 1
+\end{array}\right)\left(\begin{array}{c}
+x\\
+0
+\end{array}\right)=\left(\begin{array}{c}
+b\\
+0
+\end{array}\right)\,,
+\end{split}\]</div>
+<p>where the coefficient matrix is now of order
+<span class="math notranslate nohighlight">\(2^{2}\)</span>.</p>
+<p>Another key adaptation for a quantum system is the necessity of having
+the eigenvalues in the interval <span class="math notranslate nohighlight">\(\left(0,1\right]\)</span>. This can be
+accomplished by rescaling and shifting the spectrum of <span class="math notranslate nohighlight">\(A\)</span>. However, it
+is important to accomplish this without prior knowledge of the point
+spectrum of <span class="math notranslate nohighlight">\(A\)</span>. This can be achieved by considering the spectral radius
+<span class="math notranslate nohighlight">\(\rho\left(A\right)\)</span> of <span class="math notranslate nohighlight">\(A\)</span>, which is defined by</p>
+<div class="math notranslate nohighlight">
+\[
+\rho\left(A\right)=\max\left\{ \left|\lambda_{1}\right|,...,\left|\lambda_{n}\right|\right\} \,.
+\]</div>
+<p>Because <span class="math notranslate nohighlight">\(\rho\left(A\right)\leq\left\Vert A\right\Vert\)</span> for any operator
+norm <span class="math notranslate nohighlight">\(\left\Vert \cdot\right\Vert\)</span>, we can choose a convenient matrix
+norm, such as the maximum absolute row sum,</p>
+<div class="math notranslate nohighlight">
+\[
+\rho\equiv\left\Vert A\right\Vert _{\infty}=\max_{1\leq i\leq N}\left\{ \sum_{j=1}^{N}\left|a_{ij}\right|\right\}
+\]</div>
+<p>so that <span class="math notranslate nohighlight">\(spec\left(A\right)=\left[\lambda_{min},\lambda_{max}\right]\subset\left[-\rho,\rho\right]\)</span>.
+Consider the matrix</p>
+<div class="math notranslate nohighlight">
+\[
+\tilde{A}=\Omega\left(A+\omega I\right)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Omega&gt;0\)</span> and <span class="math notranslate nohighlight">\(\omega\)</span> are real numbers. The eigenvalues of <span class="math notranslate nohighlight">\(\tilde{A}\)</span>
+are the <span class="math notranslate nohighlight">\(\tilde{\lambda}\)</span> roots of the characteristic polynomial</p>
+<div class="math notranslate nohighlight">
+\[
+\det\left(\tilde{A}-\tilde{\lambda}I\right)=\det\left(\Omega\left(A+\omega I\right)-\tilde{\lambda}I\right)=\Omega^{N}\det\left(A+\omega-\frac{\tilde{\lambda}}{\Omega}\right)\,.
+\]</div>
+<p>The last determinant tells us that</p>
+<div class="math notranslate nohighlight" id="equation-eigenvalue">
+<span class="eqno">(3)<a class="headerlink" href="#equation-eigenvalue" title="Permalink to this equation">#</a></span>\[
+\lambda=\frac{\tilde{\lambda}}{\Omega}-\omega\Leftrightarrow\tilde{\lambda}=\Omega\left(\omega+\lambda\right)
+\]</div>
+<p>are the eigenvalues of <span class="math notranslate nohighlight">\(A\)</span>, so we find a relation between the spectrum
+of <span class="math notranslate nohighlight">\(A\)</span> and that of <span class="math notranslate nohighlight">\(\tilde{A}\)</span>. Let us now impose the condition that the
+spectrum of <span class="math notranslate nohighlight">\(\tilde{A}\)</span> is in <span class="math notranslate nohighlight">\(\left(0,1\right]\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\tilde{\lambda}\left(\lambda=-\rho\right) &amp; =\Omega\left(\omega-\rho\right)=\frac{1}{2^{k}}\\
+\tilde{\lambda}\left(\lambda=\rho\right) &amp; =\Omega\left(\omega+\rho\right)=1-\frac{1}{2^{k}}\end{aligned}
+\end{split}\]</div>
+<p>for integer <span class="math notranslate nohighlight">\(k&gt;1\)</span>. The solution for any <span class="math notranslate nohighlight">\(k\)</span> is</p>
+<div class="math notranslate nohighlight">
+\[
+\Omega=\left(\frac{1}{2}-\frac{1}{2^{k}}\right)\rho^{-1}\,,\,\,\omega=\frac{1}{1-2^{1-k}}\rho
+\]</div>
+<p>For instance, consider the Hadamard matrix</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+H=\frac{1}{\sqrt{2}}\left(\begin{array}{cc}
+1 &amp; 1\\
+1 &amp; -1
+\end{array}\right)\,.
+\end{split}\]</div>
+<p>It is hermitian and <span class="math notranslate nohighlight">\(\left\Vert H\right\Vert _{\infty}=\sqrt{2}\)</span>, so
+<span class="math notranslate nohighlight">\(spec\left(H\right)\subset\left[-\sqrt{2},\sqrt{2}\right]\)</span>, which is
+true, of course, since its eigenvalues are <span class="math notranslate nohighlight">\(\pm1\)</span>. For <span class="math notranslate nohighlight">\(k=2\)</span>, we have
+<span class="math notranslate nohighlight">\(\Omega=\sqrt{2}/8\)</span> and <span class="math notranslate nohighlight">\(\omega=2\sqrt{2}\)</span>, so</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\tilde{H}=\Omega\left(H+\omega I\right)=\frac{1}{8}\left(\begin{array}{cc}
+5 &amp; 1\\
+1 &amp; 3
+\end{array}\right)\,.
+\end{split}\]</div>
+<p>One can check that the eigenvalues of <span class="math notranslate nohighlight">\(\tilde{H}\)</span> are <span class="math notranslate nohighlight">\(\frac{1}{8}\left(4\pm\sqrt{2}\right)\)</span>, so
+<span class="math notranslate nohighlight">\(spec\left(\tilde{H}\right)\subset\left[\frac{1}{4},\frac{3}{4}\right]\subset\left(0,1\right]\)</span>.</p>
+<p>Finally, it is important to notice that the eigenvector of <span class="math notranslate nohighlight">\(A\)</span> belonging
+to the eigenvalue <span class="math notranslate nohighlight">\(\lambda\)</span> is also an eigenvector of <span class="math notranslate nohighlight">\(\tilde{A}\)</span>
+belonging to <span class="math notranslate nohighlight">\(\tilde{\lambda}\)</span>. In fact,</p>
+<div class="math notranslate nohighlight">
+\[
+\tilde{A}\left|v\right\rangle =\tilde{\lambda}\left|v\right\rangle \Leftrightarrow A\left|v\right\rangle =\frac{1}{\Omega}\left(\tilde{\lambda}-\Omega\omega\right)\left|v\right\rangle =\lambda\left|v\right\rangle 
+\]</div>
+<p>Therefore, from the solution</p>
+<div class="math notranslate nohighlight">
+\[
+\tilde{x}=\tilde{A}^{-1}b=\sum_{i}\frac{b_{i}}{\tilde{\lambda}_{i}}\left|v_{i}\right\rangle
+\]</div>
+<p>we get the solution</p>
+<div class="math notranslate nohighlight">
+\[
+x=A^{-1}b=\sum_{i}\frac{b_{i}}{\lambda_{i}}\left|v_{i}\right\rangle
+\]</div>
+<p>by simple replacement of each <span class="math notranslate nohighlight">\(\tilde{\lambda}_{i}\)</span> for <span class="math notranslate nohighlight">\(\lambda_{i}\)</span>,
+according to <a class="reference internal" href="#equation-eigenvalue">(3)</a>.</p>
+</section>
+<hr class="docutils" />
+<section id="hybrid-hhl">
+<h2>Hybrid HHL<a class="headerlink" href="#hybrid-hhl" title="Permalink to this heading">#</a></h2>
+<p>Suppose all the necessary pre-processing has been deatlt with, and we
+are to apply HHL to the linear system <a class="reference internal" href="#equation-linear-sys">(1)</a>
+where <span class="math notranslate nohighlight">\(A\)</span> is an hermitian matrix of order
+<span class="math notranslate nohighlight">\(2^{n}\)</span>, whose eigenvalues lie in the interval <span class="math notranslate nohighlight">\(\left(0,1\right]\)</span>.</p>
+<p>Since we can only implement unitary transformations, we consider instead
+the unitary matrix <span class="math notranslate nohighlight">\(U=e^{2\pi iA}\)</span>, whose eigenvalues are
+<span class="math notranslate nohighlight">\(e^{2\pi i\lambda_{i}}\)</span>, <span class="math notranslate nohighlight">\(i=0,...,N-1\)</span>. So let’s say we have prepared a
+<span class="math notranslate nohighlight">\(n\)</span>-qubit state <span class="math notranslate nohighlight">\(\left|v\right\rangle\)</span> which is an eigenstate of <span class="math notranslate nohighlight">\(A\)</span>
+with eigenvalue <span class="math notranslate nohighlight">\(\lambda\)</span>, so</p>
+<div class="math notranslate nohighlight">
+\[
+U\left|v\right\rangle =e^{2\pi i\lambda}\left|v\right\rangle \,.
+\]</div>
+<p>We then apply the Quantum Phase Estimation (QPE) algorithm to the state
+<span class="math notranslate nohighlight">\(\left|v\right\rangle \otimes\left|0\right\rangle ^{\otimes t}\)</span>, where
+<span class="math notranslate nohighlight">\(\left|0\right\rangle ^{\otimes t}\)</span> is a second quantum register with
+<span class="math notranslate nohighlight">\(t\)</span> qubits. The result is</p>
+<div class="math notranslate nohighlight">
+\[
+\left|v\right\rangle \otimes\left|0\right\rangle ^{\otimes t}\overset{QPE}{\mapsto}\left|v\right\rangle \otimes\left|\tilde{\lambda}\right\rangle
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\left|\tilde{\lambda}\right\rangle\)</span> is the state which outputs
+<span class="math notranslate nohighlight">\(\lambda\)</span> when measured with the accuracy of <span class="math notranslate nohighlight">\(t\)</span> qubits, that is,
+<span class="math notranslate nohighlight">\(\tilde{\lambda}\)</span> is an approximation of <span class="math notranslate nohighlight">\(\lambda\)</span> with <span class="math notranslate nohighlight">\(t\)</span> bits of
+accuracy. So one would measure <span class="math notranslate nohighlight">\(\lambda\)</span> exactly if <span class="math notranslate nohighlight">\(2^{t}\lambda\)</span> is an
+integer. If we apply QPE to the state
+<span class="math notranslate nohighlight">\(\left|b\right\rangle \left|0\right\rangle\)</span>, then we should arrive at</p>
+<div class="math notranslate nohighlight">
+\[
+\left|b\right\rangle \left|0\right\rangle ^{\otimes t}=\sum_{i=0}^{N-1}b_{i}\left|v_{i}\right\rangle \left|0\right\rangle ^{\otimes t}\overset{QPE}{\mapsto}\sum_{i=0}^{N-1}b_{i}\left|v_{i}\right\rangle \left|\tilde{\lambda}_{i}\right\rangle
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\tilde{\lambda}_{i}\)</span> is the <span class="math notranslate nohighlight">\(t\)</span>-bit approximation for the
+eigenvalue <span class="math notranslate nohighlight">\(\lambda_{i}\)</span>.</p>
+<p>The next step is to get the reciprocals of the eigenvalues, which appear
+in the solution of the linear system <a class="reference internal" href="#equation-solution">(2)</a>. The idea is to introduce an auxiliar qubit
+<span class="math notranslate nohighlight">\(\left|0\right\rangle\)</span> and perform a <span class="math notranslate nohighlight">\(y\)</span>-rotation <span class="math notranslate nohighlight">\(R_{y}\)</span> by an
+appropriate angle <span class="math notranslate nohighlight">\(\theta\)</span>. Since</p>
+<div class="math notranslate nohighlight">
+\[
+R_{y}\left(\theta\right)\left|0\right\rangle =\cos\frac{\theta}{2}\left|0\right\rangle +\sin\frac{\theta}{2}\left|1\right\rangle
+\]</div>
+<p>we need <span class="math notranslate nohighlight">\(\theta\)</span> to be <span class="math notranslate nohighlight">\(2\arcsin f\left(\lambda\right)\)</span> (we could also
+work with <span class="math notranslate nohighlight">\(\arccos\)</span>), where <span class="math notranslate nohighlight">\(f\left(\lambda\right)=\frac{\Lambda}{\lambda}\)</span> and <span class="math notranslate nohighlight">\(\Lambda\)</span> is a
+scaling parameter. In this way,</p>
+<div class="math notranslate nohighlight">
+\[
+R_{y}\left(2\arcsin\frac{\Lambda}{\lambda}\right)=\sqrt{1-\frac{\Lambda^{2}}{\lambda^{2}}}\left|0\right\rangle +\frac{\Lambda}{\lambda}\left|1\right\rangle
+\]</div>
+<p>and by measuring the auxiliar qubit we can find the reciprocal of the
+eigenvalue, up to a scaling factor. Since all eigenvalues belong to
+<span class="math notranslate nohighlight">\(\left[\lambda_{min},\lambda_{max}\right]\)</span>,
+<span class="math notranslate nohighlight">\(\lambda\in\left[\lambda_{min},\lambda_{max}\right]\)</span>, and so
+<span class="math notranslate nohighlight">\(\frac{\Lambda}{\lambda}\in\left[\frac{\Lambda}{\lambda_{max}},\frac{\Lambda}{\lambda_{min}}\right]\)</span>.
+In order to use the function <span class="math notranslate nohighlight">\(\arccos\)</span> must choose the scale <span class="math notranslate nohighlight">\(\Lambda\)</span>
+so that <span class="math notranslate nohighlight">\(\left[\frac{\Lambda}{\lambda_{max}},\frac{\Lambda}{\lambda_{min}}\right]\)</span>
+fits the domain of <span class="math notranslate nohighlight">\(\arcsin\)</span>. This can by accomplished by rescaling by
+<span class="math notranslate nohighlight">\(\Lambda\leq\lambda_{min}\)</span>, so we get
+<span class="math notranslate nohighlight">\(\left[\frac{\Lambda}{\lambda_{max}},\frac{\Lambda}{\lambda_{min}}\right]=\left[\frac{\lambda_{min}}{\lambda_{max}},1\right]\subset\left(0,1\right]\)</span>.
+This means
+<span class="math notranslate nohighlight">\(\arcsin\left(\frac{\Lambda}{\lambda}\right)\in\left(0,\frac{\pi}{2}\right]\)</span>,
+or equivalently,
+<span class="math notranslate nohighlight">\(\frac{2}{\pi}\arcsin\left(\frac{\Lambda}{\lambda}\right)\in\left(0,1\right]\)</span>.</p>
+<p>Therefore, if we could apply rotations
+<span class="math notranslate nohighlight">\(R_{y}\left(2\arcsin\frac{\Lambda}{\lambda_{i}}\right)\)</span> to the auxiliar
+qubit, conditioned on the register
+<span class="math notranslate nohighlight">\(\left|\tilde{\lambda}_{i}\right\rangle\)</span>, we would get the desired
+result of inverting the eigenvalues, and arrive at the state</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{i=0}^{N-1}b_{i}\left(\sqrt{1-\frac{\Lambda^{2}}{\lambda_{i}^{2}}}\left|0\right\rangle +\frac{\Lambda}{\lambda_{i}}\left|1\right\rangle \right)\left|v_{i}\right\rangle \left|\tilde{\lambda}_{i}\right\rangle
+\]</div>
+<p>The final step is to apply the inverse QPE to bring back the register
+<span class="math notranslate nohighlight">\(\left|\tilde{\lambda}_{i}\right\rangle\)</span> to
+<span class="math notranslate nohighlight">\(\left|0\right\rangle ^{\otimes t}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{i=0}^{N-1}b_{i}\left(\sqrt{1-\frac{\Lambda^{2}}{\lambda_{i}^{2}}}\left|0\right\rangle +\frac{\Lambda}{\lambda_{i}}\left|1\right\rangle \right)\left|v_{i}\right\rangle \left|\tilde{\lambda}_{i}\right\rangle \overset{QPE^{\dagger}}{\mapsto}\sum_{i=0}^{N-1}b_{i}\left(\sqrt{1-\frac{\Lambda^{2}}{\lambda_{i}^{2}}}\left|0\right\rangle +\frac{\Lambda}{\lambda_{i}}\left|1\right\rangle \right)\left|v_{i}\right\rangle \left|0\right\rangle ^{\otimes t}
+\]</div>
+<p>Now, measurement values of <span class="math notranslate nohighlight">\(1\)</span> of the auxiliar qubit will result in the
+state</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{i=0}^{N-1}b_{i}\frac{\Lambda}{\lambda_{i}}\left|1\right\rangle \left|v_{i}\right\rangle \left|0\right\rangle ^{\otimes t}
+\]</div>
+<p>A solution to the problem of efficiently implementing a quantum circuit
+to perform eigenvalue inversion does not seem to be a hand. In
+(<a class="reference external" href="https://arxiv.org/abs/1207.2485">ref1</a>), the eigenvalue inversion is
+done using a combination of Newton’s method and bissection, while
+(<a class="reference external" href="https://arxiv.org/pdf/2009.04484.pdf">ref2</a>) and
+(<a class="reference external" href="https://arxiv.org/pdf/1805.12445.pdf">ref3</a>) use piecewise polynomial
+approximation to approximate <span class="math notranslate nohighlight">\(\arcsin\)</span>. We will adopt a third approach,
+which is a hybrid approach, and involves first measuring the QPE circuit
+multiple times to get a probability distribution of the eigenvalues.
+Having computed the eigenvalues, we can apply the rotations controlled
+rotations having the eigenvalues as control. To see how this works, let
+the first measured eigenvalue be <span class="math notranslate nohighlight">\(\lambda_{1}\)</span>, which is stored in
+<span class="math notranslate nohighlight">\(\left|\lambda_{1}\right\rangle\)</span>. So we apply a controlled rotation
+<span class="math notranslate nohighlight">\(Ry\left(2\arcsin\frac{\Lambda}{\lambda_{1}}\right)\)</span> to the target
+qubit, whose control bits are the bits of the measured eigenvalue
+<span class="math notranslate nohighlight">\(\lambda_{1}\)</span>. Repeat for each measured eigenvalue, and we are done.</p>
+<p>Putting everything together, we have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\left|0\right\rangle \left|b\right\rangle \left|0\right\rangle ^{\otimes t}\overset{QPE}{\mapsto}\sum_{i=0}^{N-1}b_{i}\left|0\right\rangle \left|v_{i}\right\rangle \left|\tilde{\lambda}_{i}\right\rangle  &amp; \overset{R_{y}}{\mapsto}\sum_{i=0}^{N-1}b_{i}\left(\sqrt{1-\frac{\Lambda^{2}}{\lambda_{i}^{2}}}\left|0\right\rangle +\frac{\Lambda}{\lambda_{i}}\left|1\right\rangle \right)\left|v_{i}\right\rangle \left|\tilde{\lambda}_{i}\right\rangle \\
+ &amp; \overset{QPE^{\dagger}}{\mapsto}\sum_{i=0}^{N-1}b_{i}\left(\sqrt{1-\frac{\Lambda^{2}}{\lambda_{i}^{2}}}\left|0\right\rangle +\frac{\Lambda}{\lambda_{i}}\left|1\right\rangle \right)\left|v_{i}\right\rangle \left|0\right\rangle ^{\otimes t}\\
+ &amp; \overset{measurement}{\mapsto}\sum_{i=0}^{N-1}b_{i}\frac{\Lambda}{\lambda_{i}}\left|1\right\rangle \left|v_{i}\right\rangle \left|0\right\rangle ^{\otimes t}\end{aligned}
+ \end{split}\]</div>
+<p>Our first task is to create the functions responsible for shifting the operator <span class="math notranslate nohighlight">\(A\)</span> so that its eigenvalues are in <span class="math notranslate nohighlight">\((0,1]\)</span>,
+and to calculate the eigenvalues of <span class="math notranslate nohighlight">\(A\)</span> for known eigenvalues of the shifted operator.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># given a complex hermitian matrix A, we calculate an upper bound for its spectral radius</span>
+<span class="c1">#and use it to define a new shifted operator B so that spec(B) \subset [1/2^k,1-1/2^k] for k&gt;1</span>
+
+<span class="k">def</span> <span class="nf">shiftop</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
+    <span class="c1">#get number of rows of A</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1">#calculate p=infty norm</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+    <span class="n">Omega</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="n">k</span><span class="p">)</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="n">rho</span>
+    <span class="n">omega</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">*</span><span class="n">rho</span>
+    <span class="n">shiftA</span> <span class="o">=</span> <span class="n">Omega</span> <span class="o">*</span> <span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="n">omega</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">shiftA</span><span class="p">,</span><span class="n">omega</span><span class="p">,</span><span class="n">Omega</span> 
+
+<span class="c1">#calculate eigenvalues of A based on eigenvalues of shiftA</span>
+<span class="k">def</span> <span class="nf">eigenvals</span><span class="p">(</span> <span class="n">eigAshift</span><span class="p">,</span><span class="n">omega</span><span class="p">,</span><span class="n">Omega</span><span class="p">):</span>
+    <span class="c1">#eigAshift is array of eigenvalues of Ashift</span>
+    <span class="n">lamb</span> <span class="o">=</span> <span class="n">eigAshift</span><span class="o">/</span><span class="n">Omega</span> <span class="o">-</span> <span class="n">omega</span>
+    <span class="k">return</span> <span class="n">lamb</span>
+    
+    
+</pre></div>
+</div>
+</div>
+</div>
+<p>As a simple example, let us take the Hadamard operator on <span class="math notranslate nohighlight">\(\mathbb{C}^2\)</span> as A, and obtain the corresponding shifted operator.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#test for hadamard</span>
+<span class="n">H</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
+<span class="n">shiftH</span><span class="p">,</span><span class="n">omega</span><span class="p">,</span><span class="n">Omega</span> <span class="o">=</span> <span class="n">shiftop</span><span class="p">(</span><span class="n">H</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">eigHshift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">shiftH</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The eigenvalues of the Hadamard operator are: &quot;</span><span class="p">,</span><span class="n">eigenvals</span><span class="p">(</span><span class="n">eigHshift</span><span class="p">,</span><span class="n">omega</span><span class="p">,</span><span class="n">Omega</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The eigenvalues of the Hadamard operator are:  [ 1.+0.j -1.+0.j]
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the following we create the controlled unitary operator used in the QPE subroutine.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#create controlled unitary U = exp(2\pi i shiftH)</span>
+<span class="kn">from</span> <span class="nn">qiskit.extensions</span> <span class="kn">import</span> <span class="n">HamiltonianGate</span>
+<span class="n">shiftopgate</span> <span class="o">=</span> <span class="n">HamiltonianGate</span><span class="p">(</span><span class="n">shiftH</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">.</span><span class="n">control</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we put everything together to obtain the aproximate values of the eigenvalues of the shifted operator, using QPE.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#run QPE for hadamard with b=|0&gt; and controlled U</span>
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span><span class="p">,</span> <span class="n">QuantumRegister</span><span class="p">,</span> <span class="n">ClassicalRegister</span><span class="p">,</span> <span class="n">Aer</span><span class="p">,</span> <span class="n">transpile</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">StatePreparation</span><span class="p">,</span> <span class="n">RYGate</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">ControlledGate</span>
+<span class="kn">from</span> <span class="nn">qiskit.visualization</span> <span class="kn">import</span> <span class="n">plot_histogram</span>
+
+
+<span class="c1">#dft circuit with n qubits</span>
+<span class="k">def</span> <span class="nf">dft</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">dftcirc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="c1">#make the rotations</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">dftcirc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">=</span><span class="mi">2</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">dftcirc</span><span class="o">.</span><span class="n">cp</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="n">p</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+            <span class="n">p</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="n">dftcirc</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+    <span class="c1">#now we make the swap operations</span>
+    <span class="k">for</span> <span class="n">qubit</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">dftcirc</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="n">qubit</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="n">qubit</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dftcirc</span>
+
+<span class="c1">#qpe circuit</span>
+<span class="c1">#t counting bits</span>
+<span class="c1"># eigenvector array &quot;eigenvector&quot;</span>
+<span class="c1"># controlled unitary gate &quot;unitary&quot;</span>
+
+<span class="k">def</span> <span class="nf">qpe</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">eigenvector</span><span class="p">,</span><span class="n">unitary</span><span class="p">):</span>
+    <span class="n">U</span> <span class="o">=</span> <span class="n">unitary</span>
+    <span class="n">eigenv</span> <span class="o">=</span> <span class="n">eigenvector</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">eigenvector</span><span class="p">)</span>
+    <span class="n">cqbits</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;counting qubits&quot;</span><span class="p">)</span>
+    <span class="n">psi</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;psi&quot;</span><span class="p">)</span>
+    <span class="n">qpe</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">cqbits</span><span class="p">,</span><span class="n">psi</span><span class="p">)</span>
+    <span class="c1">#we initalize the state psi to eigenv</span>
+    <span class="n">bstate</span> <span class="o">=</span> <span class="n">StatePreparation</span><span class="p">(</span><span class="n">eigenv</span><span class="p">)</span>
+    <span class="n">qpe</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bstate</span><span class="p">,</span><span class="n">psi</span><span class="p">)</span>
+    <span class="c1">#we apply the Hadamard gates to the counting qubits</span>
+    <span class="n">qpe</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="n">cqbits</span><span class="p">)</span>
+    <span class="c1">#Now we apply the controlled Unitary gates</span>
+    <span class="n">repetitions</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">counting_qubits</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">repetitions</span><span class="p">):</span>
+            <span class="n">qpe</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">U</span><span class="p">,[</span><span class="n">cqbits</span><span class="p">[</span><span class="n">counting_qubits</span><span class="p">],</span> <span class="n">psi</span><span class="p">])</span>   <span class="c1">#controlled U </span>
+        <span class="n">repetitions</span> <span class="o">*=</span> <span class="mi">2</span>
+   
+    <span class="c1">#now we apply the inverse DFT</span>
+    <span class="n">qpe</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dft</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span><span class="n">cqbits</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">qpe</span><span class="p">,</span> <span class="n">cqbits</span>
+
+<span class="c1">#define precison = size of counting bits register</span>
+<span class="n">t</span><span class="o">=</span><span class="mi">10</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="c1">#create circuit</span>
+<span class="n">qpeqc</span><span class="p">,</span> <span class="n">cqbits</span> <span class="o">=</span> <span class="n">qpe</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">shiftopgate</span><span class="p">)</span>
+<span class="c1">#measure</span>
+<span class="n">mbits</span> <span class="o">=</span> <span class="n">ClassicalRegister</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;measure bits&quot;</span><span class="p">)</span>
+<span class="n">qpeqc</span><span class="o">.</span><span class="n">add_register</span><span class="p">(</span><span class="n">mbits</span><span class="p">)</span>
+<span class="n">qpeqc</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">cqbits</span><span class="p">,</span><span class="n">mbits</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7f40d177c070&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we run the circuit in a simulator to get statistics. From the results we are able to obtain the aproximate values
+of the eigenvectors of the shifted operator.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aer_sim</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;aer_simulator&#39;</span><span class="p">)</span>
+<span class="n">shots</span> <span class="o">=</span> <span class="mi">2048</span>
+<span class="n">t_qpe</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qpeqc</span><span class="p">,</span> <span class="n">aer_sim</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">aer_sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">t_qpe</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">shots</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+
+<span class="n">plot_histogram</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dfae92c85a01b42332a0124729ef73dfbe779c9ea8cb25f0095637f077549407.png" src="_images/dfae92c85a01b42332a0124729ef73dfbe779c9ea8cb25f0095637f077549407.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#we get the eigenvalues from the probability distribution</span>
+<span class="c1">#get eigenvalues corresponding to highest counts</span>
+<span class="n">sorted_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">answer</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span> <span class="n">reverse</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="p">[</span><span class="n">phi1</span><span class="p">,</span><span class="n">phi2</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="p">)</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">sorted_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="mi">2</span><span class="p">),</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="p">)</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">sorted_list</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="mi">2</span><span class="p">)]</span>
+<span class="c1">#convert back to eigenvalues of H</span>
+<span class="p">[</span><span class="n">lambda1</span><span class="p">,</span><span class="n">lambda2</span><span class="p">]</span><span class="o">=</span>  <span class="p">[</span><span class="n">phi1</span><span class="o">/</span><span class="n">Omega</span> <span class="o">-</span> <span class="n">omega</span><span class="p">,</span><span class="n">phi2</span><span class="o">/</span><span class="n">Omega</span><span class="o">-</span><span class="n">omega</span><span class="p">]</span>
+<span class="c1">#we also need the binaries for phi1 and phi2</span>
+<span class="p">[</span><span class="n">phi1b</span><span class="p">,</span><span class="n">phi2b</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">sorted_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">sorted_list</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The eigenvalues of the Hadamard operator are: &quot;</span><span class="p">,</span><span class="n">lambda1</span><span class="p">,</span><span class="s2">&quot;and &quot;</span><span class="p">,</span><span class="n">lambda2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The eigenvalues of the Hadamard operator are:  0.9998931827716024 and  -0.9998931827716022
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we have the eigenvalues for the Hadamard operator, we can run the HHL algorithm.
+First we create a circuit with three quantum registers: the counting qubits for QPE,
+the qubits which encode the rotation angles <span class="math notranslate nohighlight">\(2\arcsin{(\Lambda/\lambda)}\)</span> and the target qubit for the rotations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qpeqc</span><span class="p">,</span> <span class="n">cqbits</span> <span class="o">=</span> <span class="n">qpe</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">shiftopgate</span><span class="p">)</span>
+
+<span class="n">targetbit</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;target bit&quot;</span><span class="p">)</span>
+<span class="n">cqbits</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="n">psi</span>    <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">hhlqc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">cqbits</span><span class="p">,</span><span class="n">targetbit</span><span class="p">,</span><span class="n">psi</span><span class="p">)</span>
+<span class="n">hhlqc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">qpeqc</span><span class="p">,</span> <span class="n">cqbits</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">psi</span><span class="p">[:])</span>
+<span class="n">hhlqc</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+
+<span class="c1">#define rotation angles and Lambda</span>
+<span class="n">Lambda</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">lambda1</span><span class="p">,</span><span class="n">lambda2</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">Lambda</span><span class="o">/</span><span class="n">lambda1</span><span class="p">),</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">Lambda</span><span class="o">/</span><span class="n">lambda2</span><span class="p">)]</span>
+
+<span class="c1">#rotate the target bit controlled by the cqbits register</span>
+<span class="n">ry1</span> <span class="o">=</span> <span class="n">RYGate</span><span class="p">(</span><span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">control</span><span class="p">(</span><span class="n">num_ctrl_qubits</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>  <span class="n">ctrl_state</span><span class="o">=</span><span class="n">phi1b</span><span class="p">)</span>
+<span class="n">ry2</span> <span class="o">=</span> <span class="n">RYGate</span><span class="p">(</span><span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">control</span><span class="p">(</span><span class="n">num_ctrl_qubits</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>  <span class="n">ctrl_state</span><span class="o">=</span><span class="n">phi2b</span><span class="p">)</span>
+<span class="n">hhlqc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ry1</span><span class="p">,</span> <span class="n">cqbits</span><span class="p">[:]</span><span class="o">+</span><span class="n">targetbit</span><span class="p">[:])</span>
+<span class="n">hhlqc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ry2</span><span class="p">,</span> <span class="n">cqbits</span><span class="p">[:]</span><span class="o">+</span><span class="n">targetbit</span><span class="p">[:])</span>
+<span class="n">hhlqc</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+
+<span class="c1">#apply inverse QPE</span>
+<span class="n">hhlqc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">qpeqc</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span> <span class="n">cqbits</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">psi</span><span class="p">[:])</span>
+
+<span class="c1">#now we measure the target bit</span>
+<span class="n">mbit</span> <span class="o">=</span> <span class="n">ClassicalRegister</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">hhlqc</span><span class="o">.</span><span class="n">add_register</span><span class="p">(</span><span class="n">mbit</span><span class="p">)</span>
+<span class="n">hhlqc</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+<span class="n">hhlqc</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">targetbit</span><span class="p">,</span><span class="n">mbit</span><span class="p">)</span>
+
+<span class="c1">#hhlqc.decompose().draw(output=&quot;mpl&quot;)</span>
+    
+    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7f40cb7b4610&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, let us run the circuit and analyze the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aer_sim</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;aer_simulator&#39;</span><span class="p">)</span>
+<span class="n">shots</span> <span class="o">=</span> <span class="mi">2048</span>
+<span class="c1">#tell the transpile not decompose custom gates</span>
+<span class="c1">#basis_gates =[&#39;u&#39;, &#39;cx&#39;, &#39;id&#39;,&#39;phi1gate&#39;] </span>
+<span class="n">t_hhl</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">hhlqc</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">aer_sim</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">aer_sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">t_hhl</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">shots</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+
+<span class="n">plot_histogram</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a2e5eaca9911645597d4f6ac7ae8c30104ddb09cce5a027fdc68d279c1189930.png" src="_images/a2e5eaca9911645597d4f6ac7ae8c30104ddb09cce5a027fdc68d279c1189930.png" />
+</div>
+</div>
+<p>The histogram is expected, since the eigenvalues of the H matrix are close to <span class="math notranslate nohighlight">\(\pm\)</span> and <span class="math notranslate nohighlight">\(\Lambda\)</span> is then close to <span class="math notranslate nohighlight">\(-1\)</span>.
+As a result, the state <span class="math notranslate nohighlight">\(\sqrt{1-\frac{\Lambda^{2}}{\lambda^{2}}}\left|0\right\rangle +\frac{\Lambda}{\lambda}\left|1\right\rangle\)</span> collapses to <span class="math notranslate nohighlight">\(\left|1\right\rangle\)</span>
+In order to compare the result we obtained with the classical result, we calculate the corresponding state fidelity:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#now let us get the state vector</span>
+<span class="kn">from</span> <span class="nn">qiskit.providers.aer</span> <span class="kn">import</span> <span class="n">StatevectorSimulator</span>
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">execute</span>
+<span class="kn">from</span> <span class="nn">qiskit.quantum_info</span> <span class="kn">import</span> <span class="n">partial_trace</span><span class="p">,</span> <span class="n">state_fidelity</span><span class="p">,</span> <span class="n">DensityMatrix</span>
+<span class="n">simulator</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;statevector_simulator&#39;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">execute</span><span class="p">(</span><span class="n">hhlqc</span><span class="p">,</span> <span class="n">simulator</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="n">statevector</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get_statevector</span><span class="p">(</span><span class="n">hhlqc</span><span class="p">)</span>
+<span class="n">traced_sv</span> <span class="o">=</span> <span class="n">partial_trace</span><span class="p">(</span><span class="n">statevector</span><span class="p">,</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
+<span class="n">cstate</span> <span class="o">=</span> <span class="n">DensityMatrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">H</span><span class="p">,</span><span class="n">b</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The state fidelity between the solution from the  hybrid HHL algorithm and the classical solution is: &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">state_fidelity</span><span class="p">(</span><span class="n">traced_sv</span><span class="p">,</span><span class="n">cstate</span><span class="p">),</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The state fidelity between the solution from the  hybrid HHL algorithm and the classical solution is:  0.9994
+</pre></div>
+</div>
+</div>
+</div>
+<p>This means our quantum solution is in excellent agreement with the classical solution!</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "qiskit"
+        },
+        kernelOptions: {
+            name: "qiskit",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'qiskit'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="adder-multiplier.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Quantum adders and quantum multipliers</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chsh.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The CHSH game</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-processing">Pre-processing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-hhl">Hybrid HHL</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rodrigo Fresneda
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

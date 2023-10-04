@@ -341,7 +341,7 @@ percent= round(abs((phi - 1/3)/(1/3))*100,2)
 print(f"varphi is off by {percent}%")
 ```
 
-Let us repeat the experiment with $t=20$!
+Let us repeat the experiment with $t=20$
 
 ```{code-cell} ipython3
 #Let us first create a circuit based on the number of counting qubits 
@@ -398,6 +398,6 @@ percent= round(abs((phi - 1/3)/(1/3))*100,5)
 print(f"varphi is off by {percent}%")
 ```
 
-```{code-cell} ipython3
 
-```
+
+

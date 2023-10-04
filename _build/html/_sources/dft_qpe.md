@@ -16,10 +16,7 @@ kernelspec:
 +++
 
 Here we implement the discrete Fourier transformation $DFT$, given by the unitary operator 
-
-$$
-DFT\left|j\right\rangle =\frac{1}{\sqrt{N}}\sum_{k=0}^{N-1}e^{\frac{2\pi ijk}{N}}\left|k\right\rangle 
-$$ 
+$$DFT\left|j\right\rangle =\frac{1}{\sqrt{N}}\sum_{k=0}^{N-1}e^{\frac{2\pi ijk}{N}}\left|k\right\rangle $$ 
 
 where $\left\{ \left|0\right\rangle ,\left|1\right\rangle ,...,\left|N-1\right\rangle \right\} $ is the computational basis and $N\in \mathbb{Z}_+ \,.$ 
 
@@ -27,61 +24,46 @@ In the following, we take $N=2^n$ and the binary representations $j=j_{n-1}j_{n-
 
 In this way, the $DFT$ operator can be equivalently defined as
 
-$$
-DFT\left|j_{n-1}j_{n-2}...j_{0}\right\rangle =\frac{1}{2^{n/2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{0}}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.j_{1}j_{0}}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right) \,.
-$$
+$$DFT\left|j_{n-1}j_{n-2}...j_{0}\right\rangle =\frac{1}{2^{n/2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{0}}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.j_{1}j_{0}}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right) \,.$$
 
 
 Let us now implement this operator as a quantum circuit. In order to do so, we first explain the rationale. First, we apply a Hadamard gate to the $n$-th qubit, producing the state
 
-$$
-\frac{1}{\sqrt{2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}}\left|1\right\rangle \right)\left|j_{n-2}j_{n-2}...j_{0}\right\rangle 
-$$
+$$\frac{1}{\sqrt{2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}}\left|1\right\rangle \right)\left|j_{n-2}j_{n-2}...j_{0}\right\rangle $$
 
 
 
 Next, we apply a succession of controlled unitary gates 
 
-$$
-U_{k}=\left(\begin{array}{cc}
+$$U_{k}=\left(\begin{array}{cc}
 1 & 0\\
 0 & e^{2\pi i/2^{k}}
-\end{array}\right)
-$$
+\end{array}\right)$$
 
 on the target qubit $j_{n-1}$ having $j_0,..,j_{n-2}$  as control qubits. For instance, the first controlled unitary operator is $U_2$, which gives the state 
 
-$$
-\frac{1}{\sqrt{2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}}\left|1\right\rangle \right)\left|j_{n-2}j_{n-3}...j_{0}\right\rangle 
-$$
+$$\frac{1}{\sqrt{2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}}\left|1\right\rangle \right)\left|j_{n-2}j_{n-3}...j_{0}\right\rangle $$
 
 Doing successive controlled operations, $U_3,U_4,...,U_n$, we arrive at
 
-$$
-\frac{1}{\sqrt{2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left|j_{n-2}j_{n-3}...j_{0}\right\rangle 
-$$
+$$\frac{1}{\sqrt{2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left|j_{n-2}j_{n-3}...j_{0}\right\rangle $$
 
 
 
 Now we repeat this for the qubit $j_{n-2}$: first apply a Hadamard to $j_{n-2}$ gate to bring the state to
 
-$$
-\frac{1}{2}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.j_{n-2}}\left|1\right\rangle \right)\left|j_{n-3}...j_{0}\right\rangle 
+$$\frac{1}{2}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.j_{n-2}}\left|1\right\rangle \right)\left|j_{n-3}...j_{0}\right\rangle 
 $$
 
 
 Then, repeated applications of the controlled unitary gates $U_2,..,U_{n-1}$  gives
 
-$$
-\frac{1}{2}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left|j_{n-3}...j_{0}\right\rangle 
-$$
+$$\frac{1}{2}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left|j_{n-3}...j_{0}\right\rangle $$
 
 
 Repeating this procedure for the remaining qubits, we finally arrive at
 
-$$
-\frac{1}{2^{n/2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i0.j_{0}}\left|1\right\rangle \right)
-$$
+$$\frac{1}{2^{n/2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i0.j_{0}}\left|1\right\rangle \right)$$
 
 
 For the above expression to agree with the defintion of $DFT$, we need to reverse the order of the qubits, by performing swap operations.
@@ -138,71 +120,52 @@ def qft(circuit, n):
 
 Let $\left|\psi\right\rangle$ be an eigenvector of a unitary operator $U$. Therefore the eigenvalue is a phase, 
 
-$$
-U\left|\psi\right\rangle=e^{2\pi i\varphi}\left|\psi\right\rangle \,.
-$$
+$$U\left|\psi\right\rangle=e^{2\pi i\varphi}\left|\psi\right\rangle \,.$$
 
 The Phase estimation algorithm aims at finding $\varphi$. One needs two registers, the first one with $t$
 qubits , and the second one with $k$ qubits, necessary to store the state $\left|\psi\right\rangle \in \mathbb{C}_2^k$. 
 
 To determine $\varphi$ accurate to $n$ bits with probability of success at least $1-\epsilon$, one has
 
-$$
-t= n+\left\lceil \log\left(1+\frac{1}{2\epsilon}\right)\right\rceil \,.
-$$ 
+$$t= n+\left\lceil \log\left(1+\frac{1}{2\epsilon}\right)\right\rceil \,.$$ 
 
 Thus, the initial state is $\left|\psi\right\rangle \otimes \left|0\right\rangle ^{\otimes t}$. We begin by applying a Hadamard transform to the first register, 
 
-$$
-\left|0\right\rangle ^{\otimes t}\mapsto\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t}-1}\left|k\right\rangle =\frac{1}{2^{t/2}}\left(\left|0\right\rangle +\left|1\right\rangle \right)^{\otimes t}\,,
-$$
+$$\left|0\right\rangle ^{\otimes t}\mapsto\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t}-1}\left|k\right\rangle =\frac{1}{2^{t/2}}\left(\left|0\right\rangle +\left|1\right\rangle \right)^{\otimes t}\,,$$
 
 followed by controlled $U^{2^j}$ gates, $j=0,...,t-1$,  on $\left|\psi\right\rangle$ as target state and the each counting qubit as control.  Using the relation
 
-$$
-U^{2^{j}}\left|\psi\right\rangle =e^{2\pi i2^{j}\varphi}\left|\psi\right\rangle \,, 
-$$
+$$U^{2^{j}}\left|\psi\right\rangle =e^{2\pi i2^{j}\varphi}\left|\psi\right\rangle \,, $$
 
 we obtain
 
-$$
-\begin{align*}
+$$\begin{align*}
 \left|\psi\right\rangle \otimes\left|0\right\rangle ^{\otimes t} & \mapsto\left|\psi\right\rangle \otimes\frac{1}{2^{t/2}}\left(\left|0\right\rangle +e^{2\pi i2^{t-1}\varphi}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i2^{t-2}\varphi}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i2^{0}\varphi}\left|1\right\rangle \right)\\
  & =\left|\psi\right\rangle \otimes\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|k\right\rangle 
 \end{align*}
-\,.
-$$
+\,.$$
 
 We can thus ignore the second register, and consider just the counting qubits. Applying the inverse discrete Fourier transformation to the first register, we obtain 
 
+$$DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|k\right\rangle \right)=\left|\tilde{\varphi}\right\rangle \,,
 $$
-DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|k\right\rangle \right)=\left|\tilde{\varphi}\right\rangle \,,
-$$
-
 where $\left|\tilde{\varphi}\right\rangle$ is the state which outputs $\varphi$ when measured with the accuracy of $t$ bits. To see this, suppose $\varphi$ can be expressed exactly with $t$ bits, 
 
-$$
-\varphi = 0.\varphi_{t-1} \varphi_{t-2} \cdots  \varphi_0 \,.
-$$
+$$\varphi = 0.\varphi_{t-1} \varphi_{t-2} \cdots  \varphi_0 \,.$$
 
 Then the first stage of the algorithm would be, ignoring the second register, 
 
-$$
-\left|0\right\rangle ^{\otimes t}\mapsto\frac{1}{2^{t/2}}\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{0}\varphi}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{1}\varphi_{0}}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{t-1}\cdots\varphi_{0}}\left|1\right\rangle \right) \,.
-$$
+$$\left|0\right\rangle ^{\otimes t}\mapsto\frac{1}{2^{t/2}}\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{0}\varphi}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{1}\varphi_{0}}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{t-1}\cdots\varphi_{0}}\left|1\right\rangle \right) \,.$$
 
 Thus, when applying the inverse discrete Fourier transformation, we would get
 
-$$
-DFT^{\dagger}\left(\frac{1}{2^{t/2}}\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{0}\varphi}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{1}\varphi_{0}}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{t-1}\cdots\varphi_{0}}\left|1\right\rangle \right)\right)=\left|\varphi_{t-1}\varphi_{t-2}\cdots\varphi_{0}\right\rangle \,,
-$$
+$$DFT^{\dagger}\left(\frac{1}{2^{t/2}}\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{0}\varphi}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{1}\varphi_{0}}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{t-1}\cdots\varphi_{0}}\left|1\right\rangle \right)\right)=\left|\varphi_{t-1}\varphi_{t-2}\cdots\varphi_{0}\right\rangle \,,$$
 
 that is, we get $\varphi$ when a measurement is made on the first register. 
 
 Let us determine the state $\left|\tilde{\varphi}\right\rangle$  explicitly. By performing an inverse discrete Fourier transformation after the first state of the algorithm, one has
 
-$$
-\begin{align*}
+$$\begin{align*}
 DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|k\right\rangle \right) & =\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}DFT^{\dagger}\left|k\right\rangle \\
  & =\frac{1}{2^{t}}\sum_{k,l=0}^{2^{t-1}}e^{\frac{2\pi ik}{2^{t}}\left(2^{t}\varphi-l\right)}\left|l\right\rangle \,.
 \end{align*}
@@ -216,8 +179,7 @@ If $2^t \varphi$ is an integer (when $\varphi$ can be expressed exactly with $t$
 
 Let us apply QPE to the simple case of estimating the phase of the unitary matrix 
 
-$$
-P\left(\lambda \right)=\left(\begin{array}{cc}
+$$P\left(\lambda \right)=\left(\begin{array}{cc}
 1 & 0\\
 0 & e^{i\lambda}
 \end{array}\right)
@@ -341,63 +303,6 @@ percent= round(abs((phi - 1/3)/(1/3))*100,2)
 print(f"varphi is off by {percent}%")
 ```
 
-Let us repeat the experiment with $t=20$
-
 ```{code-cell} ipython3
-#Let us first create a circuit based on the number of counting qubits 
 
-t=20
-
-cqbits = QuantumRegister(t, name="counting qubits")
-psi = QuantumRegister(1,name="psi")
-mbits = ClassicalRegister(t,name="classical bits")
-qpe = QuantumCircuit(cqbits,psi,mbits)
-#we initalize the state psi to |1>
-qpe.x(psi)
-#we apply the Hadamard gates to the counting qubits
-qpe.h(cqbits)
-#Now we apply the controlled Unitary gates
-
-repetitions = 1
-for counting_qubits in range(t):
-    for i in range(repetitions):
-        qpe.cp(2*np.pi/3, cqbits[counting_qubits], psi)   #we changed the controlled U
-    repetitions *= 2
-
-#now we apply the inverse DFT
-qpe.barrier()
-qpe.append(dft(t).inverse(),cqbits)
-qpe.barrier()
-#measure the counting qubits
-qpe.measure(cqbits,mbits)
-
-#qpe.draw(output="mpl",scale=0.1)
-
-#and we run the circuit
-import time
-# get the start time
-st = time.time()
-aer_sim = Aer.get_backend('aer_simulator')
-shots = 2048
-t_qpe = transpile(qpe, aer_sim)
-results = aer_sim.run(t_qpe, shots=shots).result()
-answer = results.get_counts()
-# get the end time
-et = time.time()
-
-# get the execution time
-elapsed_time = et - st
-print('Execution time:', elapsed_time, 'seconds')
-
-#calculate varphi 
-
-value = int(answer.most_frequent(),2)/(2**t)
-print(f"varphi = {value}")
-
-percent= round(abs((phi - 1/3)/(1/3))*100,5)
-print(f"varphi is off by {percent}%")
 ```
-
-
-
-

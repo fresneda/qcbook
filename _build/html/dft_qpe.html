@@ -176,6 +176,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="hybrid-hhl.html">HHL algorithm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chsh.html">The CHSH game</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chsh_test.html">The CHSH test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hawking2.html">Quantum circuit model for Blackhole evaporation</a></li>
 </ul>
 
     </div>
@@ -386,56 +387,38 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="discrete-fourier-transformation-and-quantum-phase-estimation">
 <h1>Discrete Fourier Transformation and Quantum Phase Estimation<a class="headerlink" href="#discrete-fourier-transformation-and-quantum-phase-estimation" title="Permalink to this heading">#</a></h1>
-<p>Here we implement the discrete Fourier transformation <span class="math notranslate nohighlight">\(DFT\)</span>, given by the unitary operator</p>
-<div class="math notranslate nohighlight">
-\[
-DFT\left|j\right\rangle =\frac{1}{\sqrt{N}}\sum_{k=0}^{N-1}e^{\frac{2\pi ijk}{N}}\left|k\right\rangle 
-\]</div>
+<p>Here we implement the discrete Fourier transformation <span class="math notranslate nohighlight">\(DFT\)</span>, given by the unitary operator
+$<span class="math notranslate nohighlight">\(DFT\left|j\right\rangle =\frac{1}{\sqrt{N}}\sum_{k=0}^{N-1}e^{\frac{2\pi ijk}{N}}\left|k\right\rangle \)</span>$</p>
 <p>where <span class="math notranslate nohighlight">\(\left\{ \left|0\right\rangle ,\left|1\right\rangle ,...,\left|N-1\right\rangle \right\} \)</span> is the computational basis and <span class="math notranslate nohighlight">\(N\in \mathbb{Z}_+ \,.\)</span></p>
 <p>In the following, we take <span class="math notranslate nohighlight">\(N=2^n\)</span> and the binary representations <span class="math notranslate nohighlight">\(j=j_{n-1}j_{n-2}...j_{0} = j_{n-1}2^{n-1}+j_{n-2}2^{n-2}+...+j_{0}2^0\)</span>  and <span class="math notranslate nohighlight">\(j/N = j_{n-1}2^{-1}+j_{n-2}2^{-2}+...+j_{0}2^{-n} = 0.j_{n-1}j_{n-2}...j_{0}\)</span>, where <span class="math notranslate nohighlight">\(j_i \in \{0,1\} \; \forall i\)</span>.</p>
 <p>In this way, the <span class="math notranslate nohighlight">\(DFT\)</span> operator can be equivalently defined as</p>
 <div class="math notranslate nohighlight">
-\[
-DFT\left|j_{n-1}j_{n-2}...j_{0}\right\rangle =\frac{1}{2^{n/2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{0}}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.j_{1}j_{0}}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right) \,.
-\]</div>
+\[DFT\left|j_{n-1}j_{n-2}...j_{0}\right\rangle =\frac{1}{2^{n/2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{0}}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.j_{1}j_{0}}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right) \,.\]</div>
 <p>Let us now implement this operator as a quantum circuit. In order to do so, we first explain the rationale. First, we apply a Hadamard gate to the <span class="math notranslate nohighlight">\(n\)</span>-th qubit, producing the state</p>
 <div class="math notranslate nohighlight">
-\[
-\frac{1}{\sqrt{2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}}\left|1\right\rangle \right)\left|j_{n-2}j_{n-2}...j_{0}\right\rangle 
-\]</div>
+\[\frac{1}{\sqrt{2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}}\left|1\right\rangle \right)\left|j_{n-2}j_{n-2}...j_{0}\right\rangle \]</div>
 <p>Next, we apply a succession of controlled unitary gates</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}
-U_{k}=\left(\begin{array}{cc}
+\[\begin{split}U_{k}=\left(\begin{array}{cc}
 1 &amp; 0\\
 0 &amp; e^{2\pi i/2^{k}}
-\end{array}\right)
-\end{split}\]</div>
+\end{array}\right)\end{split}\]</div>
 <p>on the target qubit <span class="math notranslate nohighlight">\(j_{n-1}\)</span> having <span class="math notranslate nohighlight">\(j_0,..,j_{n-2}\)</span>  as control qubits. For instance, the first controlled unitary operator is <span class="math notranslate nohighlight">\(U_2\)</span>, which gives the state</p>
 <div class="math notranslate nohighlight">
-\[
-\frac{1}{\sqrt{2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}}\left|1\right\rangle \right)\left|j_{n-2}j_{n-3}...j_{0}\right\rangle 
-\]</div>
+\[\frac{1}{\sqrt{2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}}\left|1\right\rangle \right)\left|j_{n-2}j_{n-3}...j_{0}\right\rangle \]</div>
 <p>Doing successive controlled operations, <span class="math notranslate nohighlight">\(U_3,U_4,...,U_n\)</span>, we arrive at</p>
 <div class="math notranslate nohighlight">
-\[
-\frac{1}{\sqrt{2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left|j_{n-2}j_{n-3}...j_{0}\right\rangle 
-\]</div>
+\[\frac{1}{\sqrt{2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left|j_{n-2}j_{n-3}...j_{0}\right\rangle \]</div>
 <p>Now we repeat this for the qubit <span class="math notranslate nohighlight">\(j_{n-2}\)</span>: first apply a Hadamard to <span class="math notranslate nohighlight">\(j_{n-2}\)</span> gate to bring the state to</p>
 <div class="math notranslate nohighlight">
-\[
-\frac{1}{2}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.j_{n-2}}\left|1\right\rangle \right)\left|j_{n-3}...j_{0}\right\rangle 
+\[\frac{1}{2}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.j_{n-2}}\left|1\right\rangle \right)\left|j_{n-3}...j_{0}\right\rangle 
 \]</div>
 <p>Then, repeated applications of the controlled unitary gates <span class="math notranslate nohighlight">\(U_2,..,U_{n-1}\)</span>  gives</p>
 <div class="math notranslate nohighlight">
-\[
-\frac{1}{2}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left|j_{n-3}...j_{0}\right\rangle 
-\]</div>
+\[\frac{1}{2}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left|j_{n-3}...j_{0}\right\rangle \]</div>
 <p>Repeating this procedure for the remaining qubits, we finally arrive at</p>
 <div class="math notranslate nohighlight">
-\[
-\frac{1}{2^{n/2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i0.j_{0}}\left|1\right\rangle \right)
-\]</div>
+\[\frac{1}{2^{n/2}}\left(\left|0\right\rangle +e^{2\pi i0.j_{n-1}j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.j_{n-2}\cdots j_{0}}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i0.j_{0}}\left|1\right\rangle \right)\]</div>
 <p>For the above expression to agree with the defintion of <span class="math notranslate nohighlight">\(DFT\)</span>, we need to reverse the order of the qubits, by performing swap operations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -496,60 +479,42 @@ U_{k}=\left(\begin{array}{cc}
 <h1>Quantum Phase Estimation<a class="headerlink" href="#quantum-phase-estimation" title="Permalink to this heading">#</a></h1>
 <p>Let <span class="math notranslate nohighlight">\(\left|\psi\right\rangle\)</span> be an eigenvector of a unitary operator <span class="math notranslate nohighlight">\(U\)</span>. Therefore the eigenvalue is a phase,</p>
 <div class="math notranslate nohighlight">
-\[
-U\left|\psi\right\rangle=e^{2\pi i\varphi}\left|\psi\right\rangle \,.
-\]</div>
+\[U\left|\psi\right\rangle=e^{2\pi i\varphi}\left|\psi\right\rangle \,.\]</div>
 <p>The Phase estimation algorithm aims at finding <span class="math notranslate nohighlight">\(\varphi\)</span>. One needs two registers, the first one with <span class="math notranslate nohighlight">\(t\)</span>
 qubits , and the second one with <span class="math notranslate nohighlight">\(k\)</span> qubits, necessary to store the state <span class="math notranslate nohighlight">\(\left|\psi\right\rangle \in \mathbb{C}_2^k\)</span>.</p>
 <p>To determine <span class="math notranslate nohighlight">\(\varphi\)</span> accurate to <span class="math notranslate nohighlight">\(n\)</span> bits with probability of success at least <span class="math notranslate nohighlight">\(1-\epsilon\)</span>, one has</p>
 <div class="math notranslate nohighlight">
-\[
-t= n+\left\lceil \log\left(1+\frac{1}{2\epsilon}\right)\right\rceil \,.
-\]</div>
+\[t= n+\left\lceil \log\left(1+\frac{1}{2\epsilon}\right)\right\rceil \,.\]</div>
 <p>Thus, the initial state is <span class="math notranslate nohighlight">\(\left|\psi\right\rangle \otimes \left|0\right\rangle ^{\otimes t}\)</span>. We begin by applying a Hadamard transform to the first register,</p>
 <div class="math notranslate nohighlight">
-\[
-\left|0\right\rangle ^{\otimes t}\mapsto\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t}-1}\left|k\right\rangle =\frac{1}{2^{t/2}}\left(\left|0\right\rangle +\left|1\right\rangle \right)^{\otimes t}\,,
-\]</div>
+\[\left|0\right\rangle ^{\otimes t}\mapsto\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t}-1}\left|k\right\rangle =\frac{1}{2^{t/2}}\left(\left|0\right\rangle +\left|1\right\rangle \right)^{\otimes t}\,,\]</div>
 <p>followed by controlled <span class="math notranslate nohighlight">\(U^{2^j}\)</span> gates, <span class="math notranslate nohighlight">\(j=0,...,t-1\)</span>,  on <span class="math notranslate nohighlight">\(\left|\psi\right\rangle\)</span> as target state and the each counting qubit as control.  Using the relation</p>
 <div class="math notranslate nohighlight">
-\[
-U^{2^{j}}\left|\psi\right\rangle =e^{2\pi i2^{j}\varphi}\left|\psi\right\rangle \,, 
-\]</div>
+\[U^{2^{j}}\left|\psi\right\rangle =e^{2\pi i2^{j}\varphi}\left|\psi\right\rangle \,, \]</div>
 <p>we obtain</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align*}
+\[\begin{split}\begin{align*}
 \left|\psi\right\rangle \otimes\left|0\right\rangle ^{\otimes t} &amp; \mapsto\left|\psi\right\rangle \otimes\frac{1}{2^{t/2}}\left(\left|0\right\rangle +e^{2\pi i2^{t-1}\varphi}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i2^{t-2}\varphi}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i2^{0}\varphi}\left|1\right\rangle \right)\\
  &amp; =\left|\psi\right\rangle \otimes\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|k\right\rangle 
 \end{align*}
-\,.
-\end{split}\]</div>
+\,.\end{split}\]</div>
 <p>We can thus ignore the second register, and consider just the counting qubits. Applying the inverse discrete Fourier transformation to the first register, we obtain</p>
 <div class="math notranslate nohighlight">
-\[
-DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|k\right\rangle \right)=\left|\tilde{\varphi}\right\rangle \,,
+\[DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|k\right\rangle \right)=\left|\tilde{\varphi}\right\rangle \,,
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(\left|\tilde{\varphi}\right\rangle\)</span> is the state which outputs <span class="math notranslate nohighlight">\(\varphi\)</span> when measured with the accuracy of <span class="math notranslate nohighlight">\(t\)</span> bits. To see this, suppose <span class="math notranslate nohighlight">\(\varphi\)</span> can be expressed exactly with <span class="math notranslate nohighlight">\(t\)</span> bits,</p>
 <div class="math notranslate nohighlight">
-\[
-\varphi = 0.\varphi_{t-1} \varphi_{t-2} \cdots  \varphi_0 \,.
-\]</div>
+\[\varphi = 0.\varphi_{t-1} \varphi_{t-2} \cdots  \varphi_0 \,.\]</div>
 <p>Then the first stage of the algorithm would be, ignoring the second register,</p>
 <div class="math notranslate nohighlight">
-\[
-\left|0\right\rangle ^{\otimes t}\mapsto\frac{1}{2^{t/2}}\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{0}\varphi}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{1}\varphi_{0}}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{t-1}\cdots\varphi_{0}}\left|1\right\rangle \right) \,.
-\]</div>
+\[\left|0\right\rangle ^{\otimes t}\mapsto\frac{1}{2^{t/2}}\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{0}\varphi}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{1}\varphi_{0}}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{t-1}\cdots\varphi_{0}}\left|1\right\rangle \right) \,.\]</div>
 <p>Thus, when applying the inverse discrete Fourier transformation, we would get</p>
 <div class="math notranslate nohighlight">
-\[
-DFT^{\dagger}\left(\frac{1}{2^{t/2}}\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{0}\varphi}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{1}\varphi_{0}}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{t-1}\cdots\varphi_{0}}\left|1\right\rangle \right)\right)=\left|\varphi_{t-1}\varphi_{t-2}\cdots\varphi_{0}\right\rangle \,,
-\]</div>
+\[DFT^{\dagger}\left(\frac{1}{2^{t/2}}\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{0}\varphi}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{1}\varphi_{0}}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{t-1}\cdots\varphi_{0}}\left|1\right\rangle \right)\right)=\left|\varphi_{t-1}\varphi_{t-2}\cdots\varphi_{0}\right\rangle \,,\]</div>
 <p>that is, we get <span class="math notranslate nohighlight">\(\varphi\)</span> when a measurement is made on the first register.</p>
 <p>Let us determine the state <span class="math notranslate nohighlight">\(\left|\tilde{\varphi}\right\rangle\)</span>  explicitly. By performing an inverse discrete Fourier transformation after the first state of the algorithm, one has</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align*}
+\[\begin{split}\begin{align*}
 DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|k\right\rangle \right) &amp; =\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}DFT^{\dagger}\left|k\right\rangle \\
  &amp; =\frac{1}{2^{t}}\sum_{k,l=0}^{2^{t-1}}e^{\frac{2\pi ik}{2^{t}}\left(2^{t}\varphi-l\right)}\left|l\right\rangle \,.
 \end{align*}
@@ -560,8 +525,7 @@ DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|
 <h1>Qiskit implementation of QPE<a class="headerlink" href="#qiskit-implementation-of-qpe" title="Permalink to this heading">#</a></h1>
 <p>Let us apply QPE to the simple case of estimating the phase of the unitary matrix</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}
-P\left(\lambda \right)=\left(\begin{array}{cc}
+\[\begin{split}P\left(\lambda \right)=\left(\begin{array}{cc}
 1 &amp; 0\\
 0 &amp; e^{i\lambda}
 \end{array}\right)
@@ -692,7 +656,7 @@ P\left(\lambda \right)=\left(\begin{array}{cc}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f803e15ad1c05592b89341b4aa64c0959416841a64987cced681e3e49af34260.png" src="_images/f803e15ad1c05592b89341b4aa64c0959416841a64987cced681e3e49af34260.png" />
+<img alt="_images/6d05bf03cf6625134d11e539f63728c5f6f33a0e3217816b32272626cd3d3f8a.png" src="_images/6d05bf03cf6625134d11e539f63728c5f6f33a0e3217816b32272626cd3d3f8a.png" />
 </div>
 </div>
 <p>We see we get a distribution of possible values for <span class="math notranslate nohighlight">\(\varphi\)</span>. It is difficult to read the picture, so let us see what was the most frequent result:</p>
@@ -720,167 +684,6 @@ P\left(\lambda \right)=\left(\begin{array}{cc}
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>varphi is off by 0.1%
-</pre></div>
-</div>
-</div>
-</div>
-<p>Let us repeat the experiment with <span class="math notranslate nohighlight">\(t=20\)</span></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Let us first create a circuit based on the number of counting qubits </span>
-
-<span class="n">t</span><span class="o">=</span><span class="mi">20</span>
-
-<span class="n">cqbits</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;counting qubits&quot;</span><span class="p">)</span>
-<span class="n">psi</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;psi&quot;</span><span class="p">)</span>
-<span class="n">mbits</span> <span class="o">=</span> <span class="n">ClassicalRegister</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;classical bits&quot;</span><span class="p">)</span>
-<span class="n">qpe</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">cqbits</span><span class="p">,</span><span class="n">psi</span><span class="p">,</span><span class="n">mbits</span><span class="p">)</span>
-<span class="c1">#we initalize the state psi to |1&gt;</span>
-<span class="n">qpe</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span>
-<span class="c1">#we apply the Hadamard gates to the counting qubits</span>
-<span class="n">qpe</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="n">cqbits</span><span class="p">)</span>
-<span class="c1">#Now we apply the controlled Unitary gates</span>
-
-<span class="n">repetitions</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="k">for</span> <span class="n">counting_qubits</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">repetitions</span><span class="p">):</span>
-        <span class="n">qpe</span><span class="o">.</span><span class="n">cp</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="n">cqbits</span><span class="p">[</span><span class="n">counting_qubits</span><span class="p">],</span> <span class="n">psi</span><span class="p">)</span>   <span class="c1">#we changed the controlled U</span>
-    <span class="n">repetitions</span> <span class="o">*=</span> <span class="mi">2</span>
-
-<span class="c1">#now we apply the inverse DFT</span>
-<span class="n">qpe</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
-<span class="n">qpe</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dft</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span><span class="n">cqbits</span><span class="p">)</span>
-<span class="n">qpe</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
-<span class="c1">#measure the counting qubits</span>
-<span class="n">qpe</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">cqbits</span><span class="p">,</span><span class="n">mbits</span><span class="p">)</span>
-
-<span class="c1">#qpe.draw(output=&quot;mpl&quot;,scale=0.1)</span>
-
-<span class="c1">#and we run the circuit</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="c1"># get the start time</span>
-<span class="n">st</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="n">aer_sim</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;aer_simulator&#39;</span><span class="p">)</span>
-<span class="n">shots</span> <span class="o">=</span> <span class="mi">2048</span>
-<span class="n">t_qpe</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qpe</span><span class="p">,</span> <span class="n">aer_sim</span><span class="p">)</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">aer_sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">t_qpe</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">shots</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-<span class="n">answer</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
-<span class="c1"># get the end time</span>
-<span class="n">et</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-
-<span class="c1"># get the execution time</span>
-<span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">et</span> <span class="o">-</span> <span class="n">st</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Execution time:&#39;</span><span class="p">,</span> <span class="n">elapsed_time</span><span class="p">,</span> <span class="s1">&#39;seconds&#39;</span><span class="p">)</span>
-
-<span class="c1">#calculate varphi </span>
-
-<span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">answer</span><span class="o">.</span><span class="n">most_frequent</span><span class="p">(),</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">t</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;varphi = </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="n">percent</span><span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">abs</span><span class="p">((</span><span class="n">phi</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;varphi is off by </span><span class="si">{</span><span class="n">percent</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">line</span> <span class="mi">36</span>
-<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="n">aer_sim</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;aer_simulator&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">35</span> <span class="n">shots</span> <span class="o">=</span> <span class="mi">2048</span>
-<span class="ne">---&gt; </span><span class="mi">36</span> <span class="n">t_qpe</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qpe</span><span class="p">,</span> <span class="n">aer_sim</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">37</span> <span class="n">results</span> <span class="o">=</span> <span class="n">aer_sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">t_qpe</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">shots</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">38</span> <span class="n">answer</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
-
-<span class="nn">File ~/qiskit/lib/python3.11/site-packages/qiskit/compiler/transpiler.py:418,</span> in <span class="ni">transpile</span><span class="nt">(circuits, backend, basis_gates, inst_map, coupling_map, backend_properties, initial_layout, layout_method, routing_method, translation_method, scheduling_method, instruction_durations, dt, approximation_degree, timing_constraints, seed_transpiler, optimization_level, callback, output_name, unitary_synthesis_method, unitary_synthesis_plugin_config, target, hls_config, init_method, optimization_method, ignore_backend_supplied_default_methods)</span>
-<span class="g g-Whitespace">    </span><span class="mi">390</span>         <span class="n">instruction_durations</span> <span class="o">=</span> <span class="n">_parse_instruction_durations</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">391</span>             <span class="n">backend</span><span class="p">,</span> <span class="n">instruction_durations</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">circuits</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">392</span>         <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">394</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">generate_preset_pass_manager</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">395</span>     <span class="n">optimization_level</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">396</span>     <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">416</span>     <span class="n">_skip_target</span><span class="o">=</span><span class="n">_skip_target</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">417</span> <span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">418</span> <span class="n">out_circuits</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">circuits</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">419</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">circ</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">output_name</span><span class="p">,</span> <span class="n">out_circuits</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">420</span>     <span class="n">circ</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-
-<span class="nn">File ~/qiskit/lib/python3.11/site-packages/qiskit/transpiler/passmanager.py:537,</span> in <span class="ni">StagedPassManager.run</span><span class="nt">(self, circuits, output_name, callback)</span>
-<span class="g g-Whitespace">    </span><span class="mi">530</span> <span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">531</span>     <span class="bp">self</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">532</span>     <span class="n">circuits</span><span class="p">:</span> <span class="n">_CircuitsT</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">533</span>     <span class="n">output_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">534</span>     <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">535</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_CircuitsT</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">536</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_update_passmanager</span><span class="p">()</span>
-<span class="ne">--&gt; </span><span class="mi">537</span>     <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">circuits</span><span class="p">,</span> <span class="n">output_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>
-
-<span class="nn">File ~/qiskit/lib/python3.11/site-packages/qiskit/transpiler/passmanager.py:233,</span> in <span class="ni">PassManager.run</span><span class="nt">(self, circuits, output_name, callback)</span>
-<span class="g g-Whitespace">    </span><span class="mi">231</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_single_circuit</span><span class="p">(</span><span class="n">circuits</span><span class="p">,</span> <span class="n">output_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">232</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">circuits</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">233</span>     <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_run_single_circuit</span><span class="p">(</span><span class="n">circuits</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">output_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">)]</span>
-<span class="g g-Whitespace">    </span><span class="mi">234</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_several_circuits</span><span class="p">(</span><span class="n">circuits</span><span class="p">,</span> <span class="n">output_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>
-
-<span class="nn">File ~/qiskit/lib/python3.11/site-packages/qiskit/transpiler/passmanager.py:292,</span> in <span class="ni">PassManager._run_single_circuit</span><span class="nt">(self, circuit, output_name, callback)</span>
-<span class="g g-Whitespace">    </span><span class="mi">280</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Run all the passes on a ``circuit``.</span>
-<span class="g g-Whitespace">    </span><span class="mi">281</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">282</span><span class="sd"> Args:</span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">289</span><span class="sd">     The transformed circuit.</span>
-<span class="g g-Whitespace">    </span><span class="mi">290</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">291</span> <span class="n">running_passmanager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_running_passmanager</span><span class="p">()</span>
-<span class="ne">--&gt; </span><span class="mi">292</span> <span class="n">result</span> <span class="o">=</span> <span class="n">running_passmanager</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">output_name</span><span class="o">=</span><span class="n">output_name</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">293</span> <span class="bp">self</span><span class="o">.</span><span class="n">property_set</span> <span class="o">=</span> <span class="n">running_passmanager</span><span class="o">.</span><span class="n">property_set</span>
-<span class="g g-Whitespace">    </span><span class="mi">294</span> <span class="k">return</span> <span class="n">result</span>
-
-<span class="nn">File ~/qiskit/lib/python3.11/site-packages/qiskit/transpiler/runningpassmanager.py:117,</span> in <span class="ni">RunningPassManager.run</span><span class="nt">(self, circuit, output_name, callback)</span>
-<span class="g g-Whitespace">    </span><span class="mi">106</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Run all the passes on a QuantumCircuit</span>
-<span class="g g-Whitespace">    </span><span class="mi">107</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">108</span><span class="sd"> Args:</span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">114</span><span class="sd">     QuantumCircuit: Transformed circuit.</span>
-<span class="g g-Whitespace">    </span><span class="mi">115</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">116</span> <span class="n">name</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">name</span>
-<span class="ne">--&gt; </span><span class="mi">117</span> <span class="n">dag</span> <span class="o">=</span> <span class="n">circuit_to_dag</span><span class="p">(</span><span class="n">circuit</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">118</span> <span class="k">del</span> <span class="n">circuit</span>
-<span class="g g-Whitespace">    </span><span class="mi">120</span> <span class="k">if</span> <span class="n">callback</span><span class="p">:</span>
-
-<span class="nn">File ~/qiskit/lib/python3.11/site-packages/qiskit/converters/circuit_to_dag.py:92,</span> in <span class="ni">circuit_to_dag</span><span class="nt">(circuit, copy_operations, qubit_order, clbit_order)</span>
-<span class="g g-Whitespace">     </span><span class="mi">90</span>     <span class="k">if</span> <span class="n">copy_operations</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">91</span>         <span class="n">op</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">92</span>     <span class="n">dagcircuit</span><span class="o">.</span><span class="n">apply_operation_back</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">instruction</span><span class="o">.</span><span class="n">qubits</span><span class="p">,</span> <span class="n">instruction</span><span class="o">.</span><span class="n">clbits</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">94</span> <span class="n">dagcircuit</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">duration</span>
-<span class="g g-Whitespace">     </span><span class="mi">95</span> <span class="n">dagcircuit</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">unit</span>
-
-<span class="nn">File ~/qiskit/lib/python3.11/site-packages/qiskit/dagcircuit/dagcircuit.py:677,</span> in <span class="ni">DAGCircuit.apply_operation_back</span><span class="nt">(self, op, qargs, cargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">671</span> <span class="c1"># Add new in-edges from predecessors of the output nodes to the</span>
-<span class="g g-Whitespace">    </span><span class="mi">672</span> <span class="c1"># operation node while deleting the old in-edges of the output nodes</span>
-<span class="g g-Whitespace">    </span><span class="mi">673</span> <span class="c1"># and adding new edges from the operation node to each output node</span>
-<span class="g g-Whitespace">    </span><span class="mi">675</span> <span class="n">al</span> <span class="o">=</span> <span class="p">[</span><span class="n">qargs</span><span class="p">,</span> <span class="n">all_cbits</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">676</span> <span class="bp">self</span><span class="o">.</span><span class="n">_multi_graph</span><span class="o">.</span><span class="n">insert_node_on_in_edges_multiple</span><span class="p">(</span>
-<span class="ne">--&gt; </span><span class="mi">677</span>     <span class="n">node_index</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">output_map</span><span class="p">[</span><span class="n">q</span><span class="p">]</span><span class="o">.</span><span class="n">_node_id</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">al</span><span class="p">)]</span>
-<span class="g g-Whitespace">    </span><span class="mi">678</span> <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">679</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_multi_graph</span><span class="p">[</span><span class="n">node_index</span><span class="p">]</span>
-
-<span class="nn">File ~/qiskit/lib/python3.11/site-packages/qiskit/dagcircuit/dagcircuit.py:677,</span> in <span class="ni">&lt;listcomp&gt;</span><span class="nt">(.0)</span>
-<span class="g g-Whitespace">    </span><span class="mi">671</span> <span class="c1"># Add new in-edges from predecessors of the output nodes to the</span>
-<span class="g g-Whitespace">    </span><span class="mi">672</span> <span class="c1"># operation node while deleting the old in-edges of the output nodes</span>
-<span class="g g-Whitespace">    </span><span class="mi">673</span> <span class="c1"># and adding new edges from the operation node to each output node</span>
-<span class="g g-Whitespace">    </span><span class="mi">675</span> <span class="n">al</span> <span class="o">=</span> <span class="p">[</span><span class="n">qargs</span><span class="p">,</span> <span class="n">all_cbits</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">676</span> <span class="bp">self</span><span class="o">.</span><span class="n">_multi_graph</span><span class="o">.</span><span class="n">insert_node_on_in_edges_multiple</span><span class="p">(</span>
-<span class="ne">--&gt; </span><span class="mi">677</span>     <span class="n">node_index</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">output_map</span><span class="p">[</span><span class="n">q</span><span class="p">]</span><span class="o">.</span><span class="n">_node_id</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">al</span><span class="p">)]</span>
-<span class="g g-Whitespace">    </span><span class="mi">678</span> <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">679</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_multi_graph</span><span class="p">[</span><span class="n">node_index</span><span class="p">]</span>
-
-<span class="nn">File ~/qiskit/lib/python3.11/site-packages/qiskit/circuit/bit.py:113,</span> in <span class="ni">Bit.__hash__</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">110</span>         <span class="k">return</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">111</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repr</span>
-<span class="ne">--&gt; </span><span class="mi">113</span> <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">114</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hash</span>
-<span class="g g-Whitespace">    </span><span class="mi">116</span> <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>

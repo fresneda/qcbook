@@ -67,6 +67,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'chsh_test';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Quantum circuit model for Blackhole evaporation" href="hawking2.html" />
     <link rel="prev" title="The CHSH game" href="chsh.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -175,6 +176,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="hybrid-hhl.html">HHL algorithm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chsh.html">The CHSH game</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">The CHSH test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hawking2.html">Quantum circuit model for Blackhole evaporation</a></li>
 </ul>
 
     </div>
@@ -388,7 +390,7 @@ properties of the particles, <span class="math notranslate nohighlight">\(a_{0}\
 and so forth, so that measurements of these properties always result in
 <span class="math notranslate nohighlight">\(\pm1\)</span>. Now consider the combination</p>
 <div class="math notranslate nohighlight" id="equation-combination">
-<span class="eqno">(10)<a class="headerlink" href="#equation-combination" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(12)<a class="headerlink" href="#equation-combination" title="Permalink to this equation">#</a></span>\[
 C=a_{0}b_{0}+a_{0}b_{1}+a_{1}b_{0}-a_{1}b_{1}=\left(a_{0}+a_{1}\right)b_{0}+\left(a_{0}-a_{1}\right)b_{1}\,.
 \]</div>
 <p>Note that if <span class="math notranslate nohighlight">\(a_{0}\)</span> and <span class="math notranslate nohighlight">\(a_{1}\)</span> have equal values, for instance,
@@ -399,7 +401,7 @@ the combination <span class="math notranslate nohighlight">\(C\)</span> is again
 <p>Now each time Alice and Bob receive their particle, they perform an
 experiment, which is one of the measurements we described. After
 repeating this experiment many times, the average value of the
-combination <a class="reference internal" href="#equation-combination">(10)</a>  will be less than <span class="math notranslate nohighlight">\(2\)</span>, and it is the sum of
+combination <a class="reference internal" href="#equation-combination">(12)</a>  will be less than <span class="math notranslate nohighlight">\(2\)</span>, and it is the sum of
 the average values of each term,</p>
 <div class="math notranslate nohighlight">
 \[
@@ -410,18 +412,18 @@ the average values of each term,</p>
 the CHSH inequality. Let us briefly state the main arguments. This time
 Alice and Bob are given each a qubit which belong to an entangled pair</p>
 <div class="math notranslate nohighlight" id="equation-bell-state">
-<span class="eqno">(11)<a class="headerlink" href="#equation-bell-state" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(13)<a class="headerlink" href="#equation-bell-state" title="Permalink to this equation">#</a></span>\[
 \psi=\frac{1}{\sqrt{2}}\left(\left|00\right\rangle +\left|11\right\rangle \right)
 \]</div>
 <p>And they can perform on their qubit one of two operations, as before.
 These operations correspond to unitary hermitian operations acting on a
-qubit. The analog of the combination <a class="reference internal" href="#equation-combination">(10)</a> is the two-qubit operator</p>
+qubit. The analog of the combination <a class="reference internal" href="#equation-combination">(12)</a> is the two-qubit operator</p>
 <div class="math notranslate nohighlight">
 \[
 T=A_{0}\otimes B_{0}+A_{0}\otimes B_{1}+A_{1}\otimes B_{0}-A_{1}\otimes B_{1}
 \]</div>
 <p>We showed that the average value of this operator with respect to the
-Bell state <a class="reference internal" href="#equation-bell-state">(11)</a>  is</p>
+Bell state <a class="reference internal" href="#equation-bell-state">(13)</a>  is</p>
 <div class="math notranslate nohighlight">
 \[
 \left\langle T\right\rangle _{\psi}\leq2\sqrt{2}\,,
@@ -520,7 +522,11 @@ variables hypothesis.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; Job ID: cme13newq3k0008szmk0
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/fresneda/qiskit/lib/python3.11/site-packages/qiskit_ibm_runtime/qiskit_runtime_service.py:994: UserWarning: The backend ibm_lagos currently has a status of dedicated.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; Job ID: cmg6kyqdyqh0008rscmg
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; Job Status: JobStatus.QUEUED
@@ -566,7 +572,7 @@ variables hypothesis.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The experiment violates the CHSH inequality by 0.4006911557383792
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The experiment violates the CHSH inequality by 0.3767145006894097
 </pre></div>
 </div>
 </div>
@@ -611,6 +617,15 @@ variables hypothesis.</p>
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">The CHSH game</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="hawking2.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Quantum circuit model for Blackhole evaporation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

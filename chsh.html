@@ -176,6 +176,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="hybrid-hhl.html">HHL algorithm</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">The CHSH game</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chsh_test.html">The CHSH test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hawking2.html">Quantum circuit model for Blackhole evaporation</a></li>
 </ul>
 
     </div>
@@ -384,7 +385,7 @@ answer is <span class="math notranslate nohighlight">\(a\in\{0,1\}\)</span>. Lik
 <span class="math notranslate nohighlight">\(y\in\{0,1\}\)</span> and his answer is <span class="math notranslate nohighlight">\(b\in\{0,1\}\)</span>. They win the CHSH game if
 the following rule is satisfied:</p>
 <div class="math notranslate nohighlight" id="equation-chsh-rule">
-<span class="eqno">(4)<a class="headerlink" href="#equation-chsh-rule" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(6)<a class="headerlink" href="#equation-chsh-rule" title="Permalink to this equation">#</a></span>\[
 x\wedge y=a\oplus b
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(\wedge\)</span> is the logical conjunction and <span class="math notranslate nohighlight">\(\oplus\)</span> is the logical disjunction
@@ -425,7 +426,7 @@ most <span class="math notranslate nohighlight">\(\frac{1}{2}+\frac{\sqrt{2}}{2}
 first explain what we mean by a quantum strategy.</p>
 <p>Before the game starts, Alice and Bob prepare the Bell state</p>
 <div class="math notranslate nohighlight" id="equation-bell-state">
-<span class="eqno">(5)<a class="headerlink" href="#equation-bell-state" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(7)<a class="headerlink" href="#equation-bell-state" title="Permalink to this equation">#</a></span>\[
 \psi=\frac{1}{\sqrt{2}}\left(\left|00\right\rangle +\left|11\right\rangle \right)
 \]</div>
 <p>and each gets one qubit. For the sake of definiteness, let’s say Bob
@@ -439,7 +440,7 @@ in the standard computational basis. In terms of these quantities, the
 success rate of the CHSH game for a given choice
 <span class="math notranslate nohighlight">\(S=\left\{ A_{x},B_{y},\psi\right\}\)</span> can be written as</p>
 <div class="math notranslate nohighlight" id="equation-success">
-<span class="eqno">(6)<a class="headerlink" href="#equation-success" title="Permalink to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(8)<a class="headerlink" href="#equation-success" title="Permalink to this equation">#</a></span>\[\begin{split}
 \begin{aligned}
 \omega_{CHSH} &amp; =\frac{1}{8}\sum_{x,y\in\left\{ 0,1\right\} }\left(-1\right)^{x\wedge y}\left\langle A_{x}\otimes B_{y}\right\rangle _{\psi}+\frac{1}{2}\nonumber \\
  &amp; =\frac{1}{8}\left(\left\langle A_{0}\otimes B_{0}\right\rangle _{\psi}+\left\langle A_{0}\otimes B_{1}\right\rangle _{\psi}+\left\langle A_{1}\otimes B_{0}\right\rangle _{\psi}-\left\langle A_{1}\otimes B_{1}\right\rangle _{\psi}\right)+\frac{1}{2}\end{aligned}
@@ -449,7 +450,7 @@ expectation values of possible outcomes, in other words, let us examine
 the expectation values
 <span class="math notranslate nohighlight">\(\left\langle A_{x}\otimes B_{y}\right\rangle _{\psi}\)</span> (the subindex
 <span class="math notranslate nohighlight">\(\psi\)</span> just means that the average value is taken with respect to the
-Bell state <a class="reference internal" href="chsh_test.html#equation-bell-state">(11)</a>. Since <span class="math notranslate nohighlight">\(A_{x}\)</span> and <span class="math notranslate nohighlight">\(B_{y}\)</span> are hermitian
+Bell state <a class="reference internal" href="chsh_test.html#equation-bell-state">(13)</a>. Since <span class="math notranslate nohighlight">\(A_{x}\)</span> and <span class="math notranslate nohighlight">\(B_{y}\)</span> are hermitian
 unitary operators, and therefore square to the identity,
 <span class="math notranslate nohighlight">\(A_{x}^{2}=B_{x}^{2}=\mathbb{I}\)</span>, we have that the square of</p>
 <div class="math notranslate nohighlight">
@@ -487,9 +488,9 @@ Therefore, we have that</p>
 \left\langle T\right\rangle _{\psi}\leq2\sqrt{2}
 \]</div>
 <p>Using this last
-result in success rate <span class="math notranslate nohighlight">\(\omega_{CHSH}\)</span> given in <a class="reference internal" href="#equation-success">(6)</a>, we get the bound</p>
+result in success rate <span class="math notranslate nohighlight">\(\omega_{CHSH}\)</span> given in <a class="reference internal" href="#equation-success">(8)</a>, we get the bound</p>
 <div class="math notranslate nohighlight" id="equation-success-rate">
-<span class="eqno">(7)<a class="headerlink" href="#equation-success-rate" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(9)<a class="headerlink" href="#equation-success-rate" title="Permalink to this equation">#</a></span>\[
 \omega_{CHSH}=\frac{1}{8}\left\langle T\right\rangle _{\psi}+\frac{1}{2}\leq\frac{\sqrt{2}+2}{4}\approx85\%\,.
 \]</div>
 <p>Now let us go back to the problem at hand and figure out what the
@@ -539,7 +540,7 @@ prob\left(a=b\right) &amp; =\frac{1}{2}\left|\left(\cos\frac{\theta_{a}}{2}\cos\
  &amp; =\left(\cos\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}\right)^{2}+2\left(\sin\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}\right)^{2}+2\cos\left(\phi_{a}+\phi_{b}\right)\sin\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}\cos\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}\end{aligned}\end{split}\]</div>
 <p>For <span class="math notranslate nohighlight">\(\cos\left(\phi_{a}+\phi_{b}\right)=1\)</span>, this reduces to</p>
 <div class="math notranslate nohighlight" id="equation-a">
-<span class="eqno">(8)<a class="headerlink" href="#equation-a" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(10)<a class="headerlink" href="#equation-a" title="Permalink to this equation">#</a></span>\[
 prob\left(a=b\right)=\left(\cos\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}+\sin\frac{\theta_{a}}{2}\sin\frac{\theta_{b}}{2}\right)^{2}=\cos^{2}\left(\frac{\theta_{a}-\theta_{b}}{2}\right)\,.
 \]</div>
 <p>The probability that Alice’s and Bob’s measurements have a differing
@@ -553,7 +554,7 @@ prob\left(a\neq b\right) &amp; =\frac{1}{2}\left|\cos\frac{\theta_{a}}{2}\sin\fr
 \end{split}\]</div>
 <p>For <span class="math notranslate nohighlight">\(\cos\left(\phi_{a}+\phi_{b}\right)=1\)</span>, this reduces to</p>
 <div class="math notranslate nohighlight" id="equation-anotb">
-<span class="eqno">(9)<a class="headerlink" href="#equation-anotb" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(11)<a class="headerlink" href="#equation-anotb" title="Permalink to this equation">#</a></span>\[
 prob\left(a\neq b\right)=\left(\sin\frac{\theta_{a}}{2}\cos\frac{\theta_{b}}{2}-\sin\frac{\theta_{b}}{2}\cos\frac{\theta_{a}}{2}\right)^{2}=\sin^{2}\left(\frac{\theta_{a}-\theta_{b}}{2}\right)\,
 \]</div>
 <p>For the sake of simplicity, we shall assume <span class="math notranslate nohighlight">\(\phi_{a}=\phi_{b}=0\)</span>, so
@@ -570,8 +571,8 @@ the appropriate operations that Alice and Bob must perform to increase
 the likelihood of success. Suppose they are given the pair
 <span class="math notranslate nohighlight">\(\left(x,y\right)=\left(0,0\right)\)</span>. In order to win the game, they must
 choose their bits so that <span class="math notranslate nohighlight">\(a=b\)</span>. The highest chance of success is given
-by expression <a class="reference internal" href="#equation-success-rate">(7)</a>, so let us equate <a class="reference internal" href="#equation-a">(8)</a>  with
-<a class="reference internal" href="#equation-anotb">(9)</a>:
+by expression <a class="reference internal" href="#equation-success-rate">(9)</a>, so let us equate <a class="reference internal" href="#equation-a">(10)</a>  with
+<a class="reference internal" href="#equation-anotb">(11)</a>:
 <span class="math notranslate nohighlight">\(\cos^{2}\alpha=\frac{\sqrt{2}+2}{4}\Leftrightarrow\cos2\alpha=\frac{\sqrt{2}}{2}\)</span>.
 So <span class="math notranslate nohighlight">\(\alpha=\frac{\pi}{8}\)</span> or <span class="math notranslate nohighlight">\(\alpha=-\frac{\pi}{8}\)</span>. Since
 <span class="math notranslate nohighlight">\(\alpha=\frac{\theta_{a}-\theta_{b}}{2}\)</span>, a possible choice is
@@ -738,7 +739,7 @@ so <span class="math notranslate nohighlight">\(\alpha=\pm\frac{3\pi}{4}\)</span
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fraction of games won: 0.851
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fraction of games won: 0.83
 </pre></div>
 </div>
 </div>

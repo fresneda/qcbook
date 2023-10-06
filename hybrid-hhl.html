@@ -176,6 +176,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">HHL algorithm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chsh.html">The CHSH game</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chsh_test.html">The CHSH test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hawking2.html">Quantum circuit model for Blackhole evaporation</a></li>
 </ul>
 
     </div>
@@ -391,7 +392,7 @@ document.write(`
 <p>We will discuss a hybrid classical-quantum algorithm to solve the linear
 system of equations</p>
 <div class="math notranslate nohighlight" id="equation-linear-sys">
-<span class="eqno">(1)<a class="headerlink" href="#equation-linear-sys" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(3)<a class="headerlink" href="#equation-linear-sys" title="Permalink to this equation">#</a></span>\[
 Ax=b
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(A\in\mathcal{M}_{N}\left(\mathbb{C}\right)\)</span> is a complex matrix of
@@ -443,9 +444,9 @@ A^{-1}=\sum_{i=0}^{N-1}\lambda_{i}^{-1}\left|v_{i}\right\rangle \left\langle v_{
 \[
 b=\sum_{i=0}^{N-1}b_{i}\left|v_{i}\right\rangle
 \]</div>
-<p>the solution to the system <a class="reference internal" href="#equation-linear-sys">(1)</a> is given by</p>
+<p>the solution to the system <a class="reference internal" href="#equation-linear-sys">(3)</a> is given by</p>
 <div class="math notranslate nohighlight" id="equation-solution">
-<span class="eqno">(2)<a class="headerlink" href="#equation-solution" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(4)<a class="headerlink" href="#equation-solution" title="Permalink to this equation">#</a></span>\[
 x=A^{-1}b=\sum_{i=0}^{N-1}\frac{b_{i}}{\lambda_{i}}v_{i}
 \]</div>
 <p>Thus, the problem of finding the solution of <span class="math notranslate nohighlight">\(Ax=b\)</span> reduces to the
@@ -518,7 +519,7 @@ are the <span class="math notranslate nohighlight">\(\tilde{\lambda}\)</span> ro
 \]</div>
 <p>The last determinant tells us that</p>
 <div class="math notranslate nohighlight" id="equation-eigenvalue">
-<span class="eqno">(3)<a class="headerlink" href="#equation-eigenvalue" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(5)<a class="headerlink" href="#equation-eigenvalue" title="Permalink to this equation">#</a></span>\[
 \lambda=\frac{\tilde{\lambda}}{\Omega}-\omega\Leftrightarrow\tilde{\lambda}=\Omega\left(\omega+\lambda\right)
 \]</div>
 <p>are the eigenvalues of <span class="math notranslate nohighlight">\(A\)</span>, so we find a relation between the spectrum
@@ -574,13 +575,13 @@ belonging to <span class="math notranslate nohighlight">\(\tilde{\lambda}\)</spa
 x=A^{-1}b=\sum_{i}\frac{b_{i}}{\lambda_{i}}\left|v_{i}\right\rangle
 \]</div>
 <p>by simple replacement of each <span class="math notranslate nohighlight">\(\tilde{\lambda}_{i}\)</span> for <span class="math notranslate nohighlight">\(\lambda_{i}\)</span>,
-according to <a class="reference internal" href="#equation-eigenvalue">(3)</a>.</p>
+according to <a class="reference internal" href="#equation-eigenvalue">(5)</a>.</p>
 </section>
 <hr class="docutils" />
 <section id="hybrid-hhl">
 <h2>Hybrid HHL<a class="headerlink" href="#hybrid-hhl" title="Permalink to this heading">#</a></h2>
 <p>Suppose all the necessary pre-processing has been deatlt with, and we
-are to apply HHL to the linear system <a class="reference internal" href="#equation-linear-sys">(1)</a>
+are to apply HHL to the linear system <a class="reference internal" href="#equation-linear-sys">(3)</a>
 where <span class="math notranslate nohighlight">\(A\)</span> is an hermitian matrix of order
 <span class="math notranslate nohighlight">\(2^{n}\)</span>, whose eigenvalues lie in the interval <span class="math notranslate nohighlight">\(\left(0,1\right]\)</span>.</p>
 <p>Since we can only implement unitary transformations, we consider instead
@@ -613,7 +614,7 @@ integer. If we apply QPE to the state
 <p>where <span class="math notranslate nohighlight">\(\tilde{\lambda}_{i}\)</span> is the <span class="math notranslate nohighlight">\(t\)</span>-bit approximation for the
 eigenvalue <span class="math notranslate nohighlight">\(\lambda_{i}\)</span>.</p>
 <p>The next step is to get the reciprocals of the eigenvalues, which appear
-in the solution of the linear system <a class="reference internal" href="#equation-solution">(2)</a>. The idea is to introduce an auxiliar qubit
+in the solution of the linear system <a class="reference internal" href="#equation-solution">(4)</a>. The idea is to introduce an auxiliar qubit
 <span class="math notranslate nohighlight">\(\left|0\right\rangle\)</span> and perform a <span class="math notranslate nohighlight">\(y\)</span>-rotation <span class="math notranslate nohighlight">\(R_{y}\)</span> by an
 appropriate angle <span class="math notranslate nohighlight">\(\theta\)</span>. Since</p>
 <div class="math notranslate nohighlight">
@@ -812,7 +813,7 @@ and to calculate the eigenvalues of <span class="math notranslate nohighlight">\
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7f40d177c070&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7fcf401642e0&gt;
 </pre></div>
 </div>
 </div>
@@ -832,7 +833,7 @@ of the eigenvectors of the shifted operator.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/dfae92c85a01b42332a0124729ef73dfbe779c9ea8cb25f0095637f077549407.png" src="_images/dfae92c85a01b42332a0124729ef73dfbe779c9ea8cb25f0095637f077549407.png" />
+<img alt="_images/f3bdce840ec00bae2398759533f8162e1970d7a816c493511b4d3e9262d439c3.png" src="_images/f3bdce840ec00bae2398759533f8162e1970d7a816c493511b4d3e9262d439c3.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -897,7 +898,7 @@ the qubits which encode the rotation angles <span class="math notranslate nohigh
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7f40cb7b4610&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7fcf397d43a0&gt;
 </pre></div>
 </div>
 </div>
@@ -918,7 +919,7 @@ the qubits which encode the rotation angles <span class="math notranslate nohigh
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a2e5eaca9911645597d4f6ac7ae8c30104ddb09cce5a027fdc68d279c1189930.png" src="_images/a2e5eaca9911645597d4f6ac7ae8c30104ddb09cce5a027fdc68d279c1189930.png" />
+<img alt="_images/4f1eb3e5bba8c2834f8d44146506129b549122342214a9bfb28cfde76ffd9f00.png" src="_images/4f1eb3e5bba8c2834f8d44146506129b549122342214a9bfb28cfde76ffd9f00.png" />
 </div>
 </div>
 <p>The histogram is expected, since the eigenvalues of the H matrix are close to <span class="math notranslate nohighlight">\(\pm\)</span> and <span class="math notranslate nohighlight">\(\Lambda\)</span> is then close to <span class="math notranslate nohighlight">\(-1\)</span>.

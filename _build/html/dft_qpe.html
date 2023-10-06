@@ -488,19 +488,20 @@ qubits , and the second one with <span class="math notranslate nohighlight">\(k\
 <p>Thus, the initial state is <span class="math notranslate nohighlight">\(\left|\psi\right\rangle \otimes \left|0\right\rangle ^{\otimes t}\)</span>. We begin by applying a Hadamard transform to the first register,</p>
 <div class="math notranslate nohighlight">
 \[\left|0\right\rangle ^{\otimes t}\mapsto\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t}-1}\left|k\right\rangle =\frac{1}{2^{t/2}}\left(\left|0\right\rangle +\left|1\right\rangle \right)^{\otimes t}\,,\]</div>
-<p>followed by controlled <span class="math notranslate nohighlight">\(U^{2^j}\)</span> gates, <span class="math notranslate nohighlight">\(j=0,...,t-1\)</span>,  on <span class="math notranslate nohighlight">\(\left|\psi\right\rangle\)</span> as target state and the each counting qubit as control.  Using the relation</p>
+<p>followed by controlled <span class="math notranslate nohighlight">\(U^{2^j}\)</span> gates, <span class="math notranslate nohighlight">\(j=0,...,t-1\)</span>,  on <span class="math notranslate nohighlight">\(\left|\psi\right\rangle\)</span> as target state and each counting qubit as control.  Using the relation</p>
 <div class="math notranslate nohighlight">
 \[U^{2^{j}}\left|\psi\right\rangle =e^{2\pi i2^{j}\varphi}\left|\psi\right\rangle \,, \]</div>
 <p>we obtain</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{align*}
+<div class="math notranslate nohighlight" id="equation-controlled-rotations">
+<span class="eqno">(1)<a class="headerlink" href="#equation-controlled-rotations" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{align*}
 \left|\psi\right\rangle \otimes\left|0\right\rangle ^{\otimes t} &amp; \mapsto\left|\psi\right\rangle \otimes\frac{1}{2^{t/2}}\left(\left|0\right\rangle +e^{2\pi i2^{t-1}\varphi}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i2^{t-2}\varphi}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i2^{0}\varphi}\left|1\right\rangle \right)\\
  &amp; =\left|\psi\right\rangle \otimes\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|k\right\rangle 
 \end{align*}
 \,.\end{split}\]</div>
 <p>We can thus ignore the second register, and consider just the counting qubits. Applying the inverse discrete Fourier transformation to the first register, we obtain</p>
-<div class="math notranslate nohighlight">
-\[DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|k\right\rangle \right)=\left|\tilde{\varphi}\right\rangle \,,
+<div class="math notranslate nohighlight" id="equation-phi-tilde">
+<span class="eqno">(2)<a class="headerlink" href="#equation-phi-tilde" title="Permalink to this equation">#</a></span>\[
+DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|k\right\rangle \right)=\left|\tilde{\varphi}\right\rangle \,,
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(\left|\tilde{\varphi}\right\rangle\)</span> is the state which outputs <span class="math notranslate nohighlight">\(\varphi\)</span> when measured with the accuracy of <span class="math notranslate nohighlight">\(t\)</span> bits. To see this, suppose <span class="math notranslate nohighlight">\(\varphi\)</span> can be expressed exactly with <span class="math notranslate nohighlight">\(t\)</span> bits,</p>
 <div class="math notranslate nohighlight">
@@ -512,7 +513,7 @@ qubits , and the second one with <span class="math notranslate nohighlight">\(k\
 <div class="math notranslate nohighlight">
 \[DFT^{\dagger}\left(\frac{1}{2^{t/2}}\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{0}\varphi}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{1}\varphi_{0}}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i0.\varphi_{t-1}\cdots\varphi_{0}}\left|1\right\rangle \right)\right)=\left|\varphi_{t-1}\varphi_{t-2}\cdots\varphi_{0}\right\rangle \,,\]</div>
 <p>that is, we get <span class="math notranslate nohighlight">\(\varphi\)</span> when a measurement is made on the first register.</p>
-<p>Let us determine the state <span class="math notranslate nohighlight">\(\left|\tilde{\varphi}\right\rangle\)</span>  explicitly. By performing an inverse discrete Fourier transformation after the first state of the algorithm, one has</p>
+<p>Let us determine the state <span class="math notranslate nohighlight">\(\left|\tilde{\varphi}\right\rangle\)</span>  explicitly. By performing an inverse discrete Fourier transformation to the first register in <a class="reference internal" href="#equation-controlled-rotations">(1)</a>, one has</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
 DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|k\right\rangle \right) &amp; =\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}DFT^{\dagger}\left|k\right\rangle \\
@@ -553,7 +554,7 @@ DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1803a20d630ea96c879d0118300a940983ab65a0e804c067316714b860c44f86.png" src="_images/1803a20d630ea96c879d0118300a940983ab65a0e804c067316714b860c44f86.png" />
+<img alt="_images/5e06fbf28f912fbd1d32f9541643d2402a38a4b89736dac7dfaa04c32fe309e4.png" src="_images/5e06fbf28f912fbd1d32f9541643d2402a38a4b89736dac7dfaa04c32fe309e4.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -571,7 +572,7 @@ DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0165ad6822926db1cf4af943a9c2dc497139b16de3772e2d032b18fe00552acb.png" src="_images/0165ad6822926db1cf4af943a9c2dc497139b16de3772e2d032b18fe00552acb.png" />
+<img alt="_images/58b3d4e6abf585b69e82b52ea1d3079d27b4cbc2c4f42d6fb25642bfa5f12406.png" src="_images/58b3d4e6abf585b69e82b52ea1d3079d27b4cbc2c4f42d6fb25642bfa5f12406.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -587,7 +588,7 @@ DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a4cb522bdf073fbc863e4df1e73a2ee2f799ee46f24002bd12b2ef3a8cd69757.png" src="_images/a4cb522bdf073fbc863e4df1e73a2ee2f799ee46f24002bd12b2ef3a8cd69757.png" />
+<img alt="_images/12557b581972c12092f756dd18c85b2c5a27449b35bbd391bf6d4e4b64e37457.png" src="_images/12557b581972c12092f756dd18c85b2c5a27449b35bbd391bf6d4e4b64e37457.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -607,7 +608,7 @@ DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7f7c9ee3e156babdd0b3c9c30cbb1a7186b2127f44e5a18096d4370e40691ab6.png" src="_images/7f7c9ee3e156babdd0b3c9c30cbb1a7186b2127f44e5a18096d4370e40691ab6.png" />
+<img alt="_images/f2df84b86d5d56d74eb84d9059c1c425867ca16a6989c01b958d0754392f5ab5.png" src="_images/f2df84b86d5d56d74eb84d9059c1c425867ca16a6989c01b958d0754392f5ab5.png" />
 </div>
 </div>
 <p>The measured state is <span class="math notranslate nohighlight">\(\left|001\right\rangle\)</span>, which corresponds to <span class="math notranslate nohighlight">\(\varphi = 0\times2^{-1}+0\times2^{-2}+1\times2^{-3}=1/8\)</span>, as expected.</p>
@@ -656,7 +657,7 @@ DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6d05bf03cf6625134d11e539f63728c5f6f33a0e3217816b32272626cd3d3f8a.png" src="_images/6d05bf03cf6625134d11e539f63728c5f6f33a0e3217816b32272626cd3d3f8a.png" />
+<img alt="_images/bbc06338bf08df419dfb80d202fef3afd100115ccb34514786ec7fcc6679975a.png" src="_images/bbc06338bf08df419dfb80d202fef3afd100115ccb34514786ec7fcc6679975a.png" />
 </div>
 </div>
 <p>We see we get a distribution of possible values for <span class="math notranslate nohighlight">\(\varphi\)</span>. It is difficult to read the picture, so let us see what was the most frequent result:</p>

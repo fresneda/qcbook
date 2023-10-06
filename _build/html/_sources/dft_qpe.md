@@ -133,7 +133,7 @@ Thus, the initial state is $\left|\psi\right\rangle \otimes \left|0\right\rangle
 
 $$\left|0\right\rangle ^{\otimes t}\mapsto\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t}-1}\left|k\right\rangle =\frac{1}{2^{t/2}}\left(\left|0\right\rangle +\left|1\right\rangle \right)^{\otimes t}\,,$$
 
-followed by controlled $U^{2^j}$ gates, $j=0,...,t-1$,  on $\left|\psi\right\rangle$ as target state and the each counting qubit as control.  Using the relation
+followed by controlled $U^{2^j}$ gates, $j=0,...,t-1$,  on $\left|\psi\right\rangle$ as target state and each counting qubit as control.  Using the relation
 
 $$U^{2^{j}}\left|\psi\right\rangle =e^{2\pi i2^{j}\varphi}\left|\psi\right\rangle \,, $$
 
@@ -143,12 +143,13 @@ $$\begin{align*}
 \left|\psi\right\rangle \otimes\left|0\right\rangle ^{\otimes t} & \mapsto\left|\psi\right\rangle \otimes\frac{1}{2^{t/2}}\left(\left|0\right\rangle +e^{2\pi i2^{t-1}\varphi}\left|1\right\rangle \right)\left(\left|0\right\rangle +e^{2\pi i2^{t-2}\varphi}\left|1\right\rangle \right)\cdots\left(\left|0\right\rangle +e^{2\pi i2^{0}\varphi}\left|1\right\rangle \right)\\
  & =\left|\psi\right\rangle \otimes\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|k\right\rangle 
 \end{align*}
-\,.$$
+\,.$$(controlled-rotations)
 
 We can thus ignore the second register, and consider just the counting qubits. Applying the inverse discrete Fourier transformation to the first register, we obtain 
 
-$$DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|k\right\rangle \right)=\left|\tilde{\varphi}\right\rangle \,,
 $$
+DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|k\right\rangle \right)=\left|\tilde{\varphi}\right\rangle \,,
+$$(phi-tilde)
 where $\left|\tilde{\varphi}\right\rangle$ is the state which outputs $\varphi$ when measured with the accuracy of $t$ bits. To see this, suppose $\varphi$ can be expressed exactly with $t$ bits, 
 
 $$\varphi = 0.\varphi_{t-1} \varphi_{t-2} \cdots  \varphi_0 \,.$$
@@ -163,7 +164,7 @@ $$DFT^{\dagger}\left(\frac{1}{2^{t/2}}\left(\left|0\right\rangle +e^{2\pi i0.\va
 
 that is, we get $\varphi$ when a measurement is made on the first register. 
 
-Let us determine the state $\left|\tilde{\varphi}\right\rangle$  explicitly. By performing an inverse discrete Fourier transformation after the first state of the algorithm, one has
+Let us determine the state $\left|\tilde{\varphi}\right\rangle$  explicitly. By performing an inverse discrete Fourier transformation to the first register in {eq}``controlled-rotations``, one has
 
 $$\begin{align*}
 DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|k\right\rangle \right) & =\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}DFT^{\dagger}\left|k\right\rangle \\

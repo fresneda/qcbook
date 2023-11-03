@@ -506,36 +506,30 @@ norm, such as the maximum absolute row sum,</p>
 \rho\equiv\left\Vert A\right\Vert _{\infty}=\max_{1\leq i\leq N}\left\{ \sum_{j=1}^{N}\left|a_{ij}\right|\right\}
 \]</div>
 <p>so that <span class="math notranslate nohighlight">\(spec\left(A\right)=\left[\lambda_{min},\lambda_{max}\right]\subset\left[-\rho,\rho\right]\)</span>.
-Consider the matrix</p>
+Consider the matrix $<span class="math notranslate nohighlight">\(\tilde{A}=\kappa I+\omega A\)</span><span class="math notranslate nohighlight">\( where \)</span>\kappa<span class="math notranslate nohighlight">\( and
+\)</span>\omega&gt;0<span class="math notranslate nohighlight">\( are real numbers. The eigenvalues of \)</span>\tilde{A}<span class="math notranslate nohighlight">\( are the
+\)</span>\tilde{\lambda}$ roots of the characteristic polynomial</p>
 <div class="math notranslate nohighlight">
 \[
-\tilde{A}=\Omega\left(A+\omega I\right)
+\det\left(\tilde{A}-\tilde{\lambda}I\right)=\det\left(\omega A+\kappa I-\tilde{\lambda}I\right)=\omega^{N}\det\left(A-\frac{1}{\omega}\left(\tilde{\lambda}-\kappa\right)I\right)\,.
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(\Omega&gt;0\)</span> and <span class="math notranslate nohighlight">\(\omega\)</span> are real numbers. The eigenvalues of <span class="math notranslate nohighlight">\(\tilde{A}\)</span>
-are the <span class="math notranslate nohighlight">\(\tilde{\lambda}\)</span> roots of the characteristic polynomial</p>
-<div class="math notranslate nohighlight">
-\[
-\det\left(\tilde{A}-\tilde{\lambda}I\right)=\det\left(\Omega\left(A+\omega I\right)-\tilde{\lambda}I\right)=\Omega^{N}\det\left(A+\omega-\frac{\tilde{\lambda}}{\Omega}\right)\,.
-\]</div>
-<p>The last determinant tells us that</p>
+<p>The last determinant tells us that the eigenvalues of <span class="math notranslate nohighlight">\(A\)</span> are</p>
 <div class="math notranslate nohighlight" id="equation-eigenvalue">
 <span class="eqno">(5)<a class="headerlink" href="#equation-eigenvalue" title="Permalink to this equation">#</a></span>\[
-\lambda=\frac{\tilde{\lambda}}{\Omega}-\omega\Leftrightarrow\tilde{\lambda}=\Omega\left(\omega+\lambda\right)
+\lambda=\frac{1}{\omega}\left(\tilde{\lambda}-\kappa\right)\Leftrightarrow\tilde{\lambda}=\omega\lambda+\kappa\,,
 \]</div>
-<p>are the eigenvalues of <span class="math notranslate nohighlight">\(A\)</span>, so we find a relation between the spectrum
-of <span class="math notranslate nohighlight">\(A\)</span> and that of <span class="math notranslate nohighlight">\(\tilde{A}\)</span>. Let us now impose the condition that the
-spectrum of <span class="math notranslate nohighlight">\(\tilde{A}\)</span> is in <span class="math notranslate nohighlight">\(\left(0,1\right]\)</span>:</p>
+<p>so we find a relation between the spectrum of <span class="math notranslate nohighlight">\(A\)</span> and that of
+<span class="math notranslate nohighlight">\(\tilde{A}\)</span>. Let us now impose the condition that the spectrum of
+<span class="math notranslate nohighlight">\(\tilde{A}\)</span> is in <span class="math notranslate nohighlight">\(\left(0,1\right]\)</span>:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{aligned}
-\tilde{\lambda}\left(\lambda=-\rho\right) &amp; =\Omega\left(\omega-\rho\right)=\frac{1}{2^{k}}\\
-\tilde{\lambda}\left(\lambda=\rho\right) &amp; =\Omega\left(\omega+\rho\right)=1-\frac{1}{2^{k}}\end{aligned}
+\[\begin{split}\begin{aligned}
+\tilde{\lambda}\left(\lambda=-\rho\right) &amp; =-\omega\rho+\kappa=\frac{1}{2^{k}}\\
+\tilde{\lambda}\left(\lambda=\rho\right) &amp; =\omega\rho+\kappa=1-\frac{1}{2^{k}}\end{aligned}
 \end{split}\]</div>
-<p>for integer <span class="math notranslate nohighlight">\(k&gt;1\)</span>. The solution for any <span class="math notranslate nohighlight">\(k\)</span> is</p>
-<div class="math notranslate nohighlight">
-\[
-\Omega=\left(\frac{1}{2}-\frac{1}{2^{k}}\right)\rho^{-1}\,,\,\,\omega=\frac{1}{1-2^{1-k}}\rho
-\]</div>
+<p>for integer <span class="math notranslate nohighlight">\(k&gt;1\)</span>. The solution for any <span class="math notranslate nohighlight">\(k\)</span> is
+$<span class="math notranslate nohighlight">\(
+\kappa=\frac{1}{2}\,,\,\,\omega=\left(\frac{1}{2}-\frac{1}{2^{k}}\right)\rho^{-1}
+\)</span>$</p>
 <p>For instance, consider the Hadamard matrix</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -546,11 +540,10 @@ H=\frac{1}{\sqrt{2}}\left(\begin{array}{cc}
 \end{split}\]</div>
 <p>It is hermitian and <span class="math notranslate nohighlight">\(\left\Vert H\right\Vert _{\infty}=\sqrt{2}\)</span>, so
 <span class="math notranslate nohighlight">\(spec\left(H\right)\subset\left[-\sqrt{2},\sqrt{2}\right]\)</span>, which is
-true, of course, since its eigenvalues are <span class="math notranslate nohighlight">\(\pm1\)</span>. For <span class="math notranslate nohighlight">\(k=2\)</span>, we have
-<span class="math notranslate nohighlight">\(\Omega=\sqrt{2}/8\)</span> and <span class="math notranslate nohighlight">\(\omega=2\sqrt{2}\)</span>, so</p>
+true, of course, since its eigenvalues are <span class="math notranslate nohighlight">\(\pm1\)</span>. For <span class="math notranslate nohighlight">\(k=2\)</span>, <span class="math notranslate nohighlight">\(\omega=\sqrt{2}/8\)</span>, so</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\tilde{H}=\Omega\left(H+\omega I\right)=\frac{1}{8}\left(\begin{array}{cc}
+\tilde{H}=\frac{1}{2}I+\omega H=\frac{1}{8}\left(\begin{array}{cc}
 5 &amp; 1\\
 1 &amp; 3
 \end{array}\right)\,.
@@ -813,7 +806,7 @@ and to calculate the eigenvalues of <span class="math notranslate nohighlight">\
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7fcf401642e0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7f735ade3790&gt;
 </pre></div>
 </div>
 </div>
@@ -833,7 +826,7 @@ of the eigenvectors of the shifted operator.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f3bdce840ec00bae2398759533f8162e1970d7a816c493511b4d3e9262d439c3.png" src="_images/f3bdce840ec00bae2398759533f8162e1970d7a816c493511b4d3e9262d439c3.png" />
+<img alt="_images/cde47dd588e310bdee1658ad40c39d5ceef579aa2375287038209c4ab0d31002.png" src="_images/cde47dd588e310bdee1658ad40c39d5ceef579aa2375287038209c4ab0d31002.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -898,7 +891,7 @@ the qubits which encode the rotation angles <span class="math notranslate nohigh
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7fcf397d43a0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7f7354cb0040&gt;
 </pre></div>
 </div>
 </div>
@@ -919,7 +912,7 @@ the qubits which encode the rotation angles <span class="math notranslate nohigh
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4f1eb3e5bba8c2834f8d44146506129b549122342214a9bfb28cfde76ffd9f00.png" src="_images/4f1eb3e5bba8c2834f8d44146506129b549122342214a9bfb28cfde76ffd9f00.png" />
+<img alt="_images/4088e689a3cb586ef971a865dbc82e8c749c16aa5b02b35de69c3335e8a55963.png" src="_images/4088e689a3cb586ef971a865dbc82e8c749c16aa5b02b35de69c3335e8a55963.png" />
 </div>
 </div>
 <p>The histogram is expected, since the eigenvalues of the H matrix are close to <span class="math notranslate nohighlight">\(\pm\)</span> and <span class="math notranslate nohighlight">\(\Lambda\)</span> is then close to <span class="math notranslate nohighlight">\(-1\)</span>.

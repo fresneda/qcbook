@@ -122,7 +122,7 @@ Let $\left|\psi\right\rangle$ be an eigenvector of a unitary operator $U$. There
 
 $$U\left|\psi\right\rangle=e^{2\pi i\varphi}\left|\psi\right\rangle \,.$$
 
-The Phase estimation algorithm aims at finding $\varphi$. One needs two registers, the first one with $t$
+The Phase estimation algorithm aims at finding $\varphi$, where $\varphi \in (0,1]$. One needs two registers, the first one with $t$
 qubits , and the second one with $k$ qubits, necessary to store the state $\left|\psi\right\rangle \in \mathbb{C}_2^k$. 
 
 To determine $\varphi$ accurate to $n$ bits with probability of success at least $1-\epsilon$, one has

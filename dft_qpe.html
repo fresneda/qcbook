@@ -480,7 +480,7 @@ $<span class="math notranslate nohighlight">\(DFT\left|j\right\rangle =\frac{1}{
 <p>Let <span class="math notranslate nohighlight">\(\left|\psi\right\rangle\)</span> be an eigenvector of a unitary operator <span class="math notranslate nohighlight">\(U\)</span>. Therefore the eigenvalue is a phase,</p>
 <div class="math notranslate nohighlight">
 \[U\left|\psi\right\rangle=e^{2\pi i\varphi}\left|\psi\right\rangle \,.\]</div>
-<p>The Phase estimation algorithm aims at finding <span class="math notranslate nohighlight">\(\varphi\)</span>. One needs two registers, the first one with <span class="math notranslate nohighlight">\(t\)</span>
+<p>The Phase estimation algorithm aims at finding <span class="math notranslate nohighlight">\(\varphi\)</span>, where <span class="math notranslate nohighlight">\(\varphi \in (0,1]\)</span>. One needs two registers, the first one with <span class="math notranslate nohighlight">\(t\)</span>
 qubits , and the second one with <span class="math notranslate nohighlight">\(k\)</span> qubits, necessary to store the state <span class="math notranslate nohighlight">\(\left|\psi\right\rangle \in \mathbb{C}_2^k\)</span>.</p>
 <p>To determine <span class="math notranslate nohighlight">\(\varphi\)</span> accurate to <span class="math notranslate nohighlight">\(n\)</span> bits with probability of success at least <span class="math notranslate nohighlight">\(1-\epsilon\)</span>, one has</p>
 <div class="math notranslate nohighlight">
@@ -554,7 +554,7 @@ DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5e06fbf28f912fbd1d32f9541643d2402a38a4b89736dac7dfaa04c32fe309e4.png" src="_images/5e06fbf28f912fbd1d32f9541643d2402a38a4b89736dac7dfaa04c32fe309e4.png" />
+<img alt="_images/1803a20d630ea96c879d0118300a940983ab65a0e804c067316714b860c44f86.png" src="_images/1803a20d630ea96c879d0118300a940983ab65a0e804c067316714b860c44f86.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -572,7 +572,7 @@ DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/58b3d4e6abf585b69e82b52ea1d3079d27b4cbc2c4f42d6fb25642bfa5f12406.png" src="_images/58b3d4e6abf585b69e82b52ea1d3079d27b4cbc2c4f42d6fb25642bfa5f12406.png" />
+<img alt="_images/0165ad6822926db1cf4af943a9c2dc497139b16de3772e2d032b18fe00552acb.png" src="_images/0165ad6822926db1cf4af943a9c2dc497139b16de3772e2d032b18fe00552acb.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -588,7 +588,7 @@ DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12557b581972c12092f756dd18c85b2c5a27449b35bbd391bf6d4e4b64e37457.png" src="_images/12557b581972c12092f756dd18c85b2c5a27449b35bbd391bf6d4e4b64e37457.png" />
+<img alt="_images/a4cb522bdf073fbc863e4df1e73a2ee2f799ee46f24002bd12b2ef3a8cd69757.png" src="_images/a4cb522bdf073fbc863e4df1e73a2ee2f799ee46f24002bd12b2ef3a8cd69757.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -608,7 +608,7 @@ DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f2df84b86d5d56d74eb84d9059c1c425867ca16a6989c01b958d0754392f5ab5.png" src="_images/f2df84b86d5d56d74eb84d9059c1c425867ca16a6989c01b958d0754392f5ab5.png" />
+<img alt="_images/7f7c9ee3e156babdd0b3c9c30cbb1a7186b2127f44e5a18096d4370e40691ab6.png" src="_images/7f7c9ee3e156babdd0b3c9c30cbb1a7186b2127f44e5a18096d4370e40691ab6.png" />
 </div>
 </div>
 <p>The measured state is <span class="math notranslate nohighlight">\(\left|001\right\rangle\)</span>, which corresponds to <span class="math notranslate nohighlight">\(\varphi = 0\times2^{-1}+0\times2^{-2}+1\times2^{-3}=1/8\)</span>, as expected.</p>
@@ -657,7 +657,7 @@ DFT^{\dagger}\left(\frac{1}{2^{t/2}}\sum_{k=0}^{2^{t-1}}e^{2\pi ik\varphi}\left|
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/bbc06338bf08df419dfb80d202fef3afd100115ccb34514786ec7fcc6679975a.png" src="_images/bbc06338bf08df419dfb80d202fef3afd100115ccb34514786ec7fcc6679975a.png" />
+<img alt="_images/c16c627614a11696d9f36c3443fcbe29acdde9a8ba3b8450590f19985dc4942d.png" src="_images/c16c627614a11696d9f36c3443fcbe29acdde9a8ba3b8450590f19985dc4942d.png" />
 </div>
 </div>
 <p>We see we get a distribution of possible values for <span class="math notranslate nohighlight">\(\varphi\)</span>. It is difficult to read the picture, so let us see what was the most frequent result:</p>

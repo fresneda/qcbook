@@ -149,39 +149,32 @@ $$
 $$
 
 so that $spec\left(A\right)=\left[\lambda_{min},\lambda_{max}\right]\subset\left[-\rho,\rho\right]$.
-Consider the matrix 
+Consider the matrix $$\tilde{A}=\kappa I+\omega A$$ where $\kappa$ and
+$\omega>0$ are real numbers. The eigenvalues of $\tilde{A}$ are the
+$\tilde{\lambda}$ roots of the characteristic polynomial
 
 $$
-\tilde{A}=\Omega\left(A+\omega I\right)
-$$ 
-
-where $\Omega>0$ and $\omega$ are real numbers. The eigenvalues of $\tilde{A}$
-are the $\tilde{\lambda}$ roots of the characteristic polynomial
-
-$$
-\det\left(\tilde{A}-\tilde{\lambda}I\right)=\det\left(\Omega\left(A+\omega I\right)-\tilde{\lambda}I\right)=\Omega^{N}\det\left(A+\omega-\frac{\tilde{\lambda}}{\Omega}\right)\,.
+\det\left(\tilde{A}-\tilde{\lambda}I\right)=\det\left(\omega A+\kappa I-\tilde{\lambda}I\right)=\omega^{N}\det\left(A-\frac{1}{\omega}\left(\tilde{\lambda}-\kappa\right)I\right)\,.
 $$
 
-The last determinant tells us that
+The last determinant tells us that the eigenvalues of $A$ are
 
 $$
-\lambda=\frac{\tilde{\lambda}}{\Omega}-\omega\Leftrightarrow\tilde{\lambda}=\Omega\left(\omega+\lambda\right)
+\lambda=\frac{1}{\omega}\left(\tilde{\lambda}-\kappa\right)\Leftrightarrow\tilde{\lambda}=\omega\lambda+\kappa\,,
 $$ (eigenvalue)
 
-are the eigenvalues of $A$, so we find a relation between the spectrum
-of $A$ and that of $\tilde{A}$. Let us now impose the condition that the
-spectrum of $\tilde{A}$ is in $\left(0,1\right]$: 
+so we find a relation between the spectrum of $A$ and that of
+$\tilde{A}$. Let us now impose the condition that the spectrum of
+$\tilde{A}$ is in $\left(0,1\right]$: 
 
-$$
-\begin{aligned}
-\tilde{\lambda}\left(\lambda=-\rho\right) & =\Omega\left(\omega-\rho\right)=\frac{1}{2^{k}}\\
-\tilde{\lambda}\left(\lambda=\rho\right) & =\Omega\left(\omega+\rho\right)=1-\frac{1}{2^{k}}\end{aligned}
+$$\begin{aligned}
+\tilde{\lambda}\left(\lambda=-\rho\right) & =-\omega\rho+\kappa=\frac{1}{2^{k}}\\
+\tilde{\lambda}\left(\lambda=\rho\right) & =\omega\rho+\kappa=1-\frac{1}{2^{k}}\end{aligned}
 $$
 
 for integer $k>1$. The solution for any $k$ is
-
 $$
-\Omega=\left(\frac{1}{2}-\frac{1}{2^{k}}\right)\rho^{-1}\,,\,\,\omega=\frac{1}{1-2^{1-k}}\rho
+\kappa=\frac{1}{2}\,,\,\,\omega=\left(\frac{1}{2}-\frac{1}{2^{k}}\right)\rho^{-1}
 $$
 
 For instance, consider the Hadamard matrix
@@ -195,11 +188,10 @@ $$
 
 It is hermitian and $\left\Vert H\right\Vert _{\infty}=\sqrt{2}$, so
 $spec\left(H\right)\subset\left[-\sqrt{2},\sqrt{2}\right]$, which is
-true, of course, since its eigenvalues are $\pm1$. For $k=2$, we have
-$\Omega=\sqrt{2}/8$ and $\omega=2\sqrt{2}$, so
+true, of course, since its eigenvalues are $\pm1$. For $k=2$, $\omega=\sqrt{2}/8$, so
 
 $$
-\tilde{H}=\Omega\left(H+\omega I\right)=\frac{1}{8}\left(\begin{array}{cc}
+\tilde{H}=\frac{1}{2}I+\omega H=\frac{1}{8}\left(\begin{array}{cc}
 5 & 1\\
 1 & 3
 \end{array}\right)\,.

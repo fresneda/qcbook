@@ -149,8 +149,13 @@ $$
 $$
 
 so that $spec\left(A\right)=\left[\lambda_{min},\lambda_{max}\right]\subset\left[-\rho,\rho\right]$.
-Consider the matrix $$\tilde{A}=\kappa I+\omega A$$ where $\kappa$ and
-$\omega>0$ are real numbers. The eigenvalues of $\tilde{A}$ are the
+Consider the matrix 
+
+$$
+\tilde{A}=\kappa I+\omega A
+$$ 
+
+where $\kappa$ and $\omega>0$ are real numbers. The eigenvalues of $\tilde{A}$ are the
 $\tilde{\lambda}$ roots of the characteristic polynomial
 
 $$
@@ -284,17 +289,12 @@ $$
 and by measuring the auxiliar qubit we can find the reciprocal of the
 eigenvalue, up to a scaling factor. Since all eigenvalues belong to
 $\left[\lambda_{min},\lambda_{max}\right]$,
-$\lambda\in\left[\lambda_{min},\lambda_{max}\right]$, and so
-$\frac{\Lambda}{\lambda}\in\left[\frac{\Lambda}{\lambda_{max}},\frac{\Lambda}{\lambda_{min}}\right]$.
-In order to use the function $\arccos$ must choose the scale $\Lambda$
-so that $\left[\frac{\Lambda}{\lambda_{max}},\frac{\Lambda}{\lambda_{min}}\right]$
-fits the domain of $\arcsin$. This can by accomplished by rescaling by
-$\Lambda\leq\lambda_{min}$, so we get
-$\left[\frac{\Lambda}{\lambda_{max}},\frac{\Lambda}{\lambda_{min}}\right]=\left[\frac{\lambda_{min}}{\lambda_{max}},1\right]\subset\left(0,1\right]$.
-This means
-$\arcsin\left(\frac{\Lambda}{\lambda}\right)\in\left(0,\frac{\pi}{2}\right]$,
-or equivalently,
-$\frac{2}{\pi}\arcsin\left(\frac{\Lambda}{\lambda}\right)\in\left(0,1\right]$.
+$\lambda\in\left[\lambda_{min},\lambda_{max}\right]$, we must choose
+$\Lambda$ so that $\frac{\Lambda}{\lambda}\in\left[-1,1\right]$ is in
+the domain of $\arcsin$. This can by accomplished in general by choosing
+$\Lambda=\min\left\{ \lambda,\lambda\in spec\left(A\right)\right\} $.
+
+
 
 Therefore, if we could apply rotations
 $R_{y}\left(2\arcsin\frac{\Lambda}{\lambda_{i}}\right)$ to the auxiliar

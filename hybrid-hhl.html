@@ -506,9 +506,13 @@ norm, such as the maximum absolute row sum,</p>
 \rho\equiv\left\Vert A\right\Vert _{\infty}=\max_{1\leq i\leq N}\left\{ \sum_{j=1}^{N}\left|a_{ij}\right|\right\}
 \]</div>
 <p>so that <span class="math notranslate nohighlight">\(spec\left(A\right)=\left[\lambda_{min},\lambda_{max}\right]\subset\left[-\rho,\rho\right]\)</span>.
-Consider the matrix $<span class="math notranslate nohighlight">\(\tilde{A}=\kappa I+\omega A\)</span><span class="math notranslate nohighlight">\( where \)</span>\kappa<span class="math notranslate nohighlight">\( and
-\)</span>\omega&gt;0<span class="math notranslate nohighlight">\( are real numbers. The eigenvalues of \)</span>\tilde{A}<span class="math notranslate nohighlight">\( are the
-\)</span>\tilde{\lambda}$ roots of the characteristic polynomial</p>
+Consider the matrix</p>
+<div class="math notranslate nohighlight">
+\[
+\tilde{A}=\kappa I+\omega A
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\kappa\)</span> and <span class="math notranslate nohighlight">\(\omega&gt;0\)</span> are real numbers. The eigenvalues of <span class="math notranslate nohighlight">\(\tilde{A}\)</span> are the
+<span class="math notranslate nohighlight">\(\tilde{\lambda}\)</span> roots of the characteristic polynomial</p>
 <div class="math notranslate nohighlight">
 \[
 \det\left(\tilde{A}-\tilde{\lambda}I\right)=\det\left(\omega A+\kappa I-\tilde{\lambda}I\right)=\omega^{N}\det\left(A-\frac{1}{\omega}\left(\tilde{\lambda}-\kappa\right)I\right)\,.
@@ -624,17 +628,10 @@ R_{y}\left(2\arcsin\frac{\Lambda}{\lambda}\right)=\sqrt{1-\frac{\Lambda^{2}}{\la
 <p>and by measuring the auxiliar qubit we can find the reciprocal of the
 eigenvalue, up to a scaling factor. Since all eigenvalues belong to
 <span class="math notranslate nohighlight">\(\left[\lambda_{min},\lambda_{max}\right]\)</span>,
-<span class="math notranslate nohighlight">\(\lambda\in\left[\lambda_{min},\lambda_{max}\right]\)</span>, and so
-<span class="math notranslate nohighlight">\(\frac{\Lambda}{\lambda}\in\left[\frac{\Lambda}{\lambda_{max}},\frac{\Lambda}{\lambda_{min}}\right]\)</span>.
-In order to use the function <span class="math notranslate nohighlight">\(\arccos\)</span> must choose the scale <span class="math notranslate nohighlight">\(\Lambda\)</span>
-so that <span class="math notranslate nohighlight">\(\left[\frac{\Lambda}{\lambda_{max}},\frac{\Lambda}{\lambda_{min}}\right]\)</span>
-fits the domain of <span class="math notranslate nohighlight">\(\arcsin\)</span>. This can by accomplished by rescaling by
-<span class="math notranslate nohighlight">\(\Lambda\leq\lambda_{min}\)</span>, so we get
-<span class="math notranslate nohighlight">\(\left[\frac{\Lambda}{\lambda_{max}},\frac{\Lambda}{\lambda_{min}}\right]=\left[\frac{\lambda_{min}}{\lambda_{max}},1\right]\subset\left(0,1\right]\)</span>.
-This means
-<span class="math notranslate nohighlight">\(\arcsin\left(\frac{\Lambda}{\lambda}\right)\in\left(0,\frac{\pi}{2}\right]\)</span>,
-or equivalently,
-<span class="math notranslate nohighlight">\(\frac{2}{\pi}\arcsin\left(\frac{\Lambda}{\lambda}\right)\in\left(0,1\right]\)</span>.</p>
+<span class="math notranslate nohighlight">\(\lambda\in\left[\lambda_{min},\lambda_{max}\right]\)</span>, we must choose
+<span class="math notranslate nohighlight">\(\Lambda\)</span> so that <span class="math notranslate nohighlight">\(\frac{\Lambda}{\lambda}\in\left[-1,1\right]\)</span> is in
+the domain of <span class="math notranslate nohighlight">\(\arcsin\)</span>. This can by accomplished in general by choosing
+<span class="math notranslate nohighlight">\(\Lambda=\min\left\{ \lambda,\lambda\in spec\left(A\right)\right\} \)</span>.</p>
 <p>Therefore, if we could apply rotations
 <span class="math notranslate nohighlight">\(R_{y}\left(2\arcsin\frac{\Lambda}{\lambda_{i}}\right)\)</span> to the auxiliar
 qubit, conditioned on the register
@@ -806,7 +803,7 @@ and to calculate the eigenvalues of <span class="math notranslate nohighlight">\
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7f735ade3790&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7f5c3be10370&gt;
 </pre></div>
 </div>
 </div>
@@ -826,7 +823,7 @@ of the eigenvectors of the shifted operator.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/cde47dd588e310bdee1658ad40c39d5ceef579aa2375287038209c4ab0d31002.png" src="_images/cde47dd588e310bdee1658ad40c39d5ceef579aa2375287038209c4ab0d31002.png" />
+<img alt="_images/deb759943244247b0b86f1d0ac1d45eccb440b7340b0d5e1fb7db6a5a11eb0b0.png" src="_images/deb759943244247b0b86f1d0ac1d45eccb440b7340b0d5e1fb7db6a5a11eb0b0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -891,7 +888,7 @@ the qubits which encode the rotation angles <span class="math notranslate nohigh
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7f7354cb0040&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7f5c35e182b0&gt;
 </pre></div>
 </div>
 </div>
@@ -912,7 +909,7 @@ the qubits which encode the rotation angles <span class="math notranslate nohigh
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4088e689a3cb586ef971a865dbc82e8c749c16aa5b02b35de69c3335e8a55963.png" src="_images/4088e689a3cb586ef971a865dbc82e8c749c16aa5b02b35de69c3335e8a55963.png" />
+<img alt="_images/fe7f938bec9e8f75450f486f2dc4eb5271aa83d921b55d677c95ee6c2f338a4c.png" src="_images/fe7f938bec9e8f75450f486f2dc4eb5271aa83d921b55d677c95ee6c2f338a4c.png" />
 </div>
 </div>
 <p>The histogram is expected, since the eigenvalues of the H matrix are close to <span class="math notranslate nohighlight">\(\pm\)</span> and <span class="math notranslate nohighlight">\(\Lambda\)</span> is then close to <span class="math notranslate nohighlight">\(-1\)</span>.
